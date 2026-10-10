@@ -30,7 +30,7 @@ export const Reveal: React.FC = () => {
       width: 260,
       height: 260,
       borderRadius: '50%',
-      border: `2px solid ${alpha(COLORS.pink, 0.6)}`,
+      border: `2px solid ${alpha(COLORS.violet, 0.35)}`,
       transform: `scale(${1 + p * 2.6})`,
       opacity: (1 - p) * 0.8,
     };
@@ -45,7 +45,7 @@ export const Reveal: React.FC = () => {
             width: 900,
             height: 900,
             borderRadius: '50%',
-            background: `radial-gradient(circle, ${alpha(COLORS.pink, 0.55)} 0%, ${alpha(COLORS.violet, 0.35)} 35%, transparent 70%)`,
+            background: `radial-gradient(circle, ${alpha(COLORS.pink, 0.45)} 0%, ${alpha(COLORS.violet, 0.2)} 35%, transparent 70%)`,
             transform: `scale(${0.2 + burst * 2.2})`,
             opacity: 1 - burst,
           }}
@@ -92,7 +92,7 @@ export const Reveal: React.FC = () => {
             fontSize: 50,
             fontWeight: 500,
             letterSpacing: '-0.02em',
-            color: COLORS.mutedOnDark,
+            color: COLORS.textMuted,
           }}
         />
       </AbsoluteFill>

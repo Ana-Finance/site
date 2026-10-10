@@ -27,7 +27,7 @@ export const LogoIcon: React.FC<{
         height: size,
         borderRadius: size * 0.13,
         overflow: 'hidden',
-        boxShadow: `0 ${size * 0.12}px ${size * 0.4}px ${alpha(COLORS.violet, 0.45 * glow)}, 0 0 ${size * 0.6}px ${alpha(COLORS.pink, 0.25 * glow)}`,
+        boxShadow: `0 ${size * 0.12}px ${size * 0.35}px ${alpha(COLORS.violet, 0.3 * glow)}, 0 0 ${size * 0.5}px ${alpha(COLORS.pink, 0.25 * glow)}`,
       }}
     >
       <Img
@@ -58,8 +58,8 @@ export const Wordmark: React.FC<{
   const first = TEXTS.reveal.brandFirst.split('');
   const second = TEXTS.reveal.brandSecond.split('');
   const letters = [
-    ...first.map((ch) => ({ ch, color: COLORS.textOnDark })),
-    { ch: '\u00A0', color: COLORS.textOnDark },
+    ...first.map((ch) => ({ ch, color: COLORS.text })),
+    { ch: '\u00A0', color: COLORS.text },
     ...second.map((ch, j) => ({
       ch,
       color: interpolateColors(

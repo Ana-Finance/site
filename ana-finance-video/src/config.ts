@@ -55,28 +55,20 @@ export const COLORS = {
   violet: '#A50AFF',
   black: '#000000',
 
-  // Textes sur fond sombre
-  textOnDark: '#FFFFFF',
-  mutedOnDark: 'rgba(255, 255, 255, 0.62)',
-  subtleOnDark: 'rgba(255, 255, 255, 0.38)',
-  cardOnDark: 'rgba(255, 255, 255, 0.045)',
-  borderOnDark: 'rgba(255, 255, 255, 0.10)',
-  danger: '#FF4D6D',
+  // Fond clair
+  background: '#F8F6FC',
+  surface: '#FFFFFF',
+  text: '#0E0B16',
+  textMuted: 'rgba(14, 11, 22, 0.62)',
+  textSubtle: 'rgba(14, 11, 22, 0.42)',
+  border: 'rgba(14, 11, 22, 0.08)',
+  violetSoft: '#F3E6FF',
+  shadow: '0 24px 60px rgba(88, 28, 135, 0.12), 0 2px 6px rgba(14, 11, 22, 0.04)',
 
-  // Interface de l'application (maquette)
-  uiBg: '#F3F4F8',
-  uiSurface: '#FFFFFF',
-  uiBorder: '#E5E6EE',
-  uiText: '#15151F',
-  uiMuted: '#6B6F80',
-  uiPrimary: '#9A12F5',
-  uiPrimarySoft: '#F2E6FF',
-  uiKpi: '#4C1D95',
-  uiKpiBand: 'linear-gradient(90deg, #EDE3FF 0%, #E6ECFF 50%, #EEDDFB 100%)',
-  uiSuccess: '#22C55E',
-  uiWarning: '#F59E0B',
-  uiInfo: '#3B82F6',
-  uiTitleBar: '#ECEDF2',
+  // États
+  success: '#16A34A',
+  successSoft: '#DCFCE7',
+  danger: '#E11D48',
 };
 
 /** Dégradé de marque (texte, boutons, barres). */
@@ -113,43 +105,28 @@ export const TEXTS = {
       { step: '02', text: 'L’agent l’exécute, étape par étape.' },
       { step: '03', text: 'Vos indicateurs décollent.' },
     ],
-    windowUrl: 'app.ana-finance.com',
-    org: { initials: 'NR', name: 'Nimbus Robotics', sub: 'Série A · SaaS' },
-    user: { initials: 'CR', name: 'Camille Roy', role: 'CFO' },
-    nav: ['Cockpit DAF', 'Finance', 'Banque & Paiements', 'Clôture comptable', 'AI & Écosystème'],
-    pageTitle: 'Agents IA',
-    pageSubtitle: 'Confiez vos tâches de production. Vous gardez le contrôle.',
-    composerTitle: 'Confier une tâche',
-    chips: ['Ana choisit', 'Comptable', 'CFO', 'Clôture', 'Audit'],
+    // Bulle de demande (côté utilisateur)
+    userLabel: 'Vous',
     prompt: 'Saisis et catégorise les factures fournisseurs de juin',
-    button: 'Confier',
-    runTitle: 'Agent Comptable · en cours',
-    runDone: 'Agent Comptable · terminé',
+    // Bulles de l'agent
+    agentLabel: 'Agent Ana',
+    thinking: 'Ana analyse votre demande…',
     steps: [
-      { label: 'Analyse de 248 factures', detail: 'Lecture IA + OCR' },
-      { label: 'Catégorisation des dépenses', detail: 'Plan comptable PCG' },
-      { label: 'Génération des écritures', detail: '248 écritures' },
-      { label: 'Validation par Audit Bot', detail: '0 anomalie' },
+      { phase: 'Analyse', label: '248 factures lues et comprises' },
+      { phase: 'Action', label: 'Dépenses catégorisées au plan comptable' },
+      { phase: 'Action', label: '248 écritures générées' },
+      { phase: 'Validation', label: 'Contrôle qualité : 0 anomalie' },
     ],
-    toast: 'Tâche terminée · 248 écritures prêtes',
-    dashTitle: 'Cockpit DAF',
-    dashSubtitle: 'Impact de vos agents ce mois-ci',
+    done: 'Terminé · prêt à valider',
+    // Bulles d'indicateurs
     kpis: [
-      { value: 47, decimals: 0, suffix: ' h', label: 'économisées ce mois', sub: '≈ 1,2 ETP comptable' },
-      { value: 1248, decimals: 0, suffix: '', label: 'écritures générées', sub: 'traçables et réversibles' },
-      { value: 99.2, decimals: 1, suffix: ' %', label: 'précision vérifiée', sub: 'contrôlée par Audit Bot' },
-      { value: 0, decimals: 0, suffix: '', label: 'erreur de saisie', sub: 'sur 30 jours' },
+      { icon: 'clock', from: 0, value: 47, decimals: 0, suffix: ' h', label: 'économisées ce mois', trend: '+32 %' },
+      { icon: 'file', from: 0, value: 1248, decimals: 0, suffix: '', label: 'écritures générées', trend: '+58 %' },
+      { icon: 'shield', from: 80, value: 99.2, decimals: 1, suffix: ' %', label: 'précision vérifiée', trend: '+4,1 pts' },
+      { icon: 'check', from: 37, value: 0, decimals: 0, suffix: '', label: 'erreur de saisie', trend: '−100 %' },
     ],
-    chartTitle: 'Heures économisées par mois',
-    chartMonths: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+    chartTitle: 'Heures libérées',
     chartValues: [6, 9, 12, 14, 18, 21, 25, 28, 33, 38, 42, 47],
-    activityTitle: 'Activité des agents',
-    activities: [
-      { text: '248 factures saisies', time: 'à l’instant' },
-      { text: 'Banque rapprochée à 100 %', time: 'il y a 4 min' },
-      { text: 'FNP de juin préparées', time: 'il y a 12 min' },
-      { text: 'Relances clients envoyées', time: 'il y a 26 min' },
-    ],
   },
 
   benefits: {
@@ -174,5 +151,5 @@ export const TEXTS = {
 // ── Assets (dossier /public) ──────────────────────────────────
 export const ASSETS = {
   logoIcon: 'logo-icon.png',
-  logoFull: 'logo-full.png',
+  logoFull: 'logo-full.png', // logo complet (texte noir) : utilisé sur fond clair
 };

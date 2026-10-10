@@ -2,14 +2,15 @@ import React from 'react';
 import {
   AbsoluteFill,
   Easing,
+  Img,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
-import { BRAND_GRADIENT, COLORS, SCENES, sceneStart, TEXTS } from '../config';
+import { ASSETS, BRAND_GRADIENT, COLORS, SCENES, sceneStart, TEXTS } from '../config';
 import { AnimatedWords } from '../components/AnimatedWords';
-import { LogoIcon, Wordmark } from '../components/Brand';
 import { Cursor } from '../components/Cursor';
 import { Icon } from '../components/Icon';
 import { Scene } from '../components/Scene';
@@ -43,17 +44,22 @@ export const Cta: React.FC = () => {
   return (
     <Scene duration={duration} offset={sceneStart('cta')} exit={0}>
       <AbsoluteFill style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 28, transform: `scale(${0.8 + icon * 0.2})`, opacity: Math.min(1, icon * 1.6) }}>
-          <LogoIcon size={110} shineAt={14} glow={0.8} />
-          <Wordmark fontSize={84} delay={6} stagger={1} />
-        </div>
+        <Img
+          src={staticFile(ASSETS.logoFull)}
+          style={{
+            height: 150,
+            transform: `scale(${0.75 + icon * 0.25}) translateY(${(1 - icon) * 30}px)`,
+            opacity: Math.min(1, icon * 1.6),
+            filter: `blur(${(1 - Math.min(1, icon)) * 12}px)`,
+          }}
+        />
 
         <AnimatedWords
           text={t.headline}
           delay={16}
           stagger={4}
           style={{
-            marginTop: 70,
+            marginTop: 60,
             maxWidth: 1500,
             fontSize: 96,
             fontWeight: 700,
@@ -91,7 +97,8 @@ export const Cta: React.FC = () => {
               fontSize: 40,
               fontWeight: 600,
               letterSpacing: '-0.02em',
-              boxShadow: `0 0 ${40 + pulse * 40}px ${alpha(COLORS.violet, 0.7)}, inset 0 1px 0 rgba(255,255,255,0.35)`,
+              color: 'white',
+              boxShadow: `0 ${16 + pulse * 10}px ${36 + pulse * 30}px ${alpha(COLORS.violet, 0.35 + pulse * 0.15)}, inset 0 1px 0 rgba(255,255,255,0.35)`,
             }}
           >
             {t.button}
@@ -112,7 +119,7 @@ export const Cta: React.FC = () => {
             fontSize: 34,
             fontWeight: 500,
             letterSpacing: '0.02em',
-            color: COLORS.mutedOnDark,
+            color: COLORS.textMuted,
             opacity: url,
             transform: `translateY(${(1 - url) * 20}px)`,
           }}

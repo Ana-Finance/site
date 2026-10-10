@@ -36,9 +36,9 @@ const BenefitCard: React.FC<{
         borderRadius: 32,
         padding: 42,
         overflow: 'hidden',
-        background: 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
-        border: `1px solid ${COLORS.borderOnDark}`,
-        boxShadow: `0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12)`,
+        background: COLORS.surface,
+        border: `1px solid ${COLORS.border}`,
+        boxShadow: COLORS.shadow,
         display: 'flex',
         flexDirection: 'column',
         opacity: Math.min(1, p * 1.5) * (1 - out),
@@ -54,7 +54,7 @@ const BenefitCard: React.FC<{
           bottom: 0,
           width: 220,
           left: `${sweep}%`,
-          background: 'linear-gradient(100deg, transparent, rgba(255,131,251,0.14), transparent)',
+          background: 'linear-gradient(100deg, transparent, rgba(255,131,251,0.16), transparent)',
         }}
       />
       <div
@@ -77,7 +77,7 @@ const BenefitCard: React.FC<{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: `0 14px 36px ${alpha(COLORS.violet, 0.5)}`,
+          boxShadow: `0 14px 30px ${alpha(COLORS.violet, 0.3)}`,
         }}
       >
         <Icon name={icon} size={42} color="white" />
@@ -85,7 +85,7 @@ const BenefitCard: React.FC<{
       <div style={{ marginTop: 40, fontSize: 39, fontWeight: 700, letterSpacing: '-0.035em', lineHeight: 1.1, whiteSpace: 'nowrap' }}>
         {title}
       </div>
-      <div style={{ marginTop: 14, fontSize: 26, color: COLORS.mutedOnDark, lineHeight: 1.35 }}>
+      <div style={{ marginTop: 14, fontSize: 26, color: COLORS.textMuted, lineHeight: 1.35 }}>
         {subtitle}
       </div>
       <div style={{ flex: 1 }} />
@@ -94,8 +94,8 @@ const BenefitCard: React.FC<{
           alignSelf: 'flex-start',
           padding: '10px 20px',
           borderRadius: 999,
-          border: `1px solid ${alpha(COLORS.pink, 0.35)}`,
-          background: alpha(COLORS.violet, 0.12),
+          border: `1px solid ${alpha(COLORS.violet, 0.2)}`,
+          background: COLORS.violetSoft,
           fontSize: 26,
           fontWeight: 700,
         }}
@@ -143,7 +143,7 @@ export const Benefits: React.FC = () => {
               width: 1100,
               height: 700,
               borderRadius: '50%',
-              background: `radial-gradient(ellipse, ${alpha(COLORS.violet, 0.4)}, transparent 65%)`,
+              background: `radial-gradient(ellipse, ${alpha(COLORS.pink, 0.3)}, transparent 65%)`,
               opacity: Math.min(1, big),
             }}
           />
@@ -156,7 +156,7 @@ export const Benefits: React.FC = () => {
               fontVariantNumeric: 'tabular-nums',
               transform: `scale(${0.6 + big * 0.4})`,
               opacity: Math.min(1, big * 1.4),
-              filter: `drop-shadow(0 20px 60px ${alpha(COLORS.violet, 0.6)})`,
+              filter: `drop-shadow(0 20px 50px ${alpha(COLORS.violet, 0.3)})`,
               ...gradientText,
             }}
           >
@@ -175,7 +175,7 @@ export const Benefits: React.FC = () => {
               width: 1000,
               height: 16,
               borderRadius: 8,
-              background: alpha('#FFFFFF', 0.08),
+              background: alpha(COLORS.text, 0.08),
               overflow: 'hidden',
               opacity: interpolate(frame, [SWITCH + 34, SWITCH + 42], [0, 1], CLAMP),
             }}
@@ -186,7 +186,7 @@ export const Benefits: React.FC = () => {
                 height: '100%',
                 borderRadius: 8,
                 background: BRAND_GRADIENT,
-                boxShadow: `0 0 24px ${COLORS.violet}`,
+                boxShadow: `0 0 18px ${alpha(COLORS.violet, 0.5)}`,
               }}
             />
           </div>

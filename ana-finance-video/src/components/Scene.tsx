@@ -25,7 +25,7 @@ export const Scene: React.FC<{
       : 0;
 
   return (
-    <AbsoluteFill style={{ fontFamily, color: COLORS.textOnDark }}>
+    <AbsoluteFill style={{ fontFamily, color: COLORS.text }}>
       <Background offset={offset} />
       <AbsoluteFill
         style={{

@@ -45,8 +45,9 @@ const TaskCard: React.FC<{
     position: 'absolute',
     inset: 0,
     borderRadius: 26,
-    border: `1px solid ${COLORS.borderOnDark}`,
-    background: alpha('#FFFFFF', 0.03),
+    border: `1px solid ${COLORS.border}`,
+    background: COLORS.surface,
+    boxShadow: '0 10px 30px rgba(88, 28, 135, 0.06)',
     opacity: p * (0.75 - depth * 0.25),
     transform: `translateY(${p * depth * 14}px) scale(${1 - depth * 0.035}) rotate(${(index % 2 === 0 ? 1 : -1) * depth * p * 0.8}deg)`,
   });
@@ -72,9 +73,9 @@ const TaskCard: React.FC<{
           gap: 28,
           padding: '0 36px',
           borderRadius: 26,
-          border: `1px solid ${COLORS.borderOnDark}`,
-          background: 'linear-gradient(180deg, rgba(28,22,38,0.96), rgba(14,12,20,0.96))',
-          boxShadow: '0 20px 50px rgba(0,0,0,0.45)',
+          border: `1px solid ${COLORS.border}`,
+          background: COLORS.surface,
+          boxShadow: COLORS.shadow,
         }}
       >
         <div
@@ -85,17 +86,17 @@ const TaskCard: React.FC<{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: alpha(COLORS.violet, 0.18),
-            border: `1px solid ${alpha(COLORS.violet, 0.4)}`,
+            background: COLORS.violetSoft,
+            border: `1px solid ${alpha(COLORS.violet, 0.2)}`,
           }}
         >
-          <Icon name={icon} size={34} color={COLORS.pink} />
+          <Icon name={icon} size={34} color={COLORS.violet} />
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 38, fontWeight: 600, letterSpacing: '-0.02em' }}>
             {label}
           </div>
-          <div style={{ fontSize: 22, color: COLORS.subtleOnDark, marginTop: 4 }}>
+          <div style={{ fontSize: 22, color: COLORS.textSubtle, marginTop: 4 }}>
             {meta}
           </div>
         </div>
@@ -106,15 +107,15 @@ const TaskCard: React.FC<{
             gap: 12,
             padding: '10px 20px',
             borderRadius: 999,
-            background: alpha(COLORS.danger, 0.12 + badgePulse * 0.08),
-            border: `1px solid ${alpha(COLORS.danger, 0.45)}`,
-            color: '#FF8FA3',
+            background: alpha(COLORS.danger, 0.08 + badgePulse * 0.06),
+            border: `1px solid ${alpha(COLORS.danger, 0.3)}`,
+            color: COLORS.danger,
             fontSize: 36,
             fontWeight: 700,
             fontVariantNumeric: 'tabular-nums',
           }}
         >
-          <Icon name="alert" size={26} color="#FF8FA3" />
+          <Icon name="alert" size={26} color={COLORS.danger} />
           {formatFr(Math.round(count * counter))}
         </div>
       </div>
@@ -172,7 +173,7 @@ export const Problem: React.FC = () => {
               justifyContent: 'space-between',
               fontSize: 26,
               fontWeight: 500,
-              color: COLORS.mutedOnDark,
+              color: COLORS.textMuted,
               marginBottom: 14,
             }}
           >
@@ -185,7 +186,7 @@ export const Problem: React.FC = () => {
             style={{
               height: 14,
               borderRadius: 7,
-              background: alpha('#FFFFFF', 0.08),
+              background: alpha(COLORS.text, 0.08),
               overflow: 'hidden',
             }}
           >
@@ -195,7 +196,7 @@ export const Problem: React.FC = () => {
                 height: '100%',
                 borderRadius: 7,
                 background: `linear-gradient(90deg, ${COLORS.violet}, ${meterColor})`,
-                boxShadow: `0 0 24px ${meterColor}`,
+                boxShadow: `0 0 18px ${meterColor}`,
               }}
             />
           </div>

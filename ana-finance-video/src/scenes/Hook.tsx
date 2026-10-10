@@ -40,11 +40,12 @@ export const Hook: React.FC = () => {
             gap: 14,
             padding: '14px 28px',
             borderRadius: 999,
-            border: `1px solid ${COLORS.borderOnDark}`,
-            background: COLORS.cardOnDark,
+            border: `1px solid ${COLORS.border}`,
+            background: COLORS.surface,
+            boxShadow: COLORS.shadow,
             fontSize: 26,
             fontWeight: 500,
-            color: COLORS.mutedOnDark,
+            color: COLORS.textMuted,
             opacity: pill,
             transform: `translateY(${(1 - pill) * 20}px)`,
           }}
@@ -81,7 +82,7 @@ export const Hook: React.FC = () => {
             width: 560,
             height: 4,
             borderRadius: 2,
-            background: alpha('#FFFFFF', 0.08),
+            background: alpha(COLORS.text, 0.08),
             overflow: 'hidden',
           }}
         >
@@ -90,7 +91,7 @@ export const Hook: React.FC = () => {
               width: `${interpolate(bar, [0, 1], [0, 100], CLAMP)}%`,
               height: '100%',
               background: BRAND_GRADIENT,
-              boxShadow: `0 0 16px ${COLORS.violet}`,
+              boxShadow: `0 0 16px ${alpha(COLORS.violet, 0.5)}`,
             }}
           />
         </div>

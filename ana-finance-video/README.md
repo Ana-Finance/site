@@ -30,8 +30,7 @@ src/
   config.ts          ← textes, couleurs, durées
   Main.tsx           ← composition principale (<Series>)
   Root.tsx           ← déclaration des compositions
-  scenes/            ← Hook, Problem, Reveal, Demo, Benefits, Cta
-  scenes/demo/       ← maquette de l'app (fenêtre, tâche, tableau de bord)
+  scenes/            ← Hook, Problem, Reveal, Demo (bulles), Benefits, Cta
   components/        ← fond, textes animés, logo, icônes, curseur
 public/
   logo-icon.png, logo-full.png, fonts/ (Inter, embarquée)
