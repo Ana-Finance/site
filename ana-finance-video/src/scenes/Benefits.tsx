@@ -10,6 +10,7 @@ import { BRAND_GRADIENT, COLORS, SCENES, sceneStart, TEXTS } from '../config';
 import { AnimatedWords } from '../components/AnimatedWords';
 import { Icon } from '../components/Icon';
 import { Scene } from '../components/Scene';
+import { Sfx } from '../components/Sfx';
 import { alpha, CLAMP, formatFr, gradientText } from '../components/utils';
 
 const SWITCH = 112; // image où les cartes laissent place au chiffre fort
@@ -192,6 +193,17 @@ export const Benefits: React.FC = () => {
           </div>
         </AbsoluteFill>
       ) : null}
+      {/* Sons */}
+      <Sfx src="whoosh-soft.wav" from={0} volume={0.6} />
+      <Sfx src="pop.wav" from={12} volume={0.7} />
+      <Sfx src="pop.wav" from={19} volume={0.7} />
+      <Sfx src="pop.wav" from={26} volume={0.7} />
+      <Sfx src="shine.wav" from={40} volume={0.45} />
+      <Sfx src="whoosh.wav" from={SWITCH - 4} volume={0.8} />
+      <Sfx src="impact.wav" from={SWITCH + 10} volume={0.55} />
+      <Sfx src="counter.wav" from={SWITCH + 12} volume={0.6} />
+      <Sfx src="shine.wav" from={SWITCH + 40} volume={0.5} />
+      <Sfx src="whoosh.wav" from={duration - 16} volume={0.6} />
     </Scene>
   );
 };

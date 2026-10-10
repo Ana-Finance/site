@@ -12,6 +12,7 @@ import { AnimatedWords } from '../components/AnimatedWords';
 import { LogoIcon } from '../components/Brand';
 import { Icon } from '../components/Icon';
 import { Scene } from '../components/Scene';
+import { Sfx } from '../components/Sfx';
 import { alpha, CLAMP, formatFr, gradientText } from '../components/utils';
 
 // Chronologie de la démo (images locales à la scène).
@@ -532,6 +533,31 @@ export const Demo: React.FC = () => {
         <KpiBubble kpi={k[2]} index={2} left={220} top={640} />
         <KpiBubble kpi={k[3]} index={3} left={1280} top={660} />
       </Sequence>
+      {/* Sons */}
+      <Sfx src="pop.wav" from={0} volume={0.5} name="♪ Légende 1" />
+      <Sfx src="pop.wav" from={T.userIn} volume={0.8} name="♪ Bulle demande" />
+      <Sfx src="typing.wav" from={T.typeStart} volume={0.8} name="♪ Frappe" />
+      <Sfx src="send.wav" from={T.sent} volume={0.8} name="♪ Envoi" />
+      <Sfx src="pop-high.wav" from={T.agentIn} volume={0.7} name="♪ Bulle agent" />
+      <Sfx src="pop.wav" from={140} volume={0.5} name="♪ Légende 2" />
+      <Sfx src="pop.wav" from={T.stepStart} volume={0.6} name="♪ Étape 1" />
+      <Sfx src="check-1.wav" from={T.stepStart + T.stepDuration} volume={0.9} name="♪ Coche 1" />
+      <Sfx src="pop.wav" from={T.stepStart + T.stepEvery} volume={0.6} name="♪ Étape 2" />
+      <Sfx src="check-2.wav" from={T.stepStart + T.stepEvery + T.stepDuration} volume={0.9} name="♪ Coche 2" />
+      <Sfx src="pop.wav" from={T.stepStart + 2 * T.stepEvery} volume={0.6} name="♪ Étape 3" />
+      <Sfx src="check-3.wav" from={T.stepStart + 2 * T.stepEvery + T.stepDuration} volume={0.9} name="♪ Coche 3" />
+      <Sfx src="pop.wav" from={T.stepStart + 3 * T.stepEvery} volume={0.6} name="♪ Étape 4" />
+      <Sfx src="check-4.wav" from={T.stepStart + 3 * T.stepEvery + T.stepDuration} volume={0.9} name="♪ Coche 4" />
+      <Sfx src="success.wav" from={T.done} volume={1} name="♪ Terminé" />
+      <Sfx src="whoosh.wav" from={T.kpis - 2} volume={0.7} name="♪ Transition" />
+      <Sfx src="pop.wav" from={T.kpis} volume={0.5} name="♪ Légende 3" />
+      <Sfx src="pop.wav" from={T.kpis + 8} volume={0.7} name="♪ Graphique" />
+      <Sfx src="pop-high.wav" from={T.kpis + 16} volume={0.55} name="♪ Indicateur 1" />
+      <Sfx src="pop-high.wav" from={T.kpis + 22} volume={0.55} name="♪ Indicateur 2" />
+      <Sfx src="pop-high.wav" from={T.kpis + 28} volume={0.55} name="♪ Indicateur 3" />
+      <Sfx src="pop-high.wav" from={T.kpis + 34} volume={0.55} name="♪ Indicateur 4" />
+      <Sfx src="counter.wav" from={T.kpis + 22} volume={0.6} name="♪ Compteurs" />
+      <Sfx src="whoosh.wav" from={duration - 16} volume={0.6} name="♪ Sortie" />
     </Scene>
   );
 };

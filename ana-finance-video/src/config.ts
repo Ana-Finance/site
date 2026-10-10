@@ -148,6 +148,17 @@ export const TEXTS = {
   },
 };
 
+// ── Audio ─────────────────────────────────────────────────────
+// Fichiers dans public/audio (régénérables : python3 scripts/generate_audio.py)
+export const AUDIO = {
+  musicEnabled: true,
+  music: 'audio/music.mp3',
+  musicVolume: 0.42, // 0 → 1
+  musicFadeOutFrames: 45,
+  sfxEnabled: true,
+  sfxVolume: 0.9, // volume global des effets sonores
+};
+
 // ── Assets (dossier /public) ──────────────────────────────────
 export const ASSETS = {
   logoIcon: 'logo-icon.png',

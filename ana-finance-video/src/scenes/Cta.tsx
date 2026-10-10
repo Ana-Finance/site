@@ -14,6 +14,7 @@ import { AnimatedWords } from '../components/AnimatedWords';
 import { Cursor } from '../components/Cursor';
 import { Icon } from '../components/Icon';
 import { Scene } from '../components/Scene';
+import { Sfx } from '../components/Sfx';
 import { alpha, CLAMP } from '../components/utils';
 
 const CLICK = 92;
@@ -127,6 +128,14 @@ export const Cta: React.FC = () => {
           {t.url}
         </div>
       </AbsoluteFill>
+      {/* Sons */}
+      <Sfx src="shine.wav" from={0} volume={0.7} />
+      <Sfx src="pop.wav" from={2} volume={0.6} />
+      <Sfx src="whoosh-soft.wav" from={16} volume={0.6} />
+      <Sfx src="pop-high.wav" from={42} volume={0.7} />
+      <Sfx src="pop.wav" from={56} volume={0.4} />
+      <Sfx src="click.wav" from={CLICK} volume={1} />
+      <Sfx src="success.wav" from={CLICK + 2} volume={0.9} />
     </Scene>
   );
 };

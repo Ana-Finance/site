@@ -12,6 +12,7 @@ import { COLORS, SCENES, sceneStart, TEXTS } from '../config';
 import { AnimatedWords } from '../components/AnimatedWords';
 import { Icon } from '../components/Icon';
 import { Scene } from '../components/Scene';
+import { Sfx } from '../components/Sfx';
 import { alpha, CLAMP, formatFr } from '../components/utils';
 
 const CARD_W = 1000;
@@ -202,6 +203,14 @@ export const Problem: React.FC = () => {
           </div>
         </div>
       </AbsoluteFill>
+      {/* Sons */}
+      <Sfx src="whoosh.wav" from={0} volume={0.7} />
+      <Sfx src="drop.wav" from={18} volume={0.9} />
+      <Sfx src="drop.wav" from={32} volume={0.85} />
+      <Sfx src="drop.wav" from={46} volume={0.8} />
+      <Sfx src="counter.wav" from={22} volume={0.6} />
+      <Sfx src="riser.wav" from={132} volume={0.9} />
+      <Sfx src="alert.wav" from={138} volume={0.8} />
     </Scene>
   );
 };

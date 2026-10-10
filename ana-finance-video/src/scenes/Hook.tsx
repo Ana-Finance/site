@@ -9,6 +9,7 @@ import {
 import { BRAND_GRADIENT, COLORS, SCENES, sceneStart, TEXTS } from '../config';
 import { AnimatedWords } from '../components/AnimatedWords';
 import { Scene } from '../components/Scene';
+import { Sfx } from '../components/Sfx';
 import { CLAMP, alpha } from '../components/utils';
 
 /** 1 · Accroche (0-4 s) : une question choc. */
@@ -96,6 +97,11 @@ export const Hook: React.FC = () => {
           />
         </div>
       </AbsoluteFill>
+      {/* Sons */}
+      <Sfx src="pop-high.wav" from={0} volume={0.6} />
+      <Sfx src="whoosh-soft.wav" from={4} volume={0.7} />
+      <Sfx src="shine.wav" from={38} volume={0.5} />
+      <Sfx src="whoosh.wav" from={duration - 16} volume={0.6} />
     </Scene>
   );
 };

@@ -10,6 +10,7 @@ import { COLORS, SCENES, sceneStart, TEXTS } from '../config';
 import { AnimatedWords } from '../components/AnimatedWords';
 import { LogoIcon, Wordmark } from '../components/Brand';
 import { Scene } from '../components/Scene';
+import { Sfx } from '../components/Sfx';
 import { alpha, CLAMP } from '../components/utils';
 
 /** 3 · Révélation (10-15 s) : logo + nom + promesse. */
@@ -96,6 +97,12 @@ export const Reveal: React.FC = () => {
           }}
         />
       </AbsoluteFill>
+      {/* Sons */}
+      <Sfx src="impact.wav" from={0} volume={1} />
+      <Sfx src="whoosh-soft.wav" from={28} volume={0.6} />
+      <Sfx src="shine.wav" from={32} volume={0.8} />
+      <Sfx src="pop.wav" from={58} volume={0.5} />
+      <Sfx src="whoosh.wav" from={duration - 16} volume={0.6} />
     </Scene>
   );
 };
