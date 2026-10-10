@@ -57,5 +57,8 @@ public/
 ## Exporter en MP4
 
 ```bash
-npx remotion render AnaFinance out/ana-finance.mp4
+npm run export
 ```
+
+Produit `out/ana-finance-compatible.mp4` : H.264 yuv420p + AAC 44,1 kHz, lisible
+avec le son sur iPhone, Mac (QuickTime), WhatsApp, LinkedIn…

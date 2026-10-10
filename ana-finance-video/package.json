@@ -25,6 +25,7 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "export": "remotion render AnaFinance out/ana-finance.mp4 --codec=h264 --crf=18 --audio-bitrate=192k && remotion ffmpeg -y -i out/ana-finance.mp4 -map 0:v:0 -map 0:a:0 -c:v libx264 -preset slow -crf 18 -profile:v high -level 4.1 -pix_fmt yuv420p -vf scale=in_range=full:out_range=tv -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 -c:a aac -b:a 192k -ar 44100 -ac 2 -movflags +faststart -brand mp42 out/ana-finance-compatible.mp4"
   }
 }
