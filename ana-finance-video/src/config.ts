@@ -153,10 +153,10 @@ export const TEXTS = {
 export const AUDIO = {
   musicEnabled: true,
   music: 'audio/music.mp3',
-  musicVolume: 0.42, // 0 → 1
+  musicVolume: 0.85, // 0 → 1
   musicFadeOutFrames: 45,
   sfxEnabled: true,
-  sfxVolume: 0.9, // volume global des effets sonores
+  sfxVolume: 1, // volume global des effets sonores
 };
 
 // ── Assets (dossier /public) ──────────────────────────────────

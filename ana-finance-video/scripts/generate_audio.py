@@ -362,9 +362,9 @@ for b, name in enumerate(bars):
     notes = CH[name]
     # Pad : sombre au début, s'ouvre jusqu'au drop puis lumineux
     if start < 4:
-        cutoff, gain = 700, 0.5
+        cutoff, gain = 1300, 1.5
     elif start < 10:
-        cutoff, gain = 900 + (start - 4) * 300, 0.6
+        cutoff, gain = 1300 + (start - 4) * 250, 1.1
     elif start < 32:
         cutoff, gain = 2600, 0.55
     else:
@@ -382,7 +382,7 @@ for b, name in enumerate(bars):
             break
         # Accroche : tic-tac d'horloge
         if tb < 4:
-            add(ticks, stereo(tick(1900 if beat % 2 == 0 else 1450), -0.3 if beat % 2 else 0.3), tb, 0.5)
+            add(ticks, stereo(tick(1900 if beat % 2 == 0 else 1450), -0.3 if beat % 2 else 0.3), tb, 1.0)
         # Problème : basse pulsée en croches, montée
         if 4 <= tb < 9.5:
             for e in range(2):
@@ -424,7 +424,7 @@ for k_, g in enumerate([0.45, 0.25, 0.12]):
     shifted[delay * (k_ + 1):] = arp[:-delay * (k_ + 1)]
     arp_fx[:, k_ % 2] += shifted[:, k_ % 2] * g * 2
 
-mix = pads * 0.55 + filt(bass, 'low', 900) * 0.7 + drums * 0.8 + filt(arp_fx, 'high', 300) * 0.8 + ticks * 0.6
+mix = pads * 0.55 + filt(bass, 'low', 900) * 0.7 + drums * 0.8 + filt(arp_fx, 'high', 300) * 0.8 + ticks * 1.0
 mix = reverb(mix, 1.6, 0.12)[:N]
 # Normalisation puis saturation douce (seuls les transitoires les plus forts sont arrondis)
 mix = mix / np.percentile(np.abs(mix), 99.9) * 0.9

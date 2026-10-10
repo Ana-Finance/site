@@ -548,7 +548,7 @@ export const Demo: React.FC = () => {
       <Sfx src="check-3.wav" from={T.stepStart + 2 * T.stepEvery + T.stepDuration} volume={0.9} name="♪ Coche 3" />
       <Sfx src="pop.wav" from={T.stepStart + 3 * T.stepEvery} volume={0.6} name="♪ Étape 4" />
       <Sfx src="check-4.wav" from={T.stepStart + 3 * T.stepEvery + T.stepDuration} volume={0.9} name="♪ Coche 4" />
-      <Sfx src="success.wav" from={T.done} volume={1} name="♪ Terminé" />
+      <Sfx src="success.wav" from={T.done} volume={0.7} name="♪ Terminé" />
       <Sfx src="whoosh.wav" from={T.kpis - 2} volume={0.7} name="♪ Transition" />
       <Sfx src="pop.wav" from={T.kpis} volume={0.5} name="♪ Légende 3" />
       <Sfx src="pop.wav" from={T.kpis + 8} volume={0.7} name="♪ Graphique" />

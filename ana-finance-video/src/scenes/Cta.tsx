@@ -135,7 +135,7 @@ export const Cta: React.FC = () => {
       <Sfx src="pop-high.wav" from={42} volume={0.7} />
       <Sfx src="pop.wav" from={56} volume={0.4} />
       <Sfx src="click.wav" from={CLICK} volume={1} />
-      <Sfx src="success.wav" from={CLICK + 2} volume={0.9} />
+      <Sfx src="success.wav" from={CLICK + 2} volume={0.7} />
     </Scene>
   );
 };

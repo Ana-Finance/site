@@ -98,7 +98,7 @@ export const Reveal: React.FC = () => {
         />
       </AbsoluteFill>
       {/* Sons */}
-      <Sfx src="impact.wav" from={0} volume={1} />
+      <Sfx src="impact.wav" from={0} volume={0.5} />
       <Sfx src="whoosh-soft.wav" from={28} volume={0.6} />
       <Sfx src="shine.wav" from={32} volume={0.8} />
       <Sfx src="pop.wav" from={58} volume={0.5} />
