@@ -61,7 +61,7 @@ export const Cta: React.FC = () => {
           stagger={4}
           style={{
             marginTop: 60,
-            maxWidth: 1500,
+            maxWidth: 1250,
             fontSize: 96,
             fontWeight: 700,
             letterSpacing: '-0.045em',

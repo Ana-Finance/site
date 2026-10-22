@@ -69,6 +69,13 @@ export const COLORS = {
   success: '#16A34A',
   successSoft: '#DCFCE7',
   danger: '#E11D48',
+
+  // Couleur de chaque métier (badges et agents)
+  persona: {
+    Audit: '#2563EB',
+    Comptabilité: '#A50AFF',
+    'Contrôle de gestion': '#0D9488',
+  } as Record<string, string>,
 };
 
 /** Dégradé de marque (texte, boutons, barres). */
@@ -78,17 +85,19 @@ export const BRAND_GRADIENT = `linear-gradient(100deg, ${COLORS.violet} 0%, ${CO
 // Règle : 8 mots maximum par plan.
 export const TEXTS = {
   hook: {
-    eyebrow: 'Experts-comptables · Auditeurs · Contrôleurs',
-    question: 'Combien d’heures perdues en saisie cette semaine ?',
-    highlight: ['heures'],
+    eyebrow: 'Audit · Expertise comptable · Contrôle de gestion',
+    question: 'Combien d’heures de clôture passées à copier-coller ?',
+    highlight: ['heures', 'copier-coller'],
   },
 
   problem: {
-    title: 'Les tâches répétitives s’empilent.',
+    title: 'Busy season : les tâches s’empilent.',
+    // tag = métier concerné (couleur dans COLORS.persona)
     tasks: [
-      { label: 'Saisie des factures', meta: 'factures à saisir', count: 248, icon: 'file' },
-      { label: 'Rapprochements bancaires', meta: 'lignes à pointer', count: 1532, icon: 'bank' },
-      { label: 'Reporting mensuel', meta: 'tableaux à consolider', count: 36, icon: 'chart' },
+      { tag: 'Audit', label: 'Revue des pièces justificatives', meta: 'pièces à tester', count: 1840, icon: 'file' },
+      { tag: 'Comptabilité', label: 'Rapprochements bancaires', meta: 'lignes à pointer', count: 1532, icon: 'bank' },
+      { tag: 'Comptabilité', label: 'Écritures de clôture (FNP, CCA)', meta: 'écritures à passer', count: 248, icon: 'card' },
+      { tag: 'Contrôle de gestion', label: 'Analyse budget vs réel', meta: 'écarts à commenter', count: 64, icon: 'chart' },
     ],
     meterLabel: 'Charge de l’équipe',
   },
@@ -96,54 +105,69 @@ export const TEXTS = {
   reveal: {
     brandFirst: 'Ana',
     brandSecond: 'Finance',
-    promise: 'Des agents IA qui automatisent vos process.',
+    promise: 'Vos collaborateurs IA en audit, compta et contrôle.',
   },
 
   demo: {
     captions: [
-      { step: '01', text: 'Vous décrivez la tâche.' },
+      { step: '01', text: 'Vous confiez la tâche.' },
       { step: '02', text: 'L’agent l’exécute, étape par étape.' },
-      { step: '03', text: 'Vos indicateurs décollent.' },
+      { step: '03', text: 'Chaque métier a ses agents.' },
     ],
     // Bulle de demande (côté utilisateur)
-    userLabel: 'Vous',
-    prompt: 'Saisis et catégorise les factures fournisseurs de juin',
+    userLabel: 'Vous · Manager audit',
+    prompt: 'Prépare la revue analytique et justifie les écarts > 5 %',
     // Bulles de l'agent
     agentLabel: 'Agent Ana',
-    thinking: 'Ana analyse votre demande…',
+    thinking: 'Ana analyse la balance…',
     steps: [
-      { phase: 'Analyse', label: '248 factures lues et comprises' },
-      { phase: 'Action', label: 'Dépenses catégorisées au plan comptable' },
-      { phase: 'Action', label: '248 écritures générées' },
-      { phase: 'Validation', label: 'Contrôle qualité : 0 anomalie' },
+      { phase: 'Analyse', label: 'Balance N / N-1 importée : 12 480 lignes' },
+      { phase: 'Action', label: '23 écarts significatifs détectés' },
+      { phase: 'Action', label: 'Écarts justifiés par les pièces' },
+      { phase: 'Validation', label: 'Feuille de travail prête à revoir' },
     ],
-    done: 'Terminé · prêt à valider',
-    // Bulles d'indicateurs
-    kpis: [
-      { icon: 'clock', from: 0, value: 47, decimals: 0, suffix: ' h', label: 'économisées ce mois', trend: '+32 %' },
-      { icon: 'file', from: 0, value: 1248, decimals: 0, suffix: '', label: 'écritures générées', trend: '+58 %' },
-      { icon: 'shield', from: 80, value: 99.2, decimals: 1, suffix: ' %', label: 'précision vérifiée', trend: '+4,1 pts' },
-      { icon: 'check', from: 37, value: 0, decimals: 0, suffix: '', label: 'erreur de saisie', trend: '−100 %' },
+    done: 'Terminé · envoyé en revue',
+    // Bulles « un agent par métier » : tâches automatisées + indicateur qui monte
+    agents: [
+      {
+        persona: 'Audit',
+        name: 'Agent Audit',
+        icon: 'shield',
+        tasks: ['Revue analytique', 'Tests de détail', 'Circularisations'],
+        from: 80, value: 99.2, decimals: 1, suffix: ' %', metricLabel: 'précision vérifiée',
+      },
+      {
+        persona: 'Comptabilité',
+        name: 'Agent Comptable',
+        icon: 'file',
+        tasks: ['Saisie et lettrage', 'Rapprochements bancaires', 'Écritures de clôture'],
+        from: 0, value: 47, decimals: 0, suffix: ' h', metricLabel: 'économisées ce mois',
+      },
+      {
+        persona: 'Contrôle de gestion',
+        name: 'Agent Contrôle de gestion',
+        icon: 'chart',
+        tasks: ['Budget vs réel', 'Reporting mensuel', 'Prévisions de trésorerie'],
+        from: 0, value: 1248, decimals: 0, suffix: '', metricLabel: 'analyses traçables',
+      },
     ],
-    chartTitle: 'Heures libérées',
-    chartValues: [6, 9, 12, 14, 18, 21, 25, 28, 33, 38, 42, 47],
   },
 
   benefits: {
-    title: 'Pourquoi les cabinets choisissent Ana',
+    title: 'Pourquoi auditeurs et contrôleurs adoptent Ana',
     cards: [
-      { icon: 'clock', title: 'Gain de temps', subtitle: 'Des heures libérées chaque semaine', stat: '−47 h / mois' },
+      { icon: 'clock', title: 'Busy season allégée', subtitle: 'La production confiée aux agents', stat: '−47 h / mois' },
       { icon: 'shield', title: 'Zéro erreur de saisie', subtitle: 'Chaque écriture contrôlée', stat: '99,2 % précision' },
-      { icon: 'history', title: 'Tout est traçable', subtitle: 'Chaque décision auditable et réversible', stat: '100 % auditable' },
+      { icon: 'history', title: 'Piste d’audit complète', subtitle: 'Chaque décision tracée et réversible', stat: '100 % auditable' },
     ],
     bigNumber: 90,
     bigSuffix: ' %',
-    bigText: 'de votre temps pour ce qui compte vraiment.',
+    bigText: 'de votre temps pour l’analyse et le conseil.',
   },
 
   cta: {
-    headline: 'Générez maintenant vos premières saisies.',
-    button: 'Créer mon compte',
+    headline: 'Confiez votre prochaine clôture à vos agents.',
+    button: 'Demander une démo',
     url: 'ana-finance.com',
   },
 };

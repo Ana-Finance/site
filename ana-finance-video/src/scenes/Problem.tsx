@@ -19,11 +19,13 @@ const CARD_W = 1000;
 
 const TaskCard: React.FC<{
   index: number;
+  tag: string;
   label: string;
   meta: string;
   count: number;
   icon: string;
-}> = ({ index, label, meta, count, icon }) => {
+}> = ({ index, tag, label, meta, count, icon }) => {
+  const tagColor = COLORS.persona[tag] ?? COLORS.violet;
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const start = 14 + index * 14;
@@ -58,7 +60,7 @@ const TaskCard: React.FC<{
       style={{
         position: 'relative',
         width: CARD_W,
-        height: 132,
+        height: 112,
         opacity: Math.min(1, drop * 1.6),
         transform: `translateY(${(1 - drop) * -320}px) rotate(${(1 - drop) * (index % 2 === 0 ? -6 : 6)}deg)`,
       }}
@@ -94,11 +96,25 @@ const TaskCard: React.FC<{
           <Icon name={icon} size={34} color={COLORS.violet} />
         </div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 38, fontWeight: 600, letterSpacing: '-0.02em' }}>
+          <div style={{ fontSize: 34, fontWeight: 600, letterSpacing: '-0.02em' }}>
             {label}
           </div>
-          <div style={{ fontSize: 22, color: COLORS.textSubtle, marginTop: 4 }}>
-            {meta}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 6 }}>
+            <span
+              style={{
+                fontSize: 16,
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                padding: '3px 10px',
+                borderRadius: 6,
+                color: tagColor,
+                background: alpha(tagColor, 0.1),
+              }}
+            >
+              {tag}
+            </span>
+            <span style={{ fontSize: 21, color: COLORS.textSubtle }}>{meta}</span>
           </div>
         </div>
         <div
@@ -143,7 +159,7 @@ export const Problem: React.FC = () => {
       <AbsoluteFill
         style={{
           alignItems: 'center',
-          paddingTop: 150,
+          paddingTop: 120,
           transform: `translateX(${shake}px)`,
         }}
       >
@@ -156,10 +172,10 @@ export const Problem: React.FC = () => {
 
         <div
           style={{
-            marginTop: 70,
+            marginTop: 54,
             display: 'flex',
             flexDirection: 'column',
-            gap: 34,
+            gap: 22,
           }}
         >
           {TEXTS.problem.tasks.map((t, i) => (
@@ -167,7 +183,7 @@ export const Problem: React.FC = () => {
           ))}
         </div>
 
-        <div style={{ width: CARD_W, marginTop: 64, opacity: meterIn }}>
+        <div style={{ width: CARD_W, marginTop: 48, opacity: meterIn }}>
           <div
             style={{
               display: 'flex',
@@ -208,6 +224,7 @@ export const Problem: React.FC = () => {
       <Sfx src="drop.wav" from={18} volume={0.6} />
       <Sfx src="drop.wav" from={32} volume={0.55} />
       <Sfx src="drop.wav" from={46} volume={0.5} />
+      <Sfx src="drop.wav" from={60} volume={0.45} />
       <Sfx src="counter.wav" from={22} volume={0.6} />
       <Sfx src="riser.wav" from={132} volume={0.9} />
       <Sfx src="alert.wav" from={138} volume={0.8} />

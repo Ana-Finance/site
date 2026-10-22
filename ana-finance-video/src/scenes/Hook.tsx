@@ -69,8 +69,8 @@ export const Hook: React.FC = () => {
           delay={6}
           stagger={4}
           style={{
-            maxWidth: 1500,
-            fontSize: 116,
+            maxWidth: 1700,
+            fontSize: 106,
             fontWeight: 700,
             letterSpacing: '-0.045em',
             lineHeight: 1.04,

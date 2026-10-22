@@ -26,7 +26,7 @@ const T = {
   stepEvery: 38,
   stepDuration: 28,
   done: 298,
-  kpis: 330,
+  agents: 330,
 };
 
 const PHASE_COLORS: Record<string, string> = {
@@ -347,146 +347,126 @@ const Conversation: React.FC = () => {
   );
 };
 
-type Kpi = (typeof TEXTS.demo.kpis)[number];
+type Agent = (typeof TEXTS.demo.agents)[number];
 
-const KpiBubble: React.FC<{ kpi: Kpi; index: number; left: number; top: number }> = ({
-  kpi,
-  index,
-  left,
-  top,
-}) => {
+const AGENT_W = 520;
+const AGENT_GAP = 36;
+
+/** Phase 3 : une bulle par métier, ses tâches automatisées et un indicateur qui monte. */
+const AgentBubble: React.FC<{ agent: Agent; index: number }> = ({ agent, index }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const pop = spring({ frame: frame - 8 - index * 6, fps, config: { damping: 13, stiffness: 130 } });
-  const count = spring({ frame: frame - 14 - index * 6, fps, config: { damping: 200 }, durationInFrames: 70 });
-  const float = Math.sin((frame + index * 23) / 22) * 9;
-  const goingDown = kpi.value < kpi.from;
+  const color = COLORS.persona[agent.persona] ?? COLORS.violet;
+  const pop = spring({ frame: frame - index * 8, fps, config: { damping: 14, stiffness: 130 } });
+  const count = spring({ frame: frame - 76 - index * 4, fps, config: { damping: 200 }, durationInFrames: 60 });
+  const float = Math.sin((frame + index * 23) / 24) * 7;
+  const live = 0.5 + 0.5 * Math.sin(frame / 5 + index);
 
   return (
     <div
       style={{
         ...bubble,
         position: 'absolute',
-        left,
-        top,
-        width: 430,
-        padding: '28px 32px',
-        borderRadius: 40,
+        left: (1920 - (3 * AGENT_W + 2 * AGENT_GAP)) / 2 + index * (AGENT_W + AGENT_GAP),
+        top: 236,
+        width: AGENT_W,
+        padding: 36,
+        borderRadius: 44,
+        borderTop: `4px solid ${color}`,
         display: 'flex',
         flexDirection: 'column',
-        gap: 6,
         opacity: Math.min(1, pop * 1.6),
-        transform: `translateY(${float + (1 - pop) * 60}px) scale(${0.6 + pop * 0.4})`,
+        transform: `translateY(${float + (1 - pop) * 70}px) scale(${0.85 + pop * 0.15})`,
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
         <div
           style={{
-            width: 60,
-            height: 60,
-            borderRadius: 30,
-            background: BRAND_GRADIENT,
+            width: 56,
+            height: 56,
+            borderRadius: 28,
+            background: color,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: `0 10px 24px ${alpha(COLORS.violet, 0.3)}`,
+            boxShadow: `0 10px 24px ${alpha(color, 0.35)}`,
+            flexShrink: 0,
           }}
         >
-          <Icon name={kpi.icon} size={30} color="white" />
+          <Icon name={agent.icon} size={28} color="white" />
         </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            padding: '6px 14px',
-            borderRadius: 999,
-            background: COLORS.successSoft,
-            color: COLORS.success,
-            fontSize: 20,
-            fontWeight: 700,
-            opacity: interpolate(count, [0.5, 0.9], [0, 1], CLAMP),
-          }}
-        >
-          <Icon name={goingDown ? 'trendDown' : 'trend'} size={20} color={COLORS.success} strokeWidth={2.5} />
-          {kpi.trend}
-        </div>
-      </div>
-      <div
-        style={{
-          marginTop: 14,
-          fontSize: 76,
-          fontWeight: 800,
-          letterSpacing: '-0.045em',
-          lineHeight: 1,
-          fontVariantNumeric: 'tabular-nums',
-          ...gradientText,
-        }}
-      >
-        {formatFr(kpi.from + (kpi.value - kpi.from) * count, kpi.decimals)}
-        {kpi.suffix}
-      </div>
-      <div style={{ fontSize: 26, fontWeight: 500, color: COLORS.textMuted }}>{kpi.label}</div>
-    </div>
-  );
-};
-
-const ChartBubble: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const d = TEXTS.demo;
-  const pop = spring({ frame, fps, config: { damping: 14, stiffness: 120 } });
-  const float = Math.sin(frame / 26) * 6;
-  const max = Math.max(...d.chartValues);
-  const plotH = 250;
-
-  return (
-    <div
-      style={{
-        ...bubble,
-        position: 'absolute',
-        left: 700,
-        top: 300,
-        width: 520,
-        height: 440,
-        borderRadius: 48,
-        padding: 36,
-        opacity: Math.min(1, pop * 1.6),
-        transform: `translateY(${float + (1 - pop) * 60}px) scale(${0.7 + pop * 0.3})`,
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 26, fontWeight: 700 }}>
-        <Icon name="trend" size={28} color={COLORS.violet} strokeWidth={2.5} />
-        {d.chartTitle}
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          left: 36,
-          right: 36,
-          bottom: 40,
-          height: plotH,
-          display: 'flex',
-          alignItems: 'flex-end',
-          gap: 10,
-        }}
-      >
-        {d.chartValues.map((v, i) => {
-          const p = spring({ frame: frame - 10 - i * 3, fps, config: { damping: 15, stiffness: 120 } });
-          const isLast = i === d.chartValues.length - 1;
-          return (
+        <div>
+          <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
+            {agent.name}
+          </div>
+          <div
+            style={{
+              marginTop: 4,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              fontSize: 17,
+              fontWeight: 600,
+              color: COLORS.success,
+            }}
+          >
             <div
-              key={i}
               style={{
-                flex: 1,
-                height: (v / max) * plotH * 0.88 * p,
-                borderRadius: '10px 10px 4px 4px',
-                background: isLast ? BRAND_GRADIENT : `linear-gradient(180deg, ${alpha(COLORS.violet, 0.45)}, ${alpha(COLORS.pink, 0.2)})`,
-                boxShadow: isLast ? `0 10px 24px ${alpha(COLORS.violet, 0.35)}` : 'none',
+                width: 9,
+                height: 9,
+                borderRadius: 5,
+                background: COLORS.success,
+                boxShadow: `0 0 ${4 + live * 8}px ${COLORS.success}`,
               }}
             />
+            en production
+          </div>
+        </div>
+      </div>
+
+      <div style={{ marginTop: 26, display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {agent.tasks.map((task, j) => {
+          const appear = 14 + j * 18 + index * 4;
+          const row = spring({ frame: frame - appear, fps, config: { damping: 200 } });
+          return (
+            <div
+              key={task}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 16,
+                height: 66,
+                padding: '0 18px',
+                borderRadius: 20,
+                background: alpha(color, 0.06),
+                opacity: row,
+                transform: `translateX(${(1 - row) * -20}px)`,
+              }}
+            >
+              <StepState start={appear} end={appear + 12} />
+              <div style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-0.015em' }}>{task}</div>
+            </div>
           );
         })}
+      </div>
+
+      <div style={{ marginTop: 26, paddingTop: 22, borderTop: `1px solid ${COLORS.border}` }}>
+        <div
+          style={{
+            fontSize: 68,
+            fontWeight: 800,
+            letterSpacing: '-0.045em',
+            lineHeight: 1,
+            fontVariantNumeric: 'tabular-nums',
+            ...gradientText,
+          }}
+        >
+          {formatFr(agent.from + (agent.value - agent.from) * count, agent.decimals)}
+          {agent.suffix}
+        </div>
+        <div style={{ marginTop: 8, fontSize: 22, fontWeight: 500, color: COLORS.textMuted }}>
+          {agent.metricLabel}
+        </div>
       </div>
     </div>
   );
@@ -498,23 +478,23 @@ export const Demo: React.FC = () => {
   const { fps } = useVideoConfig();
   const duration = SCENES.demo;
   const c = TEXTS.demo.captions;
-  const k = TEXTS.demo.kpis;
+  const a = TEXTS.demo.agents;
 
-  const convOut = spring({ frame: frame - T.kpis, fps, config: { damping: 200 }, durationInFrames: 16 });
+  const convOut = spring({ frame: frame - T.agents, fps, config: { damping: 200 }, durationInFrames: 16 });
 
   return (
     <Scene duration={duration} offset={sceneStart('demo')}>
       <Sequence name="Légende 1" durationInFrames={140} layout="none">
         <Caption step={c[0].step} text={c[0].text} duration={140} />
       </Sequence>
-      <Sequence name="Légende 2" from={140} durationInFrames={T.kpis - 140} layout="none">
-        <Caption step={c[1].step} text={c[1].text} duration={T.kpis - 140} />
+      <Sequence name="Légende 2" from={140} durationInFrames={T.agents - 140} layout="none">
+        <Caption step={c[1].step} text={c[1].text} duration={T.agents - 140} />
       </Sequence>
-      <Sequence name="Légende 3" from={T.kpis} layout="none">
-        <Caption step={c[2].step} text={c[2].text} duration={duration - T.kpis} last />
+      <Sequence name="Légende 3" from={T.agents} layout="none">
+        <Caption step={c[2].step} text={c[2].text} duration={duration - T.agents} last />
       </Sequence>
 
-      {frame < T.kpis + 18 ? (
+      {frame < T.agents + 18 ? (
         <AbsoluteFill
           style={{
             opacity: 1 - convOut,
@@ -526,13 +506,12 @@ export const Demo: React.FC = () => {
         </AbsoluteFill>
       ) : null}
 
-      <Sequence name="Indicateurs" from={T.kpis + 8} layout="none">
-        <ChartBubble />
-        <KpiBubble kpi={k[0]} index={0} left={180} top={250} />
-        <KpiBubble kpi={k[1]} index={1} left={1310} top={230} />
-        <KpiBubble kpi={k[2]} index={2} left={220} top={640} />
-        <KpiBubble kpi={k[3]} index={3} left={1280} top={660} />
+      <Sequence name="Agents par métier" from={T.agents + 8} layout="none">
+        <AgentBubble agent={a[0]} index={0} />
+        <AgentBubble agent={a[1]} index={1} />
+        <AgentBubble agent={a[2]} index={2} />
       </Sequence>
+
       {/* Sons */}
       <Sfx src="pop.wav" from={0} volume={0.5} name="♪ Légende 1" />
       <Sfx src="pop.wav" from={T.userIn} volume={0.8} name="♪ Bulle demande" />
@@ -549,14 +528,15 @@ export const Demo: React.FC = () => {
       <Sfx src="pop.wav" from={T.stepStart + 3 * T.stepEvery} volume={0.6} name="♪ Étape 4" />
       <Sfx src="check-4.wav" from={T.stepStart + 3 * T.stepEvery + T.stepDuration} volume={0.9} name="♪ Coche 4" />
       <Sfx src="success.wav" from={T.done} volume={0.7} name="♪ Terminé" />
-      <Sfx src="whoosh.wav" from={T.kpis - 2} volume={0.7} name="♪ Transition" />
-      <Sfx src="pop.wav" from={T.kpis} volume={0.5} name="♪ Légende 3" />
-      <Sfx src="pop.wav" from={T.kpis + 8} volume={0.7} name="♪ Graphique" />
-      <Sfx src="pop-high.wav" from={T.kpis + 16} volume={0.55} name="♪ Indicateur 1" />
-      <Sfx src="pop-high.wav" from={T.kpis + 22} volume={0.55} name="♪ Indicateur 2" />
-      <Sfx src="pop-high.wav" from={T.kpis + 28} volume={0.55} name="♪ Indicateur 3" />
-      <Sfx src="pop-high.wav" from={T.kpis + 34} volume={0.55} name="♪ Indicateur 4" />
-      <Sfx src="counter.wav" from={T.kpis + 22} volume={0.6} name="♪ Compteurs" />
+      <Sfx src="whoosh.wav" from={T.agents - 2} volume={0.7} name="♪ Transition" />
+      <Sfx src="pop.wav" from={T.agents} volume={0.5} name="♪ Légende 3" />
+      <Sfx src="pop-high.wav" from={T.agents + 8} volume={0.6} name="♪ Agent Audit" />
+      <Sfx src="pop-high.wav" from={T.agents + 16} volume={0.6} name="♪ Agent Comptable" />
+      <Sfx src="pop-high.wav" from={T.agents + 24} volume={0.6} name="♪ Agent Contrôle" />
+      <Sfx src="check-1.wav" from={T.agents + 8 + 26} volume={0.8} name="♪ Tâches ligne 1" />
+      <Sfx src="check-2.wav" from={T.agents + 8 + 44} volume={0.8} name="♪ Tâches ligne 2" />
+      <Sfx src="check-3.wav" from={T.agents + 8 + 62} volume={0.8} name="♪ Tâches ligne 3" />
+      <Sfx src="counter.wav" from={T.agents + 8 + 76} volume={0.6} name="♪ Compteurs" />
       <Sfx src="whoosh.wav" from={duration - 16} volume={0.6} name="♪ Sortie" />
     </Scene>
   );
