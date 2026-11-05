@@ -47,16 +47,18 @@ describe('build du site avec le contenu initial', () => {
 });
 
 describe('annotation du HTML source', () => {
-  it('ne modifie que des attributs data-cms* par rapport à main', () => {
+  // Dernier commit avant l'introduction du CMS : référence fixe du HTML d'origine.
+  const PRE_CMS = '521a2bab98b5dababc882df93565bf41ee672a95';
+  it('ne modifie que des attributs data-cms* par rapport au site d\'origine', () => {
     let original;
-    try { original = execFileSync('git', ['show', 'main:index.html'], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { return; } // historique absent (CI shallow)
+    try { original = execFileSync('git', ['show', PRE_CMS + ':index.html'], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { return; } // historique absent (CI shallow)
     const strip = (s) => s.replace(/ data-cms(-type|-section)?="[^"]*"/g, '');
     // Fichiers modifiés volontairement (envoi réel des formulaires) : vérifiés par les tests de formulaires.
     const INTENTIONAL = new Set(['demo.html', 'ressources.html']);
     for (const file of listPages()) {
       if (INTENTIONAL.has(file)) continue;
       let base;
-      try { base = execFileSync('git', ['show', 'main:' + file], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { continue; }
+      try { base = execFileSync('git', ['show', PRE_CMS + ':' + file], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { continue; }
       expect(strip(readFileSync(join(ROOT, file), 'utf8')), file).toBe(base);
     }
     expect(original.length).toBeGreaterThan(0);
