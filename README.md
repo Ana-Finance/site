@@ -1,15 +1,34 @@
-# Ana Finance — site vitrine
+# Ana Finance — site vitrine et administration
 
-Site statique (HTML/CSS/JS, sans framework) de 14 pages, issu des maquettes Claude Design.
+Site statique (HTML/CSS/JS, sans framework) de 14 pages, hébergé sur GitHub Pages, avec une
+administration privée (`/admin/`) pour modifier les contenus, les images, le SEO, publier et suivre l'audience.
 
-- `index.html` : accueil ; une page `.html` par entrée du menu et du pied de page.
-- `assets/js/ana-runtime.js` : petit moteur d'interactivité (menus, onglets, simulateur de prix, formulaires).
-- `assets/js/ana-bulle.js` : ouverture des cartes en détail au clic.
-- `assets/js/ana-analytics.js` : mesure d'audience, active seulement après consentement (ID GA4 à renseigner).
+| | |
+|---|---|
+| Site public | pages `.html` à la racine + `assets/` (inchangés, zones éditables annotées `data-cms`) |
+| Administration | `admin-app/` (Vite, React, TypeScript), servie sous `/admin/` |
+| Moteur de contenu | `cms/core.js`, partagé par le build et l'aperçu de l'éditeur |
+| Données | Supabase : Auth, PostgreSQL avec RLS, Storage privé, Edge Functions (`supabase/`) |
+| Publication | brouillon → révision → GitHub Actions reconstruit le site statique → vérification en ligne |
+| Analytics | Plausible (sans cookie) ; statistiques lues par une Edge Function |
 
-Hébergement : GitHub Pages (Settings → Pages → Deploy from a branch, dossier racine).
+## Documentation
 
-## À compléter avant lancement
-- Capture produit et logos clients sur l'accueil (cadres `data-slot`).
-- Envoi réel des formulaires (Démo, Ressources) : aujourd'hui ils affichent une confirmation sans rien transmettre.
-- Identifiants GA4 (`assets/js/ana-analytics.js`) et Axeptio.
+- [docs/ADMIN_ARCHITECTURE.md](docs/ADMIN_ARCHITECTURE.md) — audit, décisions et compromis
+- [docs/SETUP.md](docs/SETUP.md) — mise en service pas à pas (Supabase, GitHub, Plausible, premier admin)
+- [docs/LIMITATIONS.md](docs/LIMITATIONS.md) — limites connues
+
+## Commandes
+
+```bash
+npm install
+npm run dev:admin        # administration en local (http://localhost:5173/admin/)
+npm run build            # admin + site complet dans _site/
+npm run check            # liens, chemins relatifs, absence de secrets dans _site/
+npm test                 # tests unitaires (moteur CMS, build fidèle au HTML d'origine, analytics)
+npm run test:sql         # migrations + permissions RLS sur PostgreSQL
+node tests/e2e/admin.e2e.mjs   # parcours complet de l'administration dans Chromium
+```
+
+Hébergement : GitHub Pages, source **GitHub Actions** (`.github/workflows/deploy.yml`).
+Tant que la source reste « Deploy from a branch », `main` est servie telle quelle.

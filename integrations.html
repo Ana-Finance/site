@@ -95,7 +95,7 @@
 </head>
 <body>
 <div class="ana-canvas" style="font-family:'Inter',system-ui,sans-serif;background:#f8f9fc;color:#16151c;padding-top:60px;">
-  <a href="#main" class="ana-skip" style="position:absolute;left:12px;top:-60px;z-index:200;background:#fff;color:#16151c;border:1.5px solid #8b1fe0;border-radius:10px;padding:10px 16px;font-size:14.5px;font-weight:600;transition:top .15s ease;">Aller au contenu</a>
+  <a href="#main" class="ana-skip" style="position:absolute;left:12px;top:-60px;z-index:200;background:#fff;color:#16151c;border:1.5px solid #8b1fe0;border-radius:10px;padding:10px 16px;font-size:14.5px;font-weight:600;transition:top .15s ease;" data-cms="integrations.page.a-1" data-cms-type="link">Aller au contenu</a>
   <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;padding-top:60px;">
     <svg class="ana-bg-art ana-bg-float-a" viewBox="0 0 240 130" fill="none" style="position:absolute;top:15%;left:clamp(8px, calc(50% - 636px - 176px), 7%);width:min(176px, 15vw);opacity:0.42;" aria-hidden="true">
       <defs><linearGradient id="g5a" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2b0a4d"></stop><stop offset="0.6" stop-color="#8b1fe0"></stop><stop offset="1" stop-color="#f23fd6"></stop></linearGradient></defs>
@@ -128,19 +128,19 @@
 
   <div data-on-mouseleave="closeMenu" style="position:fixed;top:0;left:0;right:0;z-index:60;background:#fff;border-bottom:1px solid #eceaf3;z-index:60;">
     <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 40px;max-width:1440px;margin:0 auto;">
-      <a href="index.html" style="display:flex;align-items:center;gap:9px;">
-        <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;">
-        <span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;color:#16151c;">Ana <span style="font-weight:600;background:linear-gradient(90deg,#8b1fe0,#f23fd6);-webkit-background-clip:text;background-clip:text;color:transparent;">finance</span></span>
+      <a href="index.html" style="display:flex;align-items:center;gap:9px;" data-cms="integrations.header.card_index-1" data-cms-type="href">
+        <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.header.img-1" data-cms-type="image">
+        <span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;color:#16151c;" data-cms="g.header.span-1" data-cms-type="rich">Ana <span style="font-weight:600;background:linear-gradient(90deg,#8b1fe0,#f23fd6);-webkit-background-clip:text;background-clip:text;color:transparent;">finance</span></span>
       </a>
       <div class="ana-nav-links" style="display:flex;align-items:center;gap:4px;">
-        <button type="button" data-on-mouseenter="openFeatures" data-on-click="openFeatures" data-b-style="display:flex;align-items:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:{{ wgtFeatures }};border-radius:999px;padding:9px 12px;white-space:nowrap;color:{{ colFeatures }};background:{{ bgFeatures }};">Fonctionnalités<svg width="14" height="14" style="flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
-        <button type="button" data-on-mouseenter="openCases" data-on-click="openCases" data-b-style="display:flex;align-items:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:{{ wgtCases }};border-radius:999px;padding:9px 12px;white-space:nowrap;color:{{ colCases }};background:{{ bgCases }};">Cas d'usage<svg width="14" height="14" style="flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
-        <a href="ressources.html#tarifs" style="display:flex;align-items:center;font-size:14.5px;font-weight:600;border-radius:999px;padding:9px 12px;white-space:nowrap;color:#16151c;background:transparent;text-decoration:none;">Tarifs</a>
-        <a href="a-propos.html" style="display:flex;align-items:center;font-size:14.5px;font-weight:600;border-radius:999px;padding:9px 12px;white-space:nowrap;color:#16151c;background:transparent;text-decoration:none;">À propos</a>
+        <button type="button" data-on-mouseenter="openFeatures" data-on-click="openFeatures" data-b-style="display:flex;align-items:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:{{ wgtFeatures }};border-radius:999px;padding:9px 12px;white-space:nowrap;color:{{ colFeatures }};background:{{ bgFeatures }};" data-cms="g.header.button-1" data-cms-type="text">Fonctionnalités<svg width="14" height="14" style="flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+        <button type="button" data-on-mouseenter="openCases" data-on-click="openCases" data-b-style="display:flex;align-items:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:{{ wgtCases }};border-radius:999px;padding:9px 12px;white-space:nowrap;color:{{ colCases }};background:{{ bgCases }};" data-cms="g.header.button-2" data-cms-type="text">Cas d'usage<svg width="14" height="14" style="flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+        <a href="ressources.html#tarifs" style="display:flex;align-items:center;font-size:14.5px;font-weight:600;border-radius:999px;padding:9px 12px;white-space:nowrap;color:#16151c;background:transparent;text-decoration:none;" data-cms="g.header.a-1" data-cms-type="link">Tarifs</a>
+        <a href="a-propos.html" style="display:flex;align-items:center;font-size:14.5px;font-weight:600;border-radius:999px;padding:9px 12px;white-space:nowrap;color:#16151c;background:transparent;text-decoration:none;" data-cms="g.header.a-2" data-cms-type="link">À propos</a>
       </div>
       <div class="ana-nav-cta-group" style="display:flex;align-items:center;gap:16px;">
-        <a href="https://anafinance.lovable.app/" target="_blank" rel="noopener" style="text-decoration:none;font-size:14px;font-weight:600;color:#16151c;white-space:nowrap;" class="ana-nav-platform">Accéder à la plateforme</a>
-        <a href="demo.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;border:none;border-radius:999px;padding:10px 20px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;" class="ana-nav-cta ana-nav-demo">Demander une démo</a>
+        <a href="https://anafinance.lovable.app/" target="_blank" rel="noopener" style="text-decoration:none;font-size:14px;font-weight:600;color:#16151c;white-space:nowrap;" class="ana-nav-platform" data-cms="g.header.a-3" data-cms-type="link">Accéder à la plateforme</a>
+        <a href="demo.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;border:none;border-radius:999px;padding:10px 20px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;" class="ana-nav-cta ana-nav-demo" data-cms="g.header.a-4" data-cms-type="link">Demander une démo</a>
         <button type="button" data-on-click="toggleMobileNav" aria-label="Ouvrir le menu" data-b-aria-expanded="{{ mobileOpen }}" class="ana-nav-burger" style="display:none;border:1.5px solid #e3e1ec;background:#fff;border-radius:10px;width:40px;height:40px;align-items:center;justify-content:center;cursor:pointer;flex:none;">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#16151c" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
         </button>
@@ -150,32 +150,32 @@
     <div data-if="menuFeatures" hidden>
       <div style="animation:anaPanel .18s ease both;position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid #eceaf3;box-shadow:0 28px 50px -26px rgba(20,10,60,0.3);">
         <div class="ana-mega-grid" style="max-width:1440px;margin:0 auto;padding:34px 40px 38px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px 40px;">
-          <a href="agents.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;">
+          <a href="agents.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_agents-1" data-cms-type="href">
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"></circle><circle cx="12" cy="4" r="1.6"></circle><circle cx="19" cy="16" r="1.6"></circle><circle cx="5" cy="16" r="1.6"></circle><path d="M12 6v2.8M14.6 13.6l2.8 1.6M9.4 13.6l-2.8 1.6"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
-              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;">Les agents Ana</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;">Une famille d'agents par domaine : rapprochement, relances, TVA, clôture, et Agent Control au contrôle.</span>
+              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-2" data-cms-type="text">Les agents Ana</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-3" data-cms-type="text">Une famille d'agents par domaine : rapprochement, relances, TVA, clôture, et Agent Control au contrôle.</span>
             </span>
           </a>
-          <a href="comment-ca-marche.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;">
+          <a href="comment-ca-marche.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_comment_ca_marche-1" data-cms-type="href">
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
-              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;">Comment ça marche</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;">Connexion, exécution, validation, reporting : le déroulé et le pilote.</span>
+              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-4" data-cms-type="text">Comment ça marche</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-5" data-cms-type="text">Connexion, exécution, validation, reporting : le déroulé et le pilote.</span>
             </span>
           </a>
-          <a href="pilotage-et-controle.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;">
+          <a href="pilotage-et-controle.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_pilotage_et_controle-1" data-cms-type="href">
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"></path><path d="M9 12l2 2 4-4"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
-              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;">Pilotage &amp; contrôle</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;">Niveaux d'autonomie, file de validation, journal, réversibilité, sécurité.</span>
+              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-6" data-cms-type="text">Pilotage &amp; contrôle</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-7" data-cms-type="text">Niveaux d'autonomie, file de validation, journal, réversibilité, sécurité.</span>
             </span>
           </a>
-          <a href="integrations.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;">
+          <a href="integrations.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_integrations-1" data-cms-type="href">
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 15l6-6M8 8l-2 2a4 4 0 0 0 6 6l2-2M16 16l2-2a4 4 0 0 0-6-6l-2 2"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
-              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;">Intégrations</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;">Logiciels comptables, banques DSP2, ERP et facturation, connecteur par connecteur.</span>
+              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-8" data-cms-type="text">Intégrations</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-9" data-cms-type="text">Logiciels comptables, banques DSP2, ERP et facturation, connecteur par connecteur.</span>
             </span>
           </a>
         </div>
@@ -185,25 +185,25 @@
     <div data-if="menuCases" hidden>
       <div style="animation:anaPanel .18s ease both;position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid #eceaf3;box-shadow:0 28px 50px -26px rgba(20,10,60,0.3);">
         <div class="ana-mega-grid" style="max-width:1440px;margin:0 auto;padding:34px 40px 38px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px 40px;">
-          <a href="cabinets.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;">
+          <a href="cabinets.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_cabinets-1" data-cms-type="href">
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
-              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;">Cabinets comptables</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;">Absorber la production du portefeuille et rendre du temps à la révision.</span>
+              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-10" data-cms-type="text">Cabinets comptables</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-11" data-cms-type="text">Absorber la production du portefeuille et rendre du temps à la révision.</span>
             </span>
           </a>
-          <a href="directions-financieres.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;">
+          <a href="directions-financieres.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_directions_financieres-1" data-cms-type="href">
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 7-8"></path><path d="M3 21h18"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
-              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;">Directions financières</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;">Trésorerie, écarts budgétaires et reporting comité tenus à jour en continu.</span>
+              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-12" data-cms-type="text">Directions financières</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-13" data-cms-type="text">Trésorerie, écarts budgétaires et reporting comité tenus à jour en continu.</span>
             </span>
           </a>
-          <a href="pme-et-startups.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;">
+          <a href="pme-et-startups.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_pme_et_startups-1" data-cms-type="href">
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"></path><path d="M6 21V9l6-4 6 4v12"></path><path d="M10 21v-5h4v5"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
-              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;">PME &amp; startups</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;">Tenir une compta propre sans équipe dédiée, et garder la trésorerie sous contrôle.</span>
+              <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-14" data-cms-type="text">PME &amp; startups</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-15" data-cms-type="text">Tenir une compta propre sans équipe dédiée, et garder la trésorerie sous contrôle.</span>
             </span>
           </a>
         </div>
@@ -212,70 +212,70 @@
 
     <div data-if="mobileOpen" hidden>
       <div class="ana-mobile-panel" style="border-top:1px solid #eceaf3;background:#fff;padding:10px 20px 20px;display:flex;flex-direction:column;">
-        <a href="index.html" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border-bottom:1px solid #f1eff5;text-decoration:none;">Accueil</a>
-        <button type="button" data-on-click="toggleMobileFeatures" style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border:none;background:none;border-bottom:1px solid #f1eff5;font-family:inherit;cursor:pointer;text-align:left;">Fonctionnalités<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" data-b-style="transform:rotate({{ mobFeaturesRot }});transition:transform .15s ease;"><path d="M6 9l6 6 6-6"></path></svg></button>
+        <a href="index.html" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border-bottom:1px solid #f1eff5;text-decoration:none;" data-cms="g.header.a-5" data-cms-type="link">Accueil</a>
+        <button type="button" data-on-click="toggleMobileFeatures" style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border:none;background:none;border-bottom:1px solid #f1eff5;font-family:inherit;cursor:pointer;text-align:left;" data-cms="g.header.button-3" data-cms-type="text">Fonctionnalités<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" data-b-style="transform:rotate({{ mobFeaturesRot }});transition:transform .15s ease;"><path d="M6 9l6 6 6-6"></path></svg></button>
         <div data-if="mobileFeaturesOpen" hidden>
           <div style="display:flex;flex-direction:column;padding:6px 0 6px 14px;">
-            <a href="agents.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;">Les agents Ana</a>
-            <a href="comment-ca-marche.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;">Comment ça marche</a>
-            <a href="pilotage-et-controle.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;">Pilotage &amp; contrôle</a>
-            <a href="integrations.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;">Intégrations</a>
+            <a href="agents.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;" data-cms="g.header.a-6" data-cms-type="link">Les agents Ana</a>
+            <a href="comment-ca-marche.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;" data-cms="g.header.a-7" data-cms-type="link">Comment ça marche</a>
+            <a href="pilotage-et-controle.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;" data-cms="g.header.a-8" data-cms-type="link">Pilotage &amp; contrôle</a>
+            <a href="integrations.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;" data-cms="g.header.a-9" data-cms-type="link">Intégrations</a>
           </div>
         </div>
-        <button type="button" data-on-click="toggleMobileCases" style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border:none;background:none;border-bottom:1px solid #f1eff5;font-family:inherit;cursor:pointer;text-align:left;">Cas d'usage<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" data-b-style="transform:rotate({{ mobCasesRot }});transition:transform .15s ease;"><path d="M6 9l6 6 6-6"></path></svg></button>
+        <button type="button" data-on-click="toggleMobileCases" style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border:none;background:none;border-bottom:1px solid #f1eff5;font-family:inherit;cursor:pointer;text-align:left;" data-cms="g.header.button-4" data-cms-type="text">Cas d'usage<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" data-b-style="transform:rotate({{ mobCasesRot }});transition:transform .15s ease;"><path d="M6 9l6 6 6-6"></path></svg></button>
         <div data-if="mobileCasesOpen" hidden>
           <div style="display:flex;flex-direction:column;padding:6px 0 6px 14px;">
-            <a href="cabinets.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;">Cabinets comptables</a>
-            <a href="directions-financieres.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;">Directions financières</a>
-            <a href="pme-et-startups.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;">PME &amp; startups</a>
+            <a href="cabinets.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;" data-cms="g.header.a-10" data-cms-type="link">Cabinets comptables</a>
+            <a href="directions-financieres.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;" data-cms="g.header.a-11" data-cms-type="link">Directions financières</a>
+            <a href="pme-et-startups.html" style="padding:10px 4px;font-size:14.5px;color:#4f4d61;text-decoration:none;" data-cms="g.header.a-12" data-cms-type="link">PME &amp; startups</a>
           </div>
         </div>
-        <a href="ressources.html#tarifs" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border-bottom:1px solid #f1eff5;text-decoration:none;">Tarifs</a>
-        <a href="a-propos.html" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border-bottom:1px solid #f1eff5;text-decoration:none;">À propos</a>
-        <a href="https://anafinance.lovable.app/" target="_blank" rel="noopener" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;text-decoration:none;">Accéder à la plateforme</a>
-        <a href="demo.html" style="margin-top:10px;text-decoration:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;border-radius:999px;padding:13px 20px;font-size:15px;font-weight:600;font-family:inherit;">Demander une démo</a>
+        <a href="ressources.html#tarifs" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border-bottom:1px solid #f1eff5;text-decoration:none;" data-cms="g.header.a-13" data-cms-type="link">Tarifs</a>
+        <a href="a-propos.html" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;border-bottom:1px solid #f1eff5;text-decoration:none;" data-cms="g.header.a-14" data-cms-type="link">À propos</a>
+        <a href="https://anafinance.lovable.app/" target="_blank" rel="noopener" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;text-decoration:none;" data-cms="g.header.a-15" data-cms-type="link">Accéder à la plateforme</a>
+        <a href="demo.html" style="margin-top:10px;text-decoration:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;border-radius:999px;padding:13px 20px;font-size:15px;font-weight:600;font-family:inherit;" data-cms="g.header.a-16" data-cms-type="link">Demander une démo</a>
       </div>
     </div>
 
   </div>
 
   <nav id="main" aria-label="Fil d'ariane" style="max-width:1440px;margin:0 auto;padding:22px 40px 0;display:flex;align-items:center;gap:8px;font-size:13px;color:#5b586b;">
-    <a href="index.html" style="color:#5b586b;">Accueil</a>
+    <a href="index.html" style="color:#5b586b;" data-cms="integrations.page.a-2" data-cms-type="link">Accueil</a>
     <span aria-hidden="true">/</span>
-    <a href="agents.html" style="color:#5b586b;">Fonctionnalités</a>
+    <a href="agents.html" style="color:#5b586b;" data-cms="integrations.page.a-3" data-cms-type="link">Fonctionnalités</a>
     <span aria-hidden="true">/</span>
-    <span style="color:#16151c;font-weight:600;">Intégrations</span>
+    <span style="color:#16151c;font-weight:600;" data-cms="integrations.page.span-1" data-cms-type="text">Intégrations</span>
   </nav>
-  <section style="max-width:1440px;margin:0 auto;padding:36px 40px 8px;">
-    <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 14px;">Intégrations</span>
-    <h1 class="ana-hero-h1" style="font-size:clamp(28px,5.2vw,57px);line-height:1.14;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:820px;">Ana s'installe sur votre stack existante.</h1>
-    <p style="font-size:17.5px;line-height:28px;max-width:84ch;margin:20px 0 0;color:#514f60;">Pas de migration, pas de double saisie, pas de changement d'outil pour vos équipes : Ana lit et écrit là où vos données vivent déjà.</p>
+  <section style="max-width:1440px;margin:0 auto;padding:36px 40px 8px;" data-cms-section="s1">
+    <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 14px;" data-cms="integrations.s1.span-1" data-cms-type="text">Intégrations</span>
+    <h1 class="ana-hero-h1" style="font-size:clamp(28px,5.2vw,57px);line-height:1.14;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:820px;" data-cms="integrations.s1.h1-1" data-cms-type="text">Ana s'installe sur votre stack existante.</h1>
+    <p style="font-size:17.5px;line-height:28px;max-width:84ch;margin:20px 0 0;color:#514f60;" data-cms="integrations.s1.p-1" data-cms-type="text">Pas de migration, pas de double saisie, pas de changement d'outil pour vos équipes : Ana lit et écrit là où vos données vivent déjà.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;">
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;">Aucune migration</span>
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;">Lecture seule côté banque</span>
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;">Connecteurs sur mesure</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="integrations.s1.span-2" data-cms-type="text">Aucune migration</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="integrations.s1.span-3" data-cms-type="text">Lecture seule côté banque</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="integrations.s1.span-4" data-cms-type="text">Connecteurs sur mesure</span>
     </div>
   </section>
 
-  <section id="comment" style="max-width:1440px;margin:0 auto;padding:64px 40px 8px;">
-    <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 12px;">Trois familles de connexions</span>
-    <h2 style="font-size:clamp(23px,3.8vw,38px);font-weight:800;letter-spacing:-0.02em;margin:0 0 28px;max-width:62ch;">Comptabilité, banque, gestion : les trois branchements qui suffisent à démarrer.</h2>
-    <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 26px;max-width:84ch;">Cliquez une bulle pour voir ce que la connexion permet, et ce qu'elle interdit.</p>
+  <section id="comment" style="max-width:1440px;margin:0 auto;padding:64px 40px 8px;" data-cms-section="s2">
+    <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 12px;" data-cms="integrations.s2.span-1" data-cms-type="text">Trois familles de connexions</span>
+    <h2 style="font-size:clamp(23px,3.8vw,38px);font-weight:800;letter-spacing:-0.02em;margin:0 0 28px;max-width:62ch;" data-cms="integrations.s2.h2-1" data-cms-type="text">Comptabilité, banque, gestion : les trois branchements qui suffisent à démarrer.</h2>
+    <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 26px;max-width:84ch;" data-cms="integrations.s2.p-1" data-cms-type="text">Cliquez une bulle pour voir ce que la connexion permet, et ce qu'elle interdit.</p>
     <div class="ana-features-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;">
       <details class="ana-acc" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
         <summary style="display:flex;gap:14px;align-items:flex-start;">
           <span class="ana-pill" style="width:36px;height:36px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></span>
           <span style="display:flex;flex-direction:column;gap:8px;">
-            <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;">Logiciels comptables</span>
-            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;">Lecture du plan comptable et des journaux, écriture des écritures préparées, respect de vos schémas d'imputation.</span>
-            <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;">Voir le détail <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;" data-cms="integrations.s2.span-2" data-cms-type="text">Logiciels comptables</span>
+            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="integrations.s2.span-3" data-cms-type="text">Lecture du plan comptable et des journaux, écriture des écritures préparées, respect de vos schémas d'imputation.</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;" data-cms="integrations.s2.span-4" data-cms-type="text">Voir le détail <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail" style="margin-top:18px;padding-top:18px;border-top:1px solid #eceaf3;">
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Écritures écrites dans votre logiciel, pas dans un silo parallèle</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Vos journaux, codes analytiques et conventions de lettrage conservés</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Aucune reprise d'historique à faire : Ana lit ce qui existe déjà</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-5" data-cms-type="text">Écritures écrites dans votre logiciel, pas dans un silo parallèle</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-6" data-cms-type="text">Vos journaux, codes analytiques et conventions de lettrage conservés</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-7" data-cms-type="text">Aucune reprise d'historique à faire : Ana lit ce qui existe déjà</span></li>
         </ul>
         </div>
       </details>
@@ -283,16 +283,16 @@
         <summary style="display:flex;gap:14px;align-items:flex-start;">
           <span class="ana-pill" style="width:36px;height:36px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 6a6 6 0 1 0 0 12M4 10h9M4 14h9"></path></svg></span>
           <span style="display:flex;flex-direction:column;gap:8px;">
-            <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;">Banques (DSP2)</span>
-            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;">Agrégation des comptes en lecture seule via un prestataire agréé DSP2.</span>
-            <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;">Voir le détail <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;" data-cms="integrations.s2.span-8" data-cms-type="text">Banques (DSP2)</span>
+            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="integrations.s2.span-9" data-cms-type="text">Agrégation des comptes en lecture seule via un prestataire agréé DSP2.</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;" data-cms="integrations.s2.span-10" data-cms-type="text">Voir le détail <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail" style="margin-top:18px;padding-top:18px;border-top:1px solid #eceaf3;">
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Ana ne détient jamais vos identifiants bancaires</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Aucun ordre de paiement ne peut être initié depuis Ana</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Multi-banques et multi-comptes, y compris comptes clients</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-11" data-cms-type="text">Ana ne détient jamais vos identifiants bancaires</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-12" data-cms-type="text">Aucun ordre de paiement ne peut être initié depuis Ana</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-13" data-cms-type="text">Multi-banques et multi-comptes, y compris comptes clients</span></li>
         </ul>
         </div>
       </details>
@@ -300,58 +300,58 @@
         <summary style="display:flex;gap:14px;align-items:flex-start;">
           <span class="ana-pill" style="width:36px;height:36px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5zM14 3v5h5"></path></svg></span>
           <span style="display:flex;flex-direction:column;gap:8px;">
-            <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;">ERP, facturation &amp; paie</span>
-            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;">Factures de vente et d'achat, notes de frais, abonnements et éléments de paie récupérés à la source.</span>
-            <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;">Voir le détail <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;" data-cms="integrations.s2.span-14" data-cms-type="text">ERP, facturation &amp; paie</span>
+            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="integrations.s2.span-15" data-cms-type="text">Factures de vente et d'achat, notes de frais, abonnements et éléments de paie récupérés à la source.</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;" data-cms="integrations.s2.span-16" data-cms-type="text">Voir le détail <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail" style="margin-top:18px;padding-top:18px;border-top:1px solid #eceaf3;">
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Récupération avec la pièce jointe, pas seulement le montant</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Abonnements et contrats récurrents reconnus et étalés</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span>Éléments de paie intégrés aux régularisations de clôture</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-17" data-cms-type="text">Récupération avec la pièce jointe, pas seulement le montant</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-18" data-cms-type="text">Abonnements et contrats récurrents reconnus et étalés</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="integrations.s2.span-19" data-cms-type="text">Éléments de paie intégrés aux régularisations de clôture</span></li>
         </ul>
         </div>
       </details>
     </div>
   </section>
 
-  <section id="integrations" style="max-width:1440px;margin:0 auto;padding:72px 40px 24px;">
-    <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 12px;">Périmètre</span>
-    <h2 style="font-size:clamp(23px,3.8vw,38px);font-weight:800;letter-spacing:-0.02em;margin:0 0 20px;max-width:62ch;">Ce à quoi Ana se connecte.</h2>
-    <p style="font-size:15px;line-height:24px;color:#4f4d61;margin:0 0 28px;max-width:84ch;">Connecteur manquant ? Il est développé pendant le pilote, sans surcoût de licence.</p>
+  <section id="integrations" style="max-width:1440px;margin:0 auto;padding:72px 40px 24px;" data-cms-section="s3">
+    <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 12px;" data-cms="integrations.s3.span-1" data-cms-type="text">Périmètre</span>
+    <h2 style="font-size:clamp(23px,3.8vw,38px);font-weight:800;letter-spacing:-0.02em;margin:0 0 20px;max-width:62ch;" data-cms="integrations.s3.h2-1" data-cms-type="text">Ce à quoi Ana se connecte.</h2>
+    <p style="font-size:15px;line-height:24px;color:#4f4d61;margin:0 0 28px;max-width:84ch;" data-cms="integrations.s3.p-1" data-cms-type="text">Connecteur manquant ? Il est développé pendant le pilote, sans surcoût de licence.</p>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;">
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;">Logiciels comptables</span>
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;">ERP</span>
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;">Facturation électronique</span>
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;">Agrégation bancaire (DSP2)</span>
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;">Paie</span>
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;">API &amp; webhooks</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;" data-cms="integrations.s3.span-2" data-cms-type="text">Logiciels comptables</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;" data-cms="integrations.s3.span-3" data-cms-type="text">ERP</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;" data-cms="integrations.s3.span-4" data-cms-type="text">Facturation électronique</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;" data-cms="integrations.s3.span-5" data-cms-type="text">Agrégation bancaire (DSP2)</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;" data-cms="integrations.s3.span-6" data-cms-type="text">Paie</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:500;color:#3f3d4d;" data-cms="integrations.s3.span-7" data-cms-type="text">API &amp; webhooks</span>
     </div>
     <div class="ana-logos-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;">
-      <div class="ana-slot" data-slot="integration-logo-1" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;">Logo outil</div>
-      <div class="ana-slot" data-slot="integration-logo-2" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;">Logo outil</div>
-      <div class="ana-slot" data-slot="integration-logo-3" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;">Logo outil</div>
-      <div class="ana-slot" data-slot="integration-logo-4" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;">Logo outil</div>
-      <div class="ana-slot" data-slot="integration-logo-5" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;">Logo outil</div>
+      <div class="ana-slot" data-slot="integration-logo-1" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;" data-cms="integrations.s3.slot-1" data-cms-type="slot">Logo outil</div>
+      <div class="ana-slot" data-slot="integration-logo-2" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;" data-cms="integrations.s3.slot-2" data-cms-type="slot">Logo outil</div>
+      <div class="ana-slot" data-slot="integration-logo-3" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;" data-cms="integrations.s3.slot-3" data-cms-type="slot">Logo outil</div>
+      <div class="ana-slot" data-slot="integration-logo-4" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;" data-cms="integrations.s3.slot-4" data-cms-type="slot">Logo outil</div>
+      <div class="ana-slot" data-slot="integration-logo-5" role="img" aria-label="Logo outil" style="width:100%;aspect-ratio:5/2;border-radius:12px;" data-cms="integrations.s3.slot-5" data-cms-type="slot">Logo outil</div>
     </div>
     <div style="margin-top:22px;">
-      <a href="connecteurs.html" style="font-size:15px;font-weight:600;color:#8b1fe0;">Voir le détail par connecteur →</a>
+      <a href="connecteurs.html" style="font-size:15px;font-weight:600;color:#8b1fe0;" data-cms="integrations.s3.a-1" data-cms-type="link">Voir le détail par connecteur →</a>
     </div>
   </section>
 
-  <section style="max-width:1440px;margin:0 auto;padding:48px 40px 8px;">
+  <section style="max-width:1440px;margin:0 auto;padding:48px 40px 8px;" data-cms-section="s4">
     <div style="border-radius:20px;background:#f1eefb;border:1px solid #e4dcf7;padding:28px 32px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;">
-      <p style="margin:0;font-size:15px;line-height:24px;color:#3f3d4d;max-width:81ch;">Une question sur un outil précis de votre stack ? On la traite pendant la démo.</p>
-      <a href="demo.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#16151c;border:1.5px solid #ded7ef;border-radius:999px;padding:12px 22px;font-size:14.5px;font-weight:600;font-family:inherit;">Demander une démo</a>
+      <p style="margin:0;font-size:15px;line-height:24px;color:#3f3d4d;max-width:81ch;" data-cms="integrations.s4.p-1" data-cms-type="text">Une question sur un outil précis de votre stack ? On la traite pendant la démo.</p>
+      <a href="demo.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#16151c;border:1.5px solid #ded7ef;border-radius:999px;padding:12px 22px;font-size:14.5px;font-weight:600;font-family:inherit;" data-cms="integrations.s4.a-1" data-cms-type="link">Demander une démo</a>
     </div>
   </section>
 
-  <section style="max-width:1440px;margin:0 auto;padding:80px 40px 96px;">
+  <section style="max-width:1440px;margin:0 auto;padding:80px 40px 96px;" data-cms-section="s5">
     <div style="border-radius:28px;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);padding:64px 56px;">
-      <h3 class="ana-close-h3" style="font-size:clamp(26px,4.8vw,47px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;color:#fff;margin:0;max-width:min(600px,90vw);">Passez à la vitesse agentic.</h3>
+      <h3 class="ana-close-h3" style="font-size:clamp(26px,4.8vw,47px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;color:#fff;margin:0;max-width:min(600px,90vw);" data-cms="integrations.s5.h3-1" data-cms-type="text">Passez à la vitesse agentic.</h3>
       <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;">
-        <a href="demo.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#16151c;border:none;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;">Demander une démo</a>
+        <a href="demo.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#16151c;border:none;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;" data-cms="integrations.s5.a-1" data-cms-type="link">Demander une démo</a>
       </div>
     </div>
   </section>
@@ -359,57 +359,57 @@
   <footer style="background:#0b0a10;color:#c9c7d4;">
     <div style="max-width:1440px;margin:0 auto;padding:56px 40px 48px;">
       <div style="display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-start;">
-        <a href="index.html" style="display:flex;align-items:center;gap:9px;">
-          <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;">
-          <span style="font-size:17px;font-weight:800;color:#fff;white-space:nowrap;">Ana <span style="font-weight:600;color:#d98cf0;">finance</span></span>
+        <a href="index.html" style="display:flex;align-items:center;gap:9px;" data-cms="g.footer.card_index-1" data-cms-type="href">
+          <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.footer.img-1" data-cms-type="image">
+          <span style="font-size:17px;font-weight:800;color:#fff;white-space:nowrap;" data-cms="g.footer.span-1" data-cms-type="rich">Ana <span style="font-weight:600;color:#d98cf0;">finance</span></span>
         </a>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px 32px;flex:1 1 300px;min-width:0;max-width:760px;">
           <div style="display:flex;flex-direction:column;gap:11px;">
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#7a7788;">Produit</span>
-            <a href="comment-ca-marche.html" style="color:#c9c7d4;font-size:13.5px;">Comment ça marche</a>
-            <a href="agents.html" style="color:#c9c7d4;font-size:13.5px;">Les agents Ana</a>
-            <a href="integrations.html" style="color:#c9c7d4;font-size:13.5px;">Intégrations</a>
-            <a href="pilotage-et-controle.html" style="color:#c9c7d4;font-size:13.5px;">Pilotage &amp; contrôle</a>
-            <a href="ressources.html#tarifs" style="color:#c9c7d4;font-size:13.5px;">Tarifs</a>
+            <span style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#7a7788;" data-cms="g.footer.span-2" data-cms-type="text">Produit</span>
+            <a href="comment-ca-marche.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-1" data-cms-type="link">Comment ça marche</a>
+            <a href="agents.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-2" data-cms-type="link">Les agents Ana</a>
+            <a href="integrations.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-3" data-cms-type="link">Intégrations</a>
+            <a href="pilotage-et-controle.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-4" data-cms-type="link">Pilotage &amp; contrôle</a>
+            <a href="ressources.html#tarifs" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-5" data-cms-type="link">Tarifs</a>
           </div>
           <div style="display:flex;flex-direction:column;gap:11px;">
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#7a7788;">Cas d'usage</span>
-            <a href="cabinets.html" style="color:#c9c7d4;font-size:13.5px;">Cabinets</a>
-            <a href="directions-financieres.html" style="color:#c9c7d4;font-size:13.5px;">Directions financières</a>
-            <a href="pme-et-startups.html" style="color:#c9c7d4;font-size:13.5px;">PME &amp; startups</a>
+            <span style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#7a7788;" data-cms="g.footer.span-3" data-cms-type="text">Cas d'usage</span>
+            <a href="cabinets.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-6" data-cms-type="link">Cabinets</a>
+            <a href="directions-financieres.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-7" data-cms-type="link">Directions financières</a>
+            <a href="pme-et-startups.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-8" data-cms-type="link">PME &amp; startups</a>
           </div>
           <div style="display:flex;flex-direction:column;gap:11px;">
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#7a7788;">Ressources</span>
-            <a href="ressources.html#faq" style="color:#c9c7d4;font-size:13.5px;">FAQ</a>
-            <a href="ressources.html#securite" style="color:#c9c7d4;font-size:13.5px;">Sécurité &amp; RGPD</a>
-            <a href="ressources.html#contact" style="color:#c9c7d4;font-size:13.5px;">Contact</a>
+            <span style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#7a7788;" data-cms="g.footer.span-4" data-cms-type="text">Ressources</span>
+            <a href="ressources.html#faq" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-9" data-cms-type="link">FAQ</a>
+            <a href="ressources.html#securite" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-10" data-cms-type="link">Sécurité &amp; RGPD</a>
+            <a href="ressources.html#contact" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-11" data-cms-type="link">Contact</a>
           </div>
           <div style="display:flex;flex-direction:column;gap:11px;">
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#7a7788;">Entreprise</span>
-            <a href="index.html" style="color:#c9c7d4;font-size:13.5px;">Accueil</a>
-            <a href="a-propos.html" style="color:#c9c7d4;font-size:13.5px;">À propos</a>
-            <a href="carrieres.html" style="color:#c9c7d4;font-size:13.5px;">Carrières</a>
+            <span style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#7a7788;" data-cms="g.footer.span-5" data-cms-type="text">Entreprise</span>
+            <a href="index.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-12" data-cms-type="link">Accueil</a>
+            <a href="a-propos.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-13" data-cms-type="link">À propos</a>
+            <a href="carrieres.html" style="color:#c9c7d4;font-size:13.5px;" data-cms="g.footer.a-14" data-cms-type="link">Carrières</a>
           </div>
         </div>
       </div>
       <div style="height:1px;background:rgba(255,255,255,0.12);margin:32px 0 24px;"></div>
       <div style="display:flex;flex-wrap:wrap;gap:12px 28px;font-size:13px;margin-bottom:20px;">
-        <a href="mentions-legales.html#mentions-legales" style="color:#c9c7d4;">Mentions légales</a>
-        <a href="mentions-legales.html#confidentialite" style="color:#c9c7d4;">Politique de confidentialité</a>
-        <a href="mentions-legales.html#cgu" style="color:#c9c7d4;">CGU / CGV</a>
+        <a href="mentions-legales.html#mentions-legales" style="color:#c9c7d4;" data-cms="g.footer.a-15" data-cms-type="link">Mentions légales</a>
+        <a href="mentions-legales.html#confidentialite" style="color:#c9c7d4;" data-cms="g.footer.a-16" data-cms-type="link">Politique de confidentialité</a>
+        <a href="mentions-legales.html#cgu" style="color:#c9c7d4;" data-cms="g.footer.a-17" data-cms-type="link">CGU / CGV</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:20px;color:#a7a4b5;max-width:122ch;">
-        <p style="margin:0;">Ana Finance est un outil d'automatisation à destination des professionnels. Il ne se substitue ni à l'expert-comptable ni au commissaire aux comptes et ne constitue pas un conseil comptable, fiscal ou juridique ; la validation et la responsabilité des écritures restent celles du professionnel.</p>
-        <p style="margin:0;">Les chiffres présentés (heures économisées, décisions autonomes, précision, coûts évités) sont issus de mesures internes sur un périmètre client anonymisé, à titre illustratif. Ils ne constituent ni une moyenne garantie ni une promesse de résultat.</p>
-        <p style="margin:0;">Traitements réalisés par des systèmes d'IA sous supervision humaine : chaque action est journalisée, explicable et réversible. Données hébergées dans l'Union européenne ; accès bancaire en lecture seule via prestataire agréé DSP2.</p>
-        <p style="margin:0;">© 2026 Ana Finance. Tous droits réservés. Informations légales complètes sur la page <a href="mentions-legales.html#mentions-legales" style="color:#8b1fe0;">Mentions légales</a>.</p>
+        <p style="margin:0;" data-cms="g.footer.p-1" data-cms-type="text">Ana Finance est un outil d'automatisation à destination des professionnels. Il ne se substitue ni à l'expert-comptable ni au commissaire aux comptes et ne constitue pas un conseil comptable, fiscal ou juridique ; la validation et la responsabilité des écritures restent celles du professionnel.</p>
+        <p style="margin:0;" data-cms="g.footer.p-2" data-cms-type="text">Les chiffres présentés (heures économisées, décisions autonomes, précision, coûts évités) sont issus de mesures internes sur un périmètre client anonymisé, à titre illustratif. Ils ne constituent ni une moyenne garantie ni une promesse de résultat.</p>
+        <p style="margin:0;" data-cms="g.footer.p-3" data-cms-type="text">Traitements réalisés par des systèmes d'IA sous supervision humaine : chaque action est journalisée, explicable et réversible. Données hébergées dans l'Union européenne ; accès bancaire en lecture seule via prestataire agréé DSP2.</p>
+        <p style="margin:0;" data-cms="g.footer.p-4" data-cms-type="rich">© 2026 Ana Finance. Tous droits réservés. Informations légales complètes sur la page <a href="mentions-legales.html#mentions-legales" style="color:#8b1fe0;">Mentions légales</a>.</p>
       </div>
     </div>
   </footer>
 
 
   <div class="ana-mobile-sticky-cta" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:70;padding:12px 16px;background:#fff;border-top:1px solid #eceaf3;box-shadow:0 -8px 24px -12px rgba(20,10,60,0.18);">
-    <a href="demo.html" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;text-decoration:none;font-size:15px;font-weight:700;border-radius:12px;padding:13px 0;">Demander une démo</a>
+    <a href="demo.html" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;text-decoration:none;font-size:15px;font-weight:700;border-radius:12px;padding:13px 0;" data-cms="integrations.page.a-4" data-cms-type="link">Demander une démo</a>
   </div>
 </div>
 <script>

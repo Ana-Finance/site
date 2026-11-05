@@ -1,0 +1,140 @@
+# Workflow unique : tests sur chaque PR, build + déploiement GitHub Pages sur main
+# (push) ou sur demande du CMS (workflow_dispatch avec publication_id).
+# Pré-requis : Settings → Pages → Source « GitHub Actions » (voir docs/SETUP.md).
+name: Build & déploiement
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      publication_id:
+        description: Identifiant de publication CMS (laisser vide pour un build manuel)
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages' }}
+  cancel-in-progress: false
+
+env:
+  PUBLICATION_ID: ${{ inputs.publication_id }}
+  CMS_EXPORT_URL: ${{ vars.CMS_EXPORT_URL }}
+  CMS_BUILD_TOKEN: ${{ secrets.CMS_BUILD_TOKEN }}
+  SITE_URL: ${{ vars.SITE_URL }}
+
+jobs:
+  test:
+    name: Vérifications
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cms
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Publication — construction en cours
+        if: env.PUBLICATION_ID != ''
+        run: node scripts/cms-status.mjs building
+      - run: npm ci
+      - name: TypeScript
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Tests unitaires (moteur CMS, build, analytics)
+        run: npm test
+      - name: Tests SQL (migrations + RLS)
+        run: npm run test:sql
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/cms
+
+  e2e:
+    name: Tests e2e de l'administration
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: node tests/e2e/admin.e2e.mjs
+
+  build:
+    name: Build du site
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build de l'administration
+        run: npm run build:admin
+        env:
+          VITE_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+      - name: Build du site public (contenu publié)
+        # Sur une PR, pas d'accès au contenu : on construit depuis le HTML source.
+        run: npm run build:site
+        env:
+          CMS_EXPORT_URL: ${{ github.event_name == 'pull_request' && '' || vars.CMS_EXPORT_URL }}
+          CMS_BUILD_TOKEN: ${{ github.event_name == 'pull_request' && '' || secrets.CMS_BUILD_TOKEN }}
+      - name: Validation des chemins statiques
+        run: npm run check
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        with:
+          path: _site
+
+  deploy:
+    name: Déploiement GitHub Pages
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publication — déploiement
+        if: env.PUBLICATION_ID != ''
+        run: node scripts/cms-status.mjs deploying
+      - id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Vérification en ligne de la publication
+        if: env.PUBLICATION_ID != ''
+        run: node scripts/cms-status.mjs verify "${{ steps.deployment.outputs.page_url }}"
+
+  report-failure:
+    name: Signaler l'échec au CMS
+    if: failure() && inputs.publication_id != ''
+    needs: [test, build, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node scripts/cms-status.mjs failed "Le workflow GitHub Actions a échoué (voir le journal)."

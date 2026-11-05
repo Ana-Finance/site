@@ -1,0 +1,8 @@
+node_modules/
+_site/
+.env
+.env.local
+*.log
+.DS_Store
+admin-app/dist/
+tests/e2e/screenshots/
