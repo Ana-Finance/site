@@ -1,0 +1,48 @@
+# Intégration continue de la vidéo Remotion : lint, types et bundle.
+# Aucun rendu MP4 ni déploiement n'est lancé ici.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verifier:
+    name: Lint, types et bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ana-finance-video
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ana-finance-video/package-lock.json
+
+      - name: Installer les dépendances (lockfile figé)
+        run: npm ci --no-audit --no-fund
+
+      - name: ESLint + TypeScript
+        run: npm run lint
+
+      - name: Bundle Remotion
+        run: npx remotion bundle
+
+      - name: Formatage Prettier (informatif, non bloquant)
+        continue-on-error: true
+        run: npx prettier --check src
