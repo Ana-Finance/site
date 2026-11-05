@@ -1,0 +1,29 @@
+# Mises à jour automatiques des dépendances (Pull Requests hebdomadaires, sans fusion automatique).
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/ana-finance-video"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      timezone: "Europe/Paris"
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    groups:
+      # Les paquets Remotion doivent rester à la même version entre eux.
+      remotion:
+        patterns: ["remotion", "@remotion/*"]
+      dependances-mineures:
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      timezone: "Europe/Paris"
+    commit-message:
+      prefix: "ci"
