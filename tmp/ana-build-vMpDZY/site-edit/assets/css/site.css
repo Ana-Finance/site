@@ -1,0 +1,10 @@
+[data-if] { display: contents; }
+[data-if][hidden] { display: none !important; }
+/* Correctif responsive : les colonnes de la page démo ne doivent pas imposer leur largeur minimale. */
+.ana-demo-grid > *, .ana-form-grid > * { min-width: 0; }
+/* Correctif mobile « Les agents Ana » : les cartes de la chaîne ne doivent pas élargir la page. */
+.ana-sch-6 > * { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 600px) { .ana-two-grid { grid-template-columns: minmax(0, 1fr) !important; } }
+.ana-slot { position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+  background: rgba(127,127,127,.08); color: #8b8899; border: 1.5px dashed rgba(127,127,127,.45);
+  font: 500 13px/1.4 Inter, system-ui, sans-serif; text-align: center; padding: 8px 14px; }
