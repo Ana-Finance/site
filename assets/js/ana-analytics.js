@@ -1,116 +1,88 @@
-/* Ana finance — mesure d'audience, chargée uniquement après consentement Axeptio.
-   Remplacez ANA_GA4_ID par votre identifiant de flux GA4 (ou branchez Plausible/Matomo
-   dans loadVendor()). Le journal local alimente le tableau de bord KPI du site. */
+/* Ana Finance — mesure d'audience (Plausible, sans cookie) et envoi des formulaires.
+   La configuration est injectée au build dans des balises <meta> publiques :
+     ana:analytics-domain / ana:analytics-script   → Plausible (aucune clé secrète)
+     ana:supabase-url / ana:supabase-key           → enregistrement des demandes (fonction submit_lead uniquement)
+   Sans configuration, rien n'est chargé ni envoyé. Aucune mesure dans l'aperçu de l'administration. */
 (function () {
   if (window.__anaAnalytics) return;
-  var KEY = 'ana_analytics_v1';
-  var SESSION_KEY = 'ana_session_v1';
-  var GA4_ID = 'G-XXXXXXXXXX';
-  var SESSION_MINUTES = 30;
+  function meta(name) {
+    var m = document.querySelector('meta[name="' + name + '"]');
+    return m ? m.getAttribute('content') || '' : '';
+  }
+  var preview = /[?&]cms-preview=/.test(location.search) || window.top !== window.self;
+  var domain = meta('ana:analytics-domain');
+  var src = meta('ana:analytics-script') || 'https://plausible.io/js/script.js';
 
-  function read() {
-    try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch (e) { return null; }
-  }
-  function blank() {
-    return { visitorId: null, firstSeen: null, consent: null, sessions: 0, views: [], events: [] };
-  }
-  function write(d) {
-    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {}
-  }
-  function uid() {
-    return 'v' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
-  }
-  function pageName() {
-    var t = decodeURIComponent(location.pathname.split('/').pop() || 'Accueil');
-    return t.replace(/\.html$/i, '').replace(/^index$/, '') || 'Accueil';
-  }
-  function source() {
-    var q = new URLSearchParams(location.search);
-    var utm = q.get('utm_source');
-    if (utm) return utm;
-    if (!document.referrer) return 'Direct';
-    try {
-      var h = new URL(document.referrer).hostname.replace(/^www\./, '');
-      if (h === location.hostname) return null;
-      if (/google|bing|duckduckgo|ecosia|qwant/.test(h)) return 'Recherche';
-      if (/linkedin|twitter|x\.com|facebook/.test(h)) return 'Social';
-      return h;
-    } catch (e) { return 'Direct'; }
-  }
-
-  var loaded = false;
-  function loadVendor() {
-    if (loaded || !GA4_ID || GA4_ID.indexOf('XXXX') > -1) return;
-    loaded = true;
+  window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
+  if (domain && !preview && /^https:\/\//.test(src)) {
     var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+    s.defer = true;
+    s.src = src;
+    s.setAttribute('data-domain', domain);
     document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
-    window.gtag('js', new Date());
-    window.gtag('config', GA4_ID, { anonymize_ip: true });
+  }
+
+  function pageName() {
+    var t = decodeURIComponent(location.pathname.split('/').pop() || 'index');
+    return t.replace(/\.html$/i, '') || 'index';
   }
 
   var api = {
-    granted: false,
-    setConsent: function (granted) {
-      var d = read() || blank();
-      d.consent = !!granted;
-      write(d);
-      this.granted = !!granted;
-      if (granted) { loadVendor(); this.pageview(); }
-    },
-    pageview: function () {
-      if (!this.granted) return;
-      var now = Date.now();
-      var d = read() || blank();
-      if (!d.visitorId) { d.visitorId = uid(); d.firstSeen = now; }
-      var last = 0;
-      try { last = parseInt(sessionStorage.getItem(SESSION_KEY) || '0', 10) || 0; } catch (e) {}
-      var isNew = !last || (now - last) > SESSION_MINUTES * 60000;
-      if (isNew) d.sessions = (d.sessions || 0) + 1;
-      try { sessionStorage.setItem(SESSION_KEY, String(now)); } catch (e) {}
-      d.views.push({ t: now, page: pageName(), src: source(), newSession: isNew });
-      if (d.views.length > 800) d.views = d.views.slice(-800);
-      write(d);
-      if (window.gtag) window.gtag('event', 'page_view', { page_title: pageName() });
-    },
+    enabled: !!domain && !preview,
+    /** Événement personnalisé (doit être déclaré comme objectif dans Plausible pour être compté). */
     track: function (name, props) {
-      if (!this.granted) return;
-      var d = read() || blank();
-      d.events.push({ t: Date.now(), name: name, props: props || {} });
-      if (d.events.length > 400) d.events = d.events.slice(-400);
-      write(d);
-      if (window.gtag) window.gtag('event', name, props || {});
+      if (!this.enabled || !/^[a-z][a-z0-9_]{1,60}$/.test(name)) return;
+      window.plausible(name, { props: Object.assign({ page: pageName() }, props || {}) });
     },
-    data: function () { return read() || blank(); },
-    reset: function () { write(blank()); }
+    // Compatibilité avec l'ancienne API (bandeau de consentement) : Plausible ne dépose aucun cookie.
+    setConsent: function () {},
+    pageview: function () {}
   };
   window.__anaAnalytics = api;
   window.anaAnalytics = api;
 
-  var prev = read();
-  if (prev && prev.consent === true) { api.granted = true; loadVendor(); }
-
-  function bind(sdk) {
-    if (!sdk || !sdk.on) return false;
-    sdk.on('cookies:complete', function (choices) {
-      api.setConsent(!!(choices && (choices.google_analytics || choices.analytics || choices.ana_analytics)));
-    });
-    return true;
-  }
-  window._axcb = window._axcb || [];
-  window._axcb.push(bind);
-
+  // Clics commerciaux : téléphone, e-mail, demande de démo, accès plateforme, ou attribut data-ana-event.
   document.addEventListener('click', function (e) {
-    var a = e.target && e.target.closest && e.target.closest('a[href]');
-    if (a && /(^|\/)demo\.html/i.test(a.getAttribute('href') || '')) api.track('cta_demo', { from: pageName() });
-  });
+    var a = e.target && e.target.closest && e.target.closest('a[href], [data-ana-event]');
+    if (!a) return;
+    var custom = a.getAttribute('data-ana-event');
+    if (custom) return api.track(custom);
+    var href = a.getAttribute('href') || '';
+    if (/^tel:/i.test(href)) api.track('click_phone');
+    else if (/^mailto:/i.test(href)) api.track('click_email');
+    else if (/(^|\/)demo\.html/i.test(href)) api.track('cta_demo');
+    else if (/anafinance\.lovable\.app/i.test(href)) api.track('click_platform');
+  }, true);
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { api.pageview(); });
-  } else {
-    api.pageview();
-  }
+  var ERRORS = {
+    CONSENT_REQUIRED: 'Merci de cocher la case de consentement.',
+    INVALID_EMAIL: 'Adresse e-mail invalide.',
+    INVALID_NAME: 'Merci d\'indiquer votre nom.',
+    FIELD_TOO_LONG: 'Un des champs est trop long.',
+    RATE_LIMITED: 'Trop de demandes envoyées : réessayez dans quelques minutes.'
+  };
+
+  /** Enregistre une demande. Résout {sent:true} uniquement si le serveur a confirmé l'enregistrement.
+      Sans configuration : {sent:false, configured:false}. Rejette avec un message lisible en cas d'échec. */
+  window.anaSubmitLead = function (form, kind) {
+    var url = meta('ana:supabase-url');
+    var key = meta('ana:supabase-key');
+    if (!url || !key || preview) return Promise.resolve({ sent: false, configured: false });
+    var v = function (n) { var el = form.elements[n]; return el ? (el.type === 'checkbox' ? el.checked : String(el.value || '').trim()) : null; };
+    var body = {
+      p_form: kind, p_name: v('nom') || '', p_email: v('email') || '', p_company: v('societe') || null, p_phone: v('tel') || null,
+      p_profile: v('profil') || null, p_message: v('message') || null, p_consent: v('consent') === true, p_page: pageName()
+    };
+    return fetch(url.replace(/\/$/, '') + '/rest/v1/rpc/submit_lead', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', apikey: key, authorization: 'Bearer ' + key },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      if (res.ok) return { sent: true, configured: true };
+      return res.json().catch(function () { return {}; }).then(function (j) {
+        var code = Object.keys(ERRORS).filter(function (k) { return (j.message || '').indexOf(k) > -1; })[0];
+        throw new Error(ERRORS[code] || 'L\'envoi a échoué. Réessayez ou écrivez-nous directement.');
+      });
+    }, function () { throw new Error('Connexion impossible. Vérifiez votre réseau et réessayez.'); });
+  };
 })();

@@ -204,8 +204,15 @@ export function readValue(el, type = el.getAttribute(TYPE_ATTR)) {
 }
 
 function headingOf(scope) {
-  const h = scope && scope.querySelector && scope.querySelector('h1,h2,h3');
-  return h ? h.textContent.replace(/\s+/g, ' ').trim() : '';
+  if (!scope || !scope.querySelector) return '';
+  const clip = (t) => { t = t.replace(/\s+/g, ' ').trim(); return t.length > 60 ? t.slice(0, 57) + '…' : t; };
+  const h = scope.querySelector('h1,h2,h3');
+  if (h) return clip(h.textContent);
+  // Section sans titre : premier emplacement d'image ou premier texte éditable.
+  const slot = scope.querySelector('[data-slot]');
+  if (slot) return clip('Image — ' + (slot.getAttribute('aria-label') || slot.textContent));
+  const t = scope.querySelector('[' + ATTR + '][' + TYPE_ATTR + '="text"], [' + ATTR + '][' + TYPE_ATTR + '="rich"]');
+  return t ? clip(t.textContent) : '';
 }
 
 const TAG_LABELS = { H1: 'Titre principal', H2: 'Titre', H3: 'Sous-titre', H4: 'Intertitre', P: 'Paragraphe', A: 'Lien', BUTTON: 'Bouton', IMG: 'Image', SPAN: 'Texte', LI: 'Élément de liste', LABEL: 'Libellé', DIV: 'Texte' };

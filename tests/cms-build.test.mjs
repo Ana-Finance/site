@@ -51,7 +51,10 @@ describe('annotation du HTML source', () => {
     let original;
     try { original = execFileSync('git', ['show', 'main:index.html'], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { return; } // historique absent (CI shallow)
     const strip = (s) => s.replace(/ data-cms(-type|-section)?="[^"]*"/g, '');
+    // Fichiers modifiés volontairement (envoi réel des formulaires) : vérifiés par les tests de formulaires.
+    const INTENTIONAL = new Set(['demo.html', 'ressources.html']);
     for (const file of listPages()) {
+      if (INTENTIONAL.has(file)) continue;
       let base;
       try { base = execFileSync('git', ['show', 'main:' + file], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { continue; }
       expect(strip(readFileSync(join(ROOT, file), 'utf8')), file).toBe(base);
@@ -106,5 +109,45 @@ describe('cms/core en mémoire', () => {
     applyContent(doc, mergeContent(null, { fields: { k: { html: 'ok <img src=x onerror=alert(1)><a href="javascript:x" onclick="y">l</a><span style="background:url(http://e)">s</span><strong>b</strong>' } } }));
     const html = doc.querySelector('p').innerHTML;
     expect(html).toBe('ok <a>l</a><span>s</span><strong>b</strong>');
+  });
+});
+
+describe('configuration publique injectée au build', () => {
+  const dir = join(out, 'site-config');
+  beforeAll(() => {
+    const exp = exportFrom(initialContent(ROOT));
+    exp.public = { analyticsDomain: 'ana.example', analyticsScript: 'https://plausible.io/js/script.js', supabaseUrl: 'https://x.supabase.co', supabaseAnonKey: 'anon' };
+    exp.settings = { general: { siteName: 'Ana Finance', siteUrl: 'https://ana.example/site/' }, contact: { email: 'contact@ana.example' }, social: { linkedin: 'https://linkedin.com/company/ana', x: 'javascript:alert(1)' } };
+    runBuild(exp, dir);
+  });
+  it('script de mesure présent sur toutes les pages, sans secret', () => {
+    for (const file of listPages()) {
+      const html = readFileSync(join(dir, file), 'utf8');
+      const doc = new JSDOM(html).window.document;
+      expect(doc.querySelectorAll('script[src$="assets/js/ana-analytics.js"]').length, file).toBe(1);
+      expect(doc.querySelector('meta[name="ana:analytics-domain"]').getAttribute('content')).toBe('ana.example');
+      expect(html).not.toMatch(/service_role|PLAUSIBLE_API_KEY|CMS_BUILD_TOKEN/);
+    }
+  });
+  it('canonical, sitemap, robots et données structurées depuis les paramètres', () => {
+    const doc = new JSDOM(readFileSync(join(dir, 'index.html'), 'utf8')).window.document;
+    expect(doc.querySelector('link[rel="canonical"]').getAttribute('href')).toBe('https://ana.example/site/');
+    const ld = JSON.parse(doc.querySelector('script[type="application/ld+json"]').textContent);
+    expect(ld).toMatchObject({ '@type': 'Organization', name: 'Ana Finance', email: 'contact@ana.example', sameAs: ['https://linkedin.com/company/ana'] });
+    const sitemap = readFileSync(join(dir, 'sitemap.xml'), 'utf8');
+    expect(sitemap).toContain('<loc>https://ana.example/site/agents.html</loc>');
+    expect(readFileSync(join(dir, 'robots.txt'), 'utf8')).toContain('Disallow: /site/admin/');
+  });
+});
+
+describe('check-site', () => {
+  it('bloque un site contenant une clé service_role', () => {
+    const dir = join(out, 'site');
+    const b64 = (o) => Buffer.from(JSON.stringify(o)).toString('base64url');
+    const jwt = `${b64({ alg: 'HS256', typ: 'JWT' })}.${b64({ iss: 'supabase', role: 'service_role' })}.c2lnbmF0dXJlLWZhdXNzZQ`;
+    writeFileSync(join(dir, 'assets/js/fuite.js'), `const k = "${jwt}";`);
+    let failed = false;
+    try { execFileSync('node', ['scripts/check-site.mjs', dir], { cwd: ROOT, stdio: 'pipe' }); } catch (e) { failed = String(e.stderr).includes('service_role'); }
+    expect(failed).toBe(true);
   });
 });

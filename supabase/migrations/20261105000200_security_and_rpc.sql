@@ -116,8 +116,9 @@ create policy "admins : suppression" on public.leads for delete to authenticated
 -- Colonnes protégées des médias : chemin et auteur non modifiables après création.
 create function public.media_guard() returns trigger language plpgsql as $$
 begin
+  -- Le fichier peut être remplacé (taille/dimensions), mais pas déplacé ni changer de type.
   if new.storage_path <> old.storage_path or new.created_by is distinct from old.created_by
-     or new.mime_type <> old.mime_type or new.size_bytes <> old.size_bytes then
+     or new.mime_type <> old.mime_type or new.created_at <> old.created_at then
     raise exception 'Champs du média non modifiables' using errcode = '42501';
   end if;
   return new;
@@ -414,14 +415,17 @@ begin
     into pages
   from chosen c join public.page_revisions r on r.id = c.rev_id;
 
+  select coalesce(jsonb_object_agg(key, value), '{}'::jsonb) into settings from public.site_settings;
+
+  -- Seuls les médias référencés par du contenu publié (ou l'image de partage par défaut) sont exportés.
   select coalesce(jsonb_agg(jsonb_build_object('id', a.id, 'storage_path', a.storage_path, 'mime_type', a.mime_type, 'width', a.width, 'height', a.height)), '[]'::jsonb)
     into media
   from public.media_assets a
   where a.deleted_at is null
-    and exists (select 1 from jsonb_array_elements(pages) pg where (pg -> 'content')::text like '%"mediaId": "' || a.id::text || '"%');
+    and (exists (select 1 from jsonb_array_elements(pages) pg where (pg -> 'content')::text like '%"mediaId": "' || a.id::text || '"%')
+         or (settings -> 'seo')::text like '%"mediaId": "' || a.id::text || '"%');
 
   select coalesce(jsonb_agg(jsonb_build_object('from_path', from_path, 'to_path', to_path)), '[]'::jsonb) into redirects from public.redirects;
-  select coalesce(jsonb_object_agg(key, value), '{}'::jsonb) into settings from public.site_settings;
 
   return jsonb_build_object(
     'publication', case when pub.id is null then null else jsonb_build_object('id', pub.id, 'requested_at', pub.requested_at) end,

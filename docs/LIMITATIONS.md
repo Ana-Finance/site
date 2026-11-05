@@ -1,0 +1,23 @@
+# Limites connues et pistes
+
+| Limite | Cause | Contournement / piste |
+|---|---|---|
+| Publication en 1 à 3 minutes, puis jusqu'à 10 min de cache CDN | Génération statique + CDN GitHub Pages | L'admin distingue « confirmé en ligne » et « propagation en cours » |
+| Création de page = duplication d'une page existante | Le site n'a pas de gabarits/composants ; chaque page a sa propre mise en page | Ajouter des modèles HTML dédiés si besoin récurrent |
+| Une nouvelle page n'apparaît pas seule dans la navigation | Les menus sont des liens figés dans l'en-tête partagé | Modifier un lien existant de l'en-tête (destination) dans l'éditeur |
+| Pas d'ajout libre de blocs ou de sections, ni de changement de style | Choix de sécurité : seuls les éléments déclarés `data-cms` sont éditables, sans HTML/JS arbitraire | Ajouter des attributs `data-cms` aux nouveaux éléments du HTML |
+| Certains textes ne sont pas éditables (morceaux de texte entourant un champ de formulaire, éléments animés, textes calculés par `ana-runtime.js`, simulateur de prix) | Ils sont gérés par le code de la page | Modification dans le code |
+| Les éléments des menus déroulants ne sont pas cliquables dans l'aperçu (menus fermés) | Le méga-menu s'ouvre au survol | Éditables via la liste « Champs éditables » de l'éditeur ou le mode « Naviguer » |
+| `robots.txt` ignoré par les moteurs sous `github.io/site/` | robots.txt doit être à la racine du domaine | Soumettre `sitemap.xml` dans Search Console, ou domaine personnalisé |
+| Redirections par page HTML (meta refresh + canonical), pas de 301 | GitHub Pages n'a pas de redirections serveur | Domaine derrière un CDN (Cloudflare) si des 301 sont nécessaires |
+| Statistiques de l'admin : offre Plausible Business requise | La Stats API n'est pas incluse dans les offres inférieures | Consulter le tableau de bord Plausible directement ; ou adaptateur GA4 (non implémenté) |
+| Pas de notion de session distincte des « visites » Plausible ; rebond et durée selon Plausible | Définitions du fournisseur | Définitions affichées dans l'admin |
+| Pas de données historiques avant activation de Plausible | Aucune mesure n'existait (ID GA4 jamais renseigné) | — |
+| Carte géographique non affichée (liste des pays à la place) | Pas de bibliothèque de carte ajoutée, pour la légèreté | Ajout possible (ex. carte choroplèthe) |
+| Ancienne API `anaAnalytics` : journal localStorage et chargement GA4 retirés | Remplacés par Plausible sans cookie | `anaAnalytics.track()` reste disponible |
+| Formulaires : sans Supabase configuré, comportement d'origine (confirmation sans envoi, aucune conversion) | Pas de backend avant mise en service | Configurer Supabase puis publier |
+| Pas de notification e-mail à la réception d'une demande | Hors périmètre | Database Webhook Supabase → Edge Function d'envoi (Resend, etc.) |
+| Si Supabase est indisponible, l'administration ne fonctionne pas (le site public n'est pas affecté) ; un projet gratuit est mis en pause après une semaine sans activité | Hébergement Supabase | Offre Pro, ou réactivation depuis le tableau de bord |
+| Le texte riche utilise `document.execCommand` (déprécié mais supporté par tous les navigateurs) | Pas d'éditeur riche externe ajouté | Migration vers un éditeur riche (Tiptap) si besoin |
+| Les tests e2e utilisent un backend simulé ; la RLS est testée séparément sur PostgreSQL | Pas de Supabase local dans l'environnement de développement | Ajouter `supabase start` en CI pour un test d'intégration complet |
+| Un fichier média supprimé n'est plus visible dans les anciennes versions de l'historique | La suppression est refusée seulement pour les médias utilisés par un brouillon ou une version en ligne | Le build conserve alors l'image d'origine et le signale dans le journal |

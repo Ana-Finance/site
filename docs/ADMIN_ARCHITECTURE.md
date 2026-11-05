@@ -15,7 +15,7 @@
 | Build | **Aucun.** Pas de `package.json`, pas de bundler. Les fichiers sont servis tels quels. |
 | Routing | Un fichier `.html` par page à la racine (`index.html`, `agents.html`, …). Tous les liens sont **relatifs** (`demo.html`, `assets/...`). |
 | Styles | Styles **inline** sur presque tous les éléments + un bloc `<style>` par page + `assets/css/site.css` (10 lignes). Police Inter (Google Fonts). |
-| JS | `assets/js/ana-runtime.js` : mini-moteur réactif maison (`DCLogic`, attributs `data-if`, `data-text`, `data-b-*`, `data-on-*`). Chaque page déclare une classe `Component` inline. `ana-bulle.js` : ouverture de cartes en modale. `ana-analytics.js` : journal localStorage + chargement GA4 après consentement Axeptio (ID `G-XXXXXXXXXX` non renseigné → **aucune mesure réelle aujourd'hui**). |
+| JS | `assets/js/ana-analytics.js` n'est chargé que par **2 pages sur 14** (accueil, démo). `assets/js/ana-runtime.js` : mini-moteur réactif maison (`DCLogic`, attributs `data-if`, `data-text`, `data-b-*`, `data-on-*`). Chaque page déclare une classe `Component` inline. `ana-bulle.js` : ouverture de cartes en modale. `ana-analytics.js` : journal localStorage + chargement GA4 après consentement Axeptio (ID `G-XXXXXXXXXX` non renseigné → **aucune mesure réelle aujourd'hui**). |
 | Formulaires | `demo.html` et `ressources.html` : validation côté client, **aucun envoi** (affichent une confirmation sans rien transmettre). |
 | Contenus | Codés en dur dans le HTML. Header (méga-menu + menu mobile) et footer **dupliqués à l'identique** dans 13 pages ; `demo.html` a un footer réduit. |
 | Images | 4 fichiers dans `assets/img/`. Emplacements prévus mais vides : `data-slot` (capture produit, 4 logos clients sur l'accueil, 5 logos sur `integrations.html`). |
@@ -250,5 +250,14 @@ docs/
 | 8 | SEO manager (head généré au build, sitemap, robots, redirections, aperçu Google) | P2–P3 |
 | 9 | Tests (unitaires, RLS, build, e2e admin) | continu |
 | 10 | Docs d'installation, déploiement, création admin, limites | — |
+
+## 9. État des tests
+
+| Suite | Contenu | Commande |
+|---|---|---|
+| Unitaires (30) | build identique au DOM d'origine sur les 14 pages, annotation sans autre modification, assainissement HTML/URL, SEO/sitemap/JSON-LD, script de mesure sur toutes les pages, détection de clés service_role, adaptateur Plausible, périodes | `npm test` |
+| SQL (~80 assertions) | anonyme, compte non invité, éditeur, admin, workflow (service_role) : lecture, brouillons, conflits, publication, finalisation, échec, restauration, médias, storage, dernier admin, formulaires et limites anti-abus | `npm run test:sql` |
+| E2E (20 scénarios) | site public sous `/site/`, formulaires réels + conversion, connexion/refus, dashboard sans faux chiffres, éditeur (sélection, édition, annuler/rétablir, sections, mobile/tablette), brouillon, publication, aperçu, éditeur sans droit de publier, mobile sans débordement, thème sombre, aucune erreur JS | `node tests/e2e/admin.e2e.mjs` |
+| CI | typage, lint, unitaires, SQL (service PostgreSQL), e2e sur PR, build, `check` | `.github/workflows/deploy.yml` |
 
 Voir `docs/SETUP.md` pour la mise en service et `docs/LIMITATIONS.md` pour les limites restantes.

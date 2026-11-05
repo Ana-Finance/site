@@ -380,6 +380,7 @@
             <input type="checkbox" name="consent" style="margin-top:3px;accent-color:#8b1fe0;">
             <span data-cms="ressources.s5.span-2" data-cms-type="text">J'accepte que mes données soient utilisées pour être recontacté au sujet d'Ana Finance. Elles sont conservées 24 mois et ne sont jamais cédées, voir la politique de confidentialité.</span>
           </label>
+          <p data-if="sendError" hidden role="alert" style="margin:0;color:#e0392b;font-size:13.5px;font-weight:600;"><span data-text="sendErrorMsg"></span></p>
           <div>
             <button type="submit" style="background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;border:none;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;"><span data-text="submitLabel"></span></button>
           </div>
@@ -496,7 +497,16 @@ class Component extends DCLogic {
       formOpen: !this.state.sent,
       submitLabel: "Envoyer ma demande de démo",
       resetForm: () => this.setState({ sent: false }),
-      submitForm: (e) => { e.preventDefault(); this.setState({ sent: true }); },
+      submitForm: (e) => {
+        e.preventDefault();
+        if (this.state.sending) return;
+        this.setState({ sending: true, sendError: null });
+        (window.anaSubmitLead ? window.anaSubmitLead(e.target, 'resource') : Promise.resolve({ sent: false }))
+          .then((r) => { this.setState({ sent: true, sending: false }); if (r.sent && window.anaAnalytics) window.anaAnalytics.track('form_resource_success'); })
+          .catch((err) => this.setState({ sending: false, sendError: err.message }));
+      },
+      sendError: !!this.state.sendError,
+      sendErrorMsg: this.state.sendError || '',
       menuFeatures: m === "features",
       menuCases: m === "cases",
       menuProfiles: m === "profiles",

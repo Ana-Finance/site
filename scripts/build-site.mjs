@@ -24,7 +24,7 @@ const args = process.argv.slice(2);
 const arg = (name) => { const i = args.indexOf(name); return i > -1 ? args[i + 1] : undefined; };
 const OUT = resolve(ROOT, arg('--out') || '_site');
 const CONTENT_FILE = arg('--content');
-const SITE_URL = (process.env.SITE_URL || arg('--site-url') || '').replace(/\/?$/, '/');
+let SITE_URL = (process.env.SITE_URL || arg('--site-url') || '').replace(/\/?$/, '/');
 
 const log = (...a) => console.log('[build]', ...a);
 
@@ -84,10 +84,19 @@ function injectPublicConfig(doc, cfg) {
   add('ana:analytics-script', cfg.analyticsScript);
   add('ana:supabase-url', cfg.supabaseUrl);
   add('ana:supabase-key', cfg.supabaseAnonKey);
+  // Le script de mesure/formulaires n'était présent que sur certaines pages : on l'ajoute partout où il manque.
+  if ((cfg.analyticsDomain || cfg.supabaseUrl) && !doc.querySelector('script[src$="assets/js/ana-analytics.js"]')) {
+    const sc = doc.createElement('script');
+    sc.setAttribute('src', 'assets/js/ana-analytics.js');
+    sc.setAttribute('defer', '');
+    doc.head.appendChild(sc);
+  }
 }
 
 export async function build() {
   const exp = await loadExport();
+  const settings = (exp && exp.settings) || {};
+  if (SITE_URL === '/' && settings.general && /^https:\/\//.test(settings.general.siteUrl || '')) SITE_URL = settings.general.siteUrl.replace(/\/?$/, '/');
   rmSync(OUT, { recursive: true, force: true });
   mkdirSync(OUT, { recursive: true });
   cpSync(join(ROOT, 'assets'), join(OUT, 'assets'), { recursive: true });
@@ -127,9 +136,12 @@ export async function build() {
     const doc = dom.window.document;
     const pagePath = slug + '.html';
     const content = mergeContent(globalContent, row ? row.content : null);
+    // Image de partage par défaut (Paramètres → SEO global) pour les pages qui n'en ont pas.
+    if (content.seo && !content.seo.ogImage && settings.seo && settings.seo.defaultOgImage) content.seo = { ...content.seo, ogImage: { ...settings.seo.defaultOgImage } };
     const res = applyContent(doc, content, { resolveMedia, siteUrl: SITE_URL !== '/' ? SITE_URL : undefined, pagePath });
     if (res.missing.length) log(`! ${slug} : ${res.missing.length} clé(s) sans élément HTML (ignorées)`);
     injectPublicConfig(doc, exp && exp.public);
+    if (slug === 'index') injectOrganization(doc, settings, SITE_URL !== '/' ? SITE_URL : null);
     writeFileSync(join(OUT, pagePath), dom.serialize());
     const noindex = !!doc.head.querySelector('meta[name="robots"][content*="noindex"]');
     emitted.push({ path: pagePath, noindex, lastmod: row && row.published_at });
@@ -159,6 +171,22 @@ export async function build() {
   writeFileSync(join(OUT, 'cms-publication.json'), JSON.stringify(manifest, null, 2) + '\n');
   log(`${emitted.length} page(s) écrites dans ${OUT}`);
   return { emitted, manifest };
+}
+
+/** Données structurées schema.org Organization (accueil), à partir des paramètres du CMS. */
+function injectOrganization(doc, settings, siteUrl) {
+  const g = settings.general || {}; const c = settings.contact || {}; const so = settings.social || {};
+  if (!g.siteName || !siteUrl) return;
+  const sameAs = [so.linkedin, so.x, so.youtube].filter((u) => typeof u === 'string' && /^https:\/\//.test(u));
+  const data = { '@context': 'https://schema.org', '@type': 'Organization', name: g.siteName, url: siteUrl, logo: new URL('assets/img/ana-logo-icon.png', siteUrl).href };
+  if (c.email) data.email = c.email;
+  if (c.phone) data.telephone = c.phone;
+  if (c.address) data.address = c.address;
+  if (sameAs.length) data.sameAs = sameAs;
+  const s = doc.createElement('script');
+  s.setAttribute('type', 'application/ld+json');
+  s.textContent = JSON.stringify(data).replace(/</g, '\\u003c');
+  doc.head.appendChild(s);
 }
 
 function write404() {
