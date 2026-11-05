@@ -4,6 +4,8 @@ Les consignes communes à tous les agents sont dans `AGENTS.md` :
 
 @AGENTS.md
 
+@agent.md
+
 ## Spécifique à Claude Code
 
 - Répondre en français.

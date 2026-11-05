@@ -23,3 +23,7 @@ npm run export    # rendu MP4 (local uniquement, ne pas committer out/)
 3. Ne pas committer les sorties (`out/`, `build/`) ni de secrets.
 4. Pas de promesse produit non tenue à l'écran (par ex. « suivi en continu / 24 h/24 » : le produit
    s'appuie sur des exports FEC périodiques).
+
+## Règles communes Ana Finance
+
+Lire et appliquer `agent.md` (règles communes aux trois dépôts, identiques pour Codex et Claude Code).
