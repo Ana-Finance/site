@@ -1,0 +1,147 @@
+# Gestion du projet Supabase depuis GitHub, sans ordinateur ni ligne de commande.
+# Actions → « Supabase — gestion » → Run workflow, puis choisir l'action.
+#
+# Secrets GitHub nécessaires (Settings → Secrets and variables → Actions → Secrets) :
+#   SUPABASE_ACCESS_TOKEN  jeton personnel Supabase (supabase.com/dashboard/account/tokens)
+#   CMS_GITHUB_TOKEN       jeton GitHub du bouton « Publier » (Actions : Read and write ;
+#                          + Variables : Read and write pour remplir les variables automatiquement)
+#   CMS_BUILD_TOKEN        longue chaîne aléatoire partagée avec Supabase
+#   PLAUSIBLE_API_KEY      facultatif
+# Référence du projet : champ « project_ref » ci-dessous, ou variable SUPABASE_PROJECT_REF.
+# Détails : docs/SUPABASE_WORKFLOWS.md
+name: Supabase — gestion
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Action à exécuter
+        type: choice
+        default: diagnostic
+        options:
+          - diagnostic
+          - installer-tout
+          - migrations
+          - fonctions
+          - auth
+          - admin
+          - variables-github
+      project_ref:
+        description: Référence du projet Supabase (20 lettres) — vide = variable SUPABASE_PROJECT_REF
+        type: string
+        required: false
+      email:
+        description: "« admin » ou « installer-tout » : e-mail du membre à inviter / promouvoir"
+        type: string
+        required: false
+      role:
+        description: Rôle attribué
+        type: choice
+        default: admin
+        options: [admin, editor]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-gestion
+  cancel-in-progress: false
+
+jobs:
+  supabase:
+    name: ${{ inputs.action }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ACTION: ${{ inputs.action }}
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_REF: ${{ inputs.project_ref || vars.SUPABASE_PROJECT_REF }}
+      SITE_URL: ${{ vars.SITE_URL || 'https://ana-finance.github.io/site/' }}
+      CMS_GITHUB_TOKEN: ${{ secrets.CMS_GITHUB_TOKEN }}
+      CMS_BUILD_TOKEN: ${{ secrets.CMS_BUILD_TOKEN }}
+      PLAUSIBLE_API_KEY: ${{ secrets.PLAUSIBLE_API_KEY }}
+      EMAIL: ${{ inputs.email }}
+      ROLE: ${{ inputs.role }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Contrôle de la configuration
+        id: config
+        run: |
+          missing=()
+          [ -n "$SUPABASE_ACCESS_TOKEN" ] || missing+=("secret SUPABASE_ACCESS_TOKEN")
+          [[ "$SUPABASE_PROJECT_REF" =~ ^[a-z]{20}$ ]] || missing+=("référence du projet (champ project_ref ou variable SUPABASE_PROJECT_REF, 20 lettres minuscules)")
+          if [[ "$ACTION" == "installer-tout" || "$ACTION" == "fonctions" ]]; then
+            [ -n "$CMS_GITHUB_TOKEN" ] || missing+=("secret CMS_GITHUB_TOKEN")
+            [ -n "$CMS_BUILD_TOKEN" ] || missing+=("secret CMS_BUILD_TOKEN")
+          fi
+          if [[ "$ACTION" == "admin" && -z "$EMAIL" ]]; then missing+=("champ email"); fi
+          if (( ${#missing[@]} )); then
+            printf '### Configuration incomplète\n' >> "$GITHUB_STEP_SUMMARY"
+            for m in "${missing[@]}"; do echo "::error::Manquant : $m"; echo "- $m" >> "$GITHUB_STEP_SUMMARY"; done
+            exit 1
+          fi
+          echo "Projet $SUPABASE_PROJECT_REF · action $ACTION"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+
+      - name: Authentification (inscriptions fermées, URL de redirection)
+        if: env.ACTION == 'installer-tout' || env.ACTION == 'auth'
+        run: node scripts/supabase-manage.mjs auth
+
+      - name: Migrations
+        if: env.ACTION == 'installer-tout' || env.ACTION == 'migrations'
+        run: node scripts/supabase-manage.mjs migrations
+
+      - name: Contenu initial des pages
+        if: env.ACTION == 'installer-tout' || env.ACTION == 'migrations'
+        run: node scripts/supabase-manage.mjs seed
+
+      - uses: supabase/setup-cli@v1
+        if: env.ACTION == 'installer-tout' || env.ACTION == 'fonctions'
+        with:
+          version: 2.122.1
+
+      - name: Secrets des fonctions
+        if: env.ACTION == 'installer-tout' || env.ACTION == 'fonctions'
+        run: |
+          umask 077
+          f="$RUNNER_TEMP/functions.env"
+          {
+            echo "GITHUB_TOKEN=$CMS_GITHUB_TOKEN"
+            echo "GITHUB_REPOSITORY=$GITHUB_REPOSITORY"
+            echo "CMS_BUILD_TOKEN=$CMS_BUILD_TOKEN"
+            echo "ADMIN_URL=${SITE_URL%/}/admin/"
+            echo "SITE_URL=$SITE_URL"
+            echo "ALLOWED_ORIGINS=$(echo "$SITE_URL" | sed -E 's#^(https://[^/]+).*#\1#')"
+            [ -n "$PLAUSIBLE_API_KEY" ] && echo "PLAUSIBLE_API_KEY=$PLAUSIBLE_API_KEY" || true
+          } > "$f"
+          supabase secrets set --project-ref "$SUPABASE_PROJECT_REF" --env-file "$f"
+          rm -f "$f"
+          echo "Secrets des fonctions enregistrés ✓" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Déploiement des fonctions
+        if: env.ACTION == 'installer-tout' || env.ACTION == 'fonctions'
+        run: |
+          for fn in publish analytics admin-users; do
+            supabase functions deploy "$fn" --project-ref "$SUPABASE_PROJECT_REF" --use-api
+          done
+          # Appelée uniquement par GitHub Actions avec CMS_BUILD_TOKEN, pas avec un jeton utilisateur.
+          supabase functions deploy cms-export --project-ref "$SUPABASE_PROJECT_REF" --use-api --no-verify-jwt
+          echo "Fonctions publish, analytics, admin-users, cms-export déployées ✓" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Variables GitHub du site
+        if: env.ACTION == 'installer-tout' || env.ACTION == 'variables-github'
+        run: node scripts/supabase-manage.mjs variables-github
+
+      - name: Membre administrateur
+        if: env.ACTION == 'admin' || (env.ACTION == 'installer-tout' && env.EMAIL != '')
+        run: node scripts/supabase-manage.mjs admin --email "$EMAIL" --role "$ROLE"
+
+      - name: Diagnostic
+        if: always() && steps.config.outcome == 'success' && (env.ACTION == 'diagnostic' || env.ACTION == 'installer-tout')
+        run: node scripts/supabase-manage.mjs diagnostic
