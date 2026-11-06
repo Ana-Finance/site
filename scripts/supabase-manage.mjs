@@ -7,7 +7,8 @@
  *   diagnostic         état du projet (lecture seule)
  *   migrations         applique les migrations manquantes (reconnaît celles exécutées à la main)
  *   seed               contenu initial des pages (idempotent)
- *   auth               inscriptions fermées, URL de redirection, mots de passe ≥ 12 caractères
+ *   auth               URL de l'admin ajoutée aux redirections, mots de passe ≥ 12 caractères
+ *                      (ne ferme pas les inscriptions : projet partagé avec l'app ANA)
  *   admin              invite un membre et lui donne un rôle : --email x@y.fr --role admin|editor
  *   variables-github   écrit SUPABASE_URL, SUPABASE_ANON_KEY, CMS_EXPORT_URL, SITE_URL dans GitHub
  *
@@ -124,18 +125,23 @@ export async function seed() {
 /* Auth                                                                */
 /* ------------------------------------------------------------------ */
 
+// Projet partagé avec l'app ANA (dépôt Ana-Finance/app) : l'app a besoin des inscriptions (email + Google)
+// et de ses propres URL de redirection. On ne ferme donc pas les inscriptions et on n'écrase rien :
+// l'URL de l'admin est AJOUTÉE à la liste. L'accès au CMS reste réservé aux comptes qui ont un profil
+// actif (créé par invitation, aucun droit d'écriture sur profiles pour « authenticated »).
+const splitUrls = (v) => String(v || '').split(',').map((s) => s.trim()).filter(Boolean);
+
 export async function auth() {
-  const body = {
-    disable_signup: true,
-    site_url: ADMIN_URL,
-    uri_allow_list: ADMIN_URL,
-    password_min_length: 12,
-    mailer_autoconfirm: false,
-  };
+  const cur = await api(`/projects/${ref()}/config/auth`);
+  const urls = splitUrls(cur.uri_allow_list);
+  if (!urls.includes(ADMIN_URL)) urls.push(ADMIN_URL);
+  const body = { uri_allow_list: urls.join(','), password_min_length: 12, mailer_autoconfirm: false };
+  if (!cur.site_url) body.site_url = ADMIN_URL; // seulement si rien n'est réglé (l'app peut l'avoir choisie)
   await api(`/projects/${ref()}/config/auth`, { method: 'PATCH', body: JSON.stringify(body) });
   const cfg = await api(`/projects/${ref()}/config/auth`);
-  log(`Auth : inscriptions libres ${cfg.disable_signup ? 'FERMÉES ✓' : 'OUVERTES ✗'} · URL ${cfg.site_url} · mot de passe ≥ ${cfg.password_min_length}`);
-  if (!cfg.disable_signup) throw new Error('Les inscriptions libres sont toujours ouvertes.');
+  const adminOk = splitUrls(cfg.uri_allow_list).includes(ADMIN_URL);
+  log(`Auth : inscriptions ${cfg.disable_signup ? 'fermées' : 'ouvertes (app ANA)'} · URL du site ${cfg.site_url} · admin dans les redirections ${adminOk ? '✓' : '✗'} · mot de passe ≥ ${cfg.password_min_length}`);
+  if (!adminOk) throw new Error(`L'URL de l'admin (${ADMIN_URL}) est absente des URL de redirection.`);
 }
 
 /* ------------------------------------------------------------------ */
@@ -247,7 +253,7 @@ export async function diagnostic() {
   }
   if (!LOCAL) {
     const cfg = await api(`/projects/${ref()}/config/auth`);
-    log(`Auth : inscriptions libres ${cfg.disable_signup ? 'fermées ✓' : 'OUVERTES ✗'} · URL de redirection ${cfg.site_url || '—'}`);
+    log(`Auth : inscriptions ${cfg.disable_signup ? 'fermées' : 'ouvertes (app ANA)'} · URL du site ${cfg.site_url || '—'} · admin dans les redirections ${ok(splitUrls(cfg.uri_allow_list).includes(ADMIN_URL))}`);
     const fns = await api(`/projects/${ref()}/functions`);
     const want = ['publish', 'analytics', 'admin-users', 'cms-export'];
     const have = new Set(fns.map((f) => f.slug));

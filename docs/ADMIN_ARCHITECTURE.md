@@ -141,7 +141,7 @@ Conversions : événements envoyés par `assets/js/ana-analytics.js` (`cta_demo`
 
 ### 3.5 Sécurité
 
-- Supabase Auth e-mail + mot de passe, **inscriptions publiques désactivées**, réinitialisation par e-mail.
+- Supabase Auth e-mail + mot de passe, réinitialisation par e-mail. Le projet Supabase est **partagé avec l'app ANA**, qui a besoin des inscriptions publiques : un compte créé ainsi n'a **aucun accès au CMS** tant qu'il n'a pas de profil actif dans `profiles` (créé uniquement par invitation d'un administrateur).
 - Rôles `admin` / `editor` dans `profiles`. Le premier admin est promu via une requête SQL documentée (exécutée dans le SQL Editor, jamais depuis le front).
 - RLS activée sur **toutes** les tables. Les anonymes ne peuvent qu'appeler `submit_lead` (insertion validée) : ils ne lisent aucune table.
 - Écritures sensibles uniquement via des fonctions SQL `security definer` qui vérifient le rôle (`is_admin()`, `is_member()`).

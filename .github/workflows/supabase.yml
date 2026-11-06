@@ -89,7 +89,7 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
 
-      - name: Authentification (inscriptions fermées, URL de redirection)
+      - name: Authentification (URL de redirection de l'admin, mots de passe)
         if: env.ACTION == 'installer-tout' || env.ACTION == 'auth'
         run: node scripts/supabase-manage.mjs auth
 

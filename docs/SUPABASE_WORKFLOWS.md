@@ -25,7 +25,7 @@ La référence du projet (20 lettres, *Project Settings → General → Project 
 | `installer-tout` | auth + migrations + contenu + secrets + fonctions + variables GitHub (+ admin si e-mail rempli), puis diagnostic | oui |
 | `migrations` | Applique les migrations manquantes puis le contenu initial. Reconnaît ce qui a déjà été exécuté à la main dans l'éditeur SQL | oui |
 | `fonctions` | Enregistre les secrets et déploie les 4 Edge Functions | oui |
-| `auth` | Inscriptions libres fermées, URL de redirection de l'admin, mots de passe ≥ 12 caractères | oui |
+| `auth` | Ajoute l'URL de l'admin aux URL de redirection (sans retirer celles de l'app ANA), mots de passe ≥ 12 caractères. Ne ferme pas les inscriptions : le projet est partagé avec l'app ANA, et l'accès au CMS reste réservé aux comptes invités (table `profiles`) | oui |
 | `admin` | Invite l'e-mail indiqué (lien pour choisir son mot de passe) ou promeut un compte existant, avec le rôle choisi | oui |
 | `variables-github` | Écrit `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `CMS_EXPORT_URL`, `SITE_URL` ; à défaut de permission, les affiche dans le résumé du run | oui |
 
