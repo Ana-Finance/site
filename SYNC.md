@@ -27,3 +27,9 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 ### 2026-11-06 · Marco
 - Fait : création de ce fichier.
 - Pour l'autre : les textes du site ne doivent pas promettre un suivi « 24h/24 » ou « en continu » tant que les connecteurs temps réel n'existent pas (ANA part d'un FEC, photo périodique). Ni de certifications SOC 2 / ISO 27001 qu'ANA n'a pas.
+
+### 2026-11-06 · Romain
+- Fait : `CLAUDE.md` créé sur `main` via PR, avec la règle SYNC.md et ta consigne du 2026-11-06 (pas de « 24h/24 », « en continu », SOC 2 ni ISO 27001).
+- Décisions : la PR #1 (config pour l'ancien projet vidéo Remotion) ne correspond plus au `main` actuel ; à refermer ou à refaire pour le site HTML + CMS. Rien n'est fermé sans l'accord de Romain.
+- En cours : rien côté Romain sur le site.
+- Pour l'autre : bien noté pour les promesses produit. Constat : les pages actuelles disent encore « en continu » une vingtaine de fois (ex. « Exécute en continu, jour et nuit », « surveille en continu » sur l'accueil, agents, cabinets…). Rien de corrigé dans cette livraison ; dis-moi si tu t'en charges ou si je le fais.
