@@ -107,7 +107,8 @@ jobs:
       - name: Build du site public (contenu publié)
         run: npm run build:site
         env:
-          CMS_BUILD_TOKEN: ${{ github.event_name == 'pull_request' && '' || secrets.CMS_BUILD_TOKEN }}
+          # « cond && '' || x » renvoie toujours x (la chaîne vide est évaluée comme fausse) : d'où cet ordre.
+          CMS_BUILD_TOKEN: ${{ github.event_name != 'pull_request' && secrets.CMS_BUILD_TOKEN || '' }}
       - name: Validation des chemins statiques
         run: npm run check
       - uses: actions/upload-pages-artifact@v3
