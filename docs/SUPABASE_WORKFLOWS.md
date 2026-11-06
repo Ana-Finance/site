@@ -37,3 +37,10 @@ Les clés lues via l'API sont masquées dans les journaux.
 - Seules les personnes ayant le droit d'écriture sur le repository peuvent lancer ce workflow.
 - `SUPABASE_ACCESS_TOKEN` donne un accès complet à vos projets Supabase. Révoquez-le et recréez-le en cas de doute, puis mettez le secret à jour.
 - Aucune action ne supprime de données.
+
+## Déploiement du site
+
+Le workflow « Build & déploiement » se configure seul : il lit la référence du projet dans
+`supabase/project.json` (ou la variable `SUPABASE_PROJECT_REF`) et récupère la clé publique avec le secret
+`SUPABASE_ACCESS_TOKEN`. Les variables `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `CMS_EXPORT_URL` et `SITE_URL`
+restent facultatives : si elles existent, elles sont prioritaires.

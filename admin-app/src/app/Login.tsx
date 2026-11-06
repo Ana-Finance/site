@@ -113,8 +113,9 @@ export function NotConfigured() {
   return (
     <AuthScreen>
       <Notice tone="warning" title="Administration non configurée">
-        Les variables <code>VITE_SUPABASE_URL</code> et <code>VITE_SUPABASE_ANON_KEY</code> n'ont pas été fournies lors du build.
-        Suivez <code>docs/SETUP.md</code> (étapes 1 à 4), puis relancez le déploiement.
+        L'adresse et la clé publique de Supabase n'étaient pas disponibles lors du déploiement
+        (secret GitHub <code>SUPABASE_ACCESS_TOKEN</code>, ou variables <code>SUPABASE_URL</code> et <code>SUPABASE_ANON_KEY</code>).
+        Voir <code>docs/SUPABASE_WORKFLOWS.md</code>, puis relancer « Build &amp; déploiement ».
       </Notice>
     </AuthScreen>
   );
