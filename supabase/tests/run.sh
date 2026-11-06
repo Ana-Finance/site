@@ -14,10 +14,14 @@ if [[ -z "${DATABASE_URL:-}" ]]; then
   trap '"${RUN[@]}" "$BIN/pg_ctl" -D "$TMP/data" stop -m fast >/dev/null; rm -rf "$TMP"' EXIT
   "${RUN[@]}" "$BIN/createdb" -h "$TMP" -U postgres cms
   export DATABASE_URL="postgresql://postgres@/cms?host=$TMP"
+  export BASE_URL="postgresql://postgres@" QS="?host=$TMP"
 fi
+# Base de connexion pour les scénarios (DATABASE_URL de la forme postgresql://u:p@hôte:port/base).
+if [[ -z "${BASE_URL:-}" ]]; then BASE_URL="${DATABASE_URL%/*}"; QS=""; export BASE_URL QS; fi
 
 "${PSQL[@]}" "$DATABASE_URL" -f supabase/tests/stubs.sql
 for f in supabase/migrations/*.sql; do echo "migration  $(basename "$f")"; "${PSQL[@]}" "$DATABASE_URL" -f "$f"; done
 echo "seed       content.sql (x2, idempotence)"; "${PSQL[@]}" "$DATABASE_URL" -f supabase/seed/content.sql; "${PSQL[@]}" "$DATABASE_URL" -f supabase/seed/content.sql
 for t in supabase/tests/*_test.sql; do echo "test       $(basename "$t")"; "${PSQL[@]}" "$DATABASE_URL" -f "$t"; done
+bash supabase/tests/manage_scenarios.sh
 echo "OK : migrations et permissions vérifiées."
