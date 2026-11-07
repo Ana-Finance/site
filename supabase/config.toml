@@ -2,8 +2,8 @@
 project_id = "ana-finance-site"
 
 [auth]
-site_url = "https://ana-finance.github.io/site/admin/"
-additional_redirect_urls = ["https://ana-finance.github.io/site/admin/", "http://localhost:5173/"]
+site_url = "https://ana-finance.com/admin/"
+additional_redirect_urls = ["https://ana-finance.com/admin/", "https://ana-finance.github.io/site/admin/", "http://localhost:5173/admin/", "http://localhost:5173/"]
 # Pas d'inscription libre : les comptes sont créés par invitation (Edge Function admin-users).
 enable_signup = false
 minimum_password_length = 12

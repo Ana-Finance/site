@@ -5,6 +5,8 @@
 
 ---
 
+> Cet audit décrit l'état initial du 5 novembre 2026. La cible après bascule est `https://ana-finance.com/` et l'administration sera accessible sous `https://ana-finance.com/admin/`. Le domaine et les réglages externes doivent être configurés séparément.
+
 ## 1. Audit de l'existant
 
 ### 1.1 Stack identifiée

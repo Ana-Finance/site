@@ -14,7 +14,7 @@
  * Variables d'environnement :
  *   SUPABASE_ACCESS_TOKEN   jeton personnel Supabase (secret GitHub)
  *   SUPABASE_PROJECT_REF    référence du projet
- *   SITE_URL                URL publique du site (défaut : https://ana-finance.github.io/site/)
+ *   SITE_URL                URL publique du site (défaut : https://ana-finance.com/)
  *   CMS_GITHUB_TOKEN, GITHUB_REPOSITORY   pour variables-github
  *   LOCAL_DATABASE_URL      tests uniquement : exécute le SQL sur une base locale (psql) au lieu de l'API
  *
@@ -34,8 +34,10 @@ const env = (n, required = true) => {
   if (!v && required) throw new Error(`Variable manquante : ${n} (voir docs/SUPABASE_WORKFLOWS.md)`);
   return v || '';
 };
-const SITE_URL = (process.env.SITE_URL || 'https://ana-finance.github.io/site/').replace(/\/?$/, '/');
+const SITE_URL = (process.env.SITE_URL || 'https://ana-finance.com/').replace(/\/?$/, '/');
 const ADMIN_URL = SITE_URL + 'admin/';
+// shortcut: ancienne adresse github.io gardée pendant la bascule de domaine, à retirer une fois ana-finance.com stable.
+const REDIRECT_URLS = [ADMIN_URL, 'https://ana-finance.github.io/site/admin/', 'http://localhost:5173/admin/'];
 const LOCAL = process.env.LOCAL_DATABASE_URL;
 
 const summary = [];
@@ -128,7 +130,7 @@ export async function auth() {
   const body = {
     disable_signup: true,
     site_url: ADMIN_URL,
-    uri_allow_list: ADMIN_URL,
+    uri_allow_list: [...new Set(REDIRECT_URLS)].join(','),
     password_min_length: 12,
     mailer_autoconfirm: false,
   };
