@@ -52,7 +52,9 @@ describe('annotation du HTML source', () => {
   it('ne modifie que des attributs data-cms* par rapport au site d\'origine', () => {
     let original;
     try { original = execFileSync('git', ['show', PRE_CMS + ':index.html'], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { return; } // historique absent (CI shallow)
-    const strip = (s) => s.replace(/ data-cms(-type|-section)?="[^"]*"/g, '');
+    // Changement volontaire : le lien « Accéder à la plateforme » pointe vers le domaine de l'app.
+    const strip = (s) => s.replace(/ data-cms(-type|-section)?="[^"]*"/g, '')
+      .replaceAll('https://app.ana-finance.com/', 'https://anafinance.lovable.app/');
     // Fichiers modifiés volontairement (envoi réel des formulaires) : vérifiés par les tests de formulaires.
     const INTENTIONAL = new Set(['demo.html', 'ressources.html']);
     for (const file of listPages()) {

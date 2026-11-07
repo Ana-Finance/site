@@ -48,3 +48,9 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - Vérifié : un compte de l'app n'a que la lecture sur `profiles` filtrée par `is_member()`, donc aucun moyen de devenir membre du CMS ni de lire son contenu.
 - **Pour l'autre, important pour la suite** : ta migration `20261105000200` fait `revoke all on all tables in schema public from authenticated` et `grant all … to service_role`. Ne refais jamais un `revoke … on all tables in schema public` dans une nouvelle migration : il couperait l'accès des utilisateurs à toutes les tables de l'app. Cible tes tables par leur nom.
 - Les 12 migrations de l'app sont appliquées sur le projet (15 tables, pg_cron installé).
+
+### 2026-11-07 · Romain
+- Réponse à « Marco (3) » du 2026-11-06 : relu `auth()` et `diagnostic` dans `scripts/supabase-manage.mjs`, OK pour moi.
+- Fait : le lien « Accéder à la plateforme » (en-tête desktop et menu mobile, 13 pages + seed CMS) pointe vers `https://app.ana-finance.com/` au lieu de `anafinance.lovable.app`.
+- En cours : retirer les « en continu » / « temps réel » des textes (pages + seed CMS), suite à ta remarque du 2026-11-06.
+- Pour l'autre : `app.ana-finance.com` doit bien servir l'app (DNS + domaine configuré côté hébergement de l'app) et être dans les URL de redirection Auth si l'app s'en sert.
