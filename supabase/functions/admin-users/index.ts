@@ -15,7 +15,7 @@ Deno.serve(async (req) => {
     if (caller.role !== 'admin') return fail(req, 403, 'ADMIN_REQUIRED', 'Réservé aux administrateurs');
     const svc = serviceClient();
     const b = await req.json().catch(() => ({}));
-    const redirectTo = env('ADMIN_URL'); // ex. https://ana-finance.github.io/site/admin/
+    const redirectTo = env('ADMIN_URL'); // ex. https://ana-finance.com/admin/
 
     if (b.action === 'list') {
       const { data: profiles } = await svc.from('profiles').select('*').order('created_at');

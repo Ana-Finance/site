@@ -3,13 +3,13 @@
 Ce guide part du repository tel qu'il est sur la branche `feature/admin-dashboard`.
 Durée estimée : 45 minutes. **Rien n'est mis en production tant que vous n'avez pas fusionné la PR et changé la source GitHub Pages (étape 7).**
 
-Valeurs utilisées dans les exemples (à adapter) :
+Valeurs cibles après configuration du domaine et bascule. Les réglages GitHub, Supabase, CMS et Plausible existants doivent être mis à jour séparément :
 
 | | |
 |---|---|
 | Repository | `Ana-Finance/site` |
-| Site public | `https://ana-finance.github.io/site/` |
-| Administration | `https://ana-finance.github.io/site/admin/` |
+| Site public | `https://ana-finance.com/` |
+| Administration | `https://ana-finance.com/admin/` |
 | Projet Supabase | `https://<ref>.supabase.co` |
 
 ---
@@ -42,8 +42,8 @@ Le seed est généré depuis le HTML (`npm run cms:seed`). Ne le régénérez qu
 - Email : *Confirm email* activé ; *Secure password change* activé ; longueur minimale 12.
 
 *Authentication → URL Configuration* :
-- Site URL : `https://ana-finance.github.io/site/admin/`
-- Redirect URLs : `https://ana-finance.github.io/site/admin/` (et `http://localhost:5173/admin/` pour le développement).
+- Site URL : `https://ana-finance.com/admin/`
+- Redirect URLs : `https://ana-finance.com/admin/` (conserver aussi `https://ana-finance.github.io/site/admin/` pendant la transition et `http://localhost:5173/admin/` pour le développement).
 
 ### Premier administrateur (procédure unique)
 
@@ -74,9 +74,9 @@ npx supabase secrets set \
   GITHUB_TOKEN=github_pat_xxx \
   GITHUB_REPOSITORY=Ana-Finance/site \
   CMS_BUILD_TOKEN=$CMS_BUILD_TOKEN \
-  ADMIN_URL=https://ana-finance.github.io/site/admin/ \
-  SITE_URL=https://ana-finance.github.io/site/ \
-  ALLOWED_ORIGINS=https://ana-finance.github.io
+  ADMIN_URL=https://ana-finance.com/admin/ \
+  SITE_URL=https://ana-finance.com/ \
+  ALLOWED_ORIGINS=https://ana-finance.com
 npx supabase functions deploy publish
 npx supabase functions deploy analytics
 npx supabase functions deploy admin-users
@@ -95,20 +95,20 @@ Repository → *Settings → Secrets and variables → Actions* :
 | Variable | `SUPABASE_URL` | `https://<ref>.supabase.co` |
 | Variable | `SUPABASE_ANON_KEY` | clé anon / publishable (publique) |
 | Variable | `CMS_EXPORT_URL` | `https://<ref>.supabase.co/functions/v1/cms-export` |
-| Variable | `SITE_URL` | `https://ana-finance.github.io/site/` |
+| Variable | `SITE_URL` | `https://ana-finance.com/` |
 
 Aucun secret existant n'est modifié par ce projet.
 
 ## 6. Analytics (Plausible)
 
-1. Compte sur [plausible.io](https://plausible.io), hébergement UE. Ajoutez le site `ana-finance.github.io` (Plausible mesure par domaine ; avec un domaine personnalisé, utilisez-le).
+1. Compte sur [plausible.io](https://plausible.io), hébergement UE. Ajoutez le site `ana-finance.com` (Plausible mesure par domaine).
 2. *Site settings → Goals → Add goal → Custom event*, un objectif par événement : `form_demo_success`, `form_resource_success`, `cta_demo`, `click_phone`, `click_email`, `click_platform`.
 3. Clé API de statistiques (offre **Business** requise pour la Stats API) : *Account settings → API keys → New API key (Stats API)*, puis :
    ```bash
    npx supabase secrets set PLAUSIBLE_API_KEY=xxxx
    # Instance auto-hébergée : npx supabase secrets set PLAUSIBLE_BASE_URL=https://stats.exemple.fr
    ```
-4. Dans l'administration : *Paramètres → Analytics* → domaine `ana-finance.github.io`. Le script de mesure est ajouté à toutes les pages à la publication suivante.
+4. Dans l'administration : *Paramètres → Analytics* → domaine `ana-finance.com`. Le script de mesure est ajouté à toutes les pages à la publication suivante.
 
 Sans clé API, l'administration affiche « Analytics non configuré » (aucun chiffre inventé) ; la mesure fonctionne quand même et reste consultable dans Plausible.
 
@@ -118,13 +118,13 @@ Sans clé API, l'administration affiche « Analytics non configuré » (aucun ch
 2. **Settings → Pages → Build and deployment → Source : GitHub Actions.**
    Tant que ce réglage reste sur « Deploy from a branch », le site continue d'être servi comme avant et `/admin/` n'existe pas.
 3. *Actions → Build & déploiement → Run workflow* (branche `main`) pour le premier déploiement, ou attendez le run déclenché par la fusion.
-4. Vérifiez `https://ana-finance.github.io/site/` puis `…/site/admin/`.
+4. Vérifiez `https://ana-finance.com/` puis `https://ana-finance.com/admin/`.
 
 Le site publié est alors identique à l'actuel (le test « DOM identique » le garantit), avec en plus `robots.txt`, `sitemap.xml`, `404.html`, les balises canoniques et le script de mesure si configuré.
 
 ## 8. Recette en ligne (10 minutes)
 
-1. `/site/admin/` → connexion avec le compte admin.
+1. `https://ana-finance.com/admin/` → connexion avec le compte admin.
 2. *Éditeur visuel* → Accueil → cliquer le grand titre → modifier → *Enregistrer*.
 3. *Prévisualiser* : la modification apparaît, le site public n'a pas changé.
 4. *Publier* → l'écran de suivi passe par *Construction → Déploiement → Vérification → En ligne*.
