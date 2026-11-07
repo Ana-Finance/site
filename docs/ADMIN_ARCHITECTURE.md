@@ -5,6 +5,8 @@
 
 ---
 
+> Cible après bascule : `https://ana-finance.com/` et administration sous `https://ana-finance.com/admin/`. Cet audit conserve les constats historiques initiaux.
+
 ## 1. Audit de l'existant
 
 ### 1.1 Stack identifiée

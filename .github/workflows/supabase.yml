@@ -56,7 +56,7 @@ jobs:
       ACTION: ${{ inputs.action }}
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       SUPABASE_PROJECT_REF: ${{ inputs.project_ref || vars.SUPABASE_PROJECT_REF }}
-      SITE_URL: ${{ vars.SITE_URL || 'https://ana-finance.github.io/site/' }}
+      SITE_URL: ${{ vars.SITE_URL || 'https://ana-finance.com/' }}
       CMS_GITHUB_TOKEN: ${{ secrets.CMS_GITHUB_TOKEN }}
       CMS_BUILD_TOKEN: ${{ secrets.CMS_BUILD_TOKEN }}
       PLAUSIBLE_API_KEY: ${{ secrets.PLAUSIBLE_API_KEY }}
@@ -117,7 +117,7 @@ jobs:
             echo "CMS_BUILD_TOKEN=$CMS_BUILD_TOKEN"
             echo "ADMIN_URL=${SITE_URL%/}/admin/"
             echo "SITE_URL=$SITE_URL"
-            echo "ALLOWED_ORIGINS=$(echo "$SITE_URL" | sed -E 's#^(https://[^/]+).*#\1#')"
+            echo "ALLOWED_ORIGINS=$(echo "$SITE_URL" | sed -E 's#^(https://[^/]+).*#\1#'),https://ana-finance.github.io"
             [ -n "$PLAUSIBLE_API_KEY" ] && echo "PLAUSIBLE_API_KEY=$PLAUSIBLE_API_KEY" || true
           } > "$f"
           supabase secrets set --project-ref "$SUPABASE_PROJECT_REF" --env-file "$f"

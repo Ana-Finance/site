@@ -178,7 +178,7 @@ export default function Settings() {
       {!s && !['conversions', 'members', 'profile'].includes(tab) ? <Spinner /> : null}
       {s && tab === 'general' && <SettingForm k="general" settings={s} onSaved={settings.reload} fields={[
         { key: 'siteName', label: 'Nom du site' },
-        { key: 'siteUrl', label: 'URL publique du site', type: 'url', hint: 'Avec la barre finale, ex. https://ana-finance.github.io/site/. Sert aux URL canoniques, au sitemap et à la vérification des publications.' },
+        { key: 'siteUrl', label: 'URL publique du site', type: 'url', hint: 'Avec la barre finale, ex. https://ana-finance.com/. Sert aux URL canoniques, au sitemap et à la vérification des publications.' },
       ]} />}
       {s && tab === 'contact' && (
         <div className="stack">
@@ -193,7 +193,7 @@ export default function Settings() {
       {s && tab === 'seo' && <SeoGlobal settings={s} onSaved={settings.reload} />}
       {s && tab === 'analytics' && <SettingForm k="analytics" settings={s} onSaved={settings.reload}
         help={<Notice>Plausible : renseignez le domaine tel que déclaré dans votre compte. La clé API n'est <b>jamais</b> saisie ici : elle est stockée dans les secrets Supabase (<code>PLAUSIBLE_API_KEY</code>, voir docs/SETUP.md). Le script de mesure est ajouté aux pages à la prochaine publication.</Notice>}
-        fields={[{ key: 'domain', label: 'Domaine Plausible', placeholder: 'ana-finance.github.io/site' }, { key: 'scriptSrc', label: 'URL du script', hint: 'Par défaut https://plausible.io/js/script.js (ou script de votre instance auto-hébergée).' }]} />}
+        fields={[{ key: 'domain', label: 'Domaine Plausible', placeholder: 'ana-finance.com' }, { key: 'scriptSrc', label: 'URL du script', hint: 'Par défaut https://plausible.io/js/script.js (ou script de votre instance auto-hébergée).' }]} />}
       {tab === 'conversions' && <Conversions />}
       {tab === 'members' && <Members />}
       {tab === 'profile' && <Profile />}

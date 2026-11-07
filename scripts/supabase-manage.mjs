@@ -15,7 +15,7 @@
  * Variables d'environnement :
  *   SUPABASE_ACCESS_TOKEN   jeton personnel Supabase (secret GitHub)
  *   SUPABASE_PROJECT_REF    référence du projet
- *   SITE_URL                URL publique du site (défaut : https://ana-finance.github.io/site/)
+ *   SITE_URL                URL publique du site (défaut : https://ana-finance.com/)
  *   CMS_GITHUB_TOKEN, GITHUB_REPOSITORY   pour variables-github
  *   LOCAL_DATABASE_URL      tests uniquement : exécute le SQL sur une base locale (psql) au lieu de l'API
  *
@@ -35,8 +35,9 @@ const env = (n, required = true) => {
   if (!v && required) throw new Error(`Variable manquante : ${n} (voir docs/SUPABASE_WORKFLOWS.md)`);
   return v || '';
 };
-const SITE_URL = (process.env.SITE_URL || 'https://ana-finance.github.io/site/').replace(/\/?$/, '/');
+const SITE_URL = (process.env.SITE_URL || 'https://ana-finance.com/').replace(/\/?$/, '/');
 const ADMIN_URL = SITE_URL + 'admin/';
+const REDIRECT_URLS = [ADMIN_URL, 'https://ana-finance.github.io/site/admin/', 'http://localhost:5173/admin/'];
 const LOCAL = process.env.LOCAL_DATABASE_URL;
 
 const summary = [];
@@ -134,7 +135,7 @@ const splitUrls = (v) => String(v || '').split(',').map((s) => s.trim()).filter(
 export async function auth() {
   const cur = await api(`/projects/${ref()}/config/auth`);
   const urls = splitUrls(cur.uri_allow_list);
-  if (!urls.includes(ADMIN_URL)) urls.push(ADMIN_URL);
+  for (const url of REDIRECT_URLS) if (!urls.includes(url)) urls.push(url);
   const body = { uri_allow_list: urls.join(','), password_min_length: 12, mailer_autoconfirm: false };
   if (!cur.site_url) body.site_url = ADMIN_URL; // seulement si rien n'est réglé (l'app peut l'avoir choisie)
   await api(`/projects/${ref()}/config/auth`, { method: 'PATCH', body: JSON.stringify(body) });
