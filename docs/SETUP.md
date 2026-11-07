@@ -38,12 +38,12 @@ Le seed est généré depuis le HTML (`npm run cms:seed`). Ne le régénérez qu
 ## 3. Authentification
 
 *Authentication → Sign In / Providers* :
-- **Allow new users to sign up : désactivé** (indispensable).
+- Projet partagé avec l’application ANA : conserver ses inscriptions et ses URL de redirection. L’accès au CMS reste réservé aux profils invités.
 - Email : *Confirm email* activé ; *Secure password change* activé ; longueur minimale 12.
 
 *Authentication → URL Configuration* :
-- Site URL : `https://ana-finance.com/admin/`
-- Redirect URLs : `https://ana-finance.com/admin/` (conserver aussi `https://ana-finance.github.io/site/admin/` pendant la transition et `http://localhost:5173/admin/` pour le développement).
+- Site URL : conserver la valeur utilisée par l’application ANA ; si elle est vide, utiliser `https://ana-finance.com/admin/`.
+- Redirect URLs : ajouter sans retirer les URL de l’application ANA : `https://ana-finance.com/admin/` (conserver aussi `https://ana-finance.github.io/site/admin/` pendant la transition et `http://localhost:5173/admin/` pour le développement).
 
 ### Premier administrateur (procédure unique)
 

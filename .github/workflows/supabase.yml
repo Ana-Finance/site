@@ -89,7 +89,7 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
 
-      - name: Authentification (inscriptions fermées, URL de redirection)
+      - name: Authentification (URL de redirection de l'admin, mots de passe)
         if: env.ACTION == 'installer-tout' || env.ACTION == 'auth'
         run: node scripts/supabase-manage.mjs auth
 
@@ -117,7 +117,6 @@ jobs:
             echo "CMS_BUILD_TOKEN=$CMS_BUILD_TOKEN"
             echo "ADMIN_URL=${SITE_URL%/}/admin/"
             echo "SITE_URL=$SITE_URL"
-            # Ancienne origine github.io conservée pendant la bascule de domaine.
             echo "ALLOWED_ORIGINS=$(echo "$SITE_URL" | sed -E 's#^(https://[^/]+).*#\1#'),https://ana-finance.github.io"
             [ -n "$PLAUSIBLE_API_KEY" ] && echo "PLAUSIBLE_API_KEY=$PLAUSIBLE_API_KEY" || true
           } > "$f"

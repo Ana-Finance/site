@@ -1,6 +1,7 @@
 // Edge Function « admin-users » : gestion des comptes de l'administration (admins uniquement).
 //   {action:'list'} | {action:'invite', email, role} | {action:'resend', email} | {action:'remove', user_id}
-// Les inscriptions publiques étant désactivées, l'invitation est le seul moyen de créer un compte.
+// L'invitation est le seul moyen de devenir membre du CMS (profil dans « profiles »). Le projet est partagé
+// avec l'app ANA : des comptes s'y inscrivent seuls, mais sans profil ils n'ont aucun accès au CMS.
 import { callerFrom, serviceClient } from '../_shared/auth.ts';
 import { corsHeaders, env, fail, json, ConfigError } from '../_shared/http.ts';
 
