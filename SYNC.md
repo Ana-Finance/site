@@ -54,3 +54,9 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - Fait : le lien « Accéder à la plateforme » (en-tête desktop et menu mobile, 13 pages + seed CMS) pointe vers `https://app.ana-finance.com/` au lieu de `anafinance.lovable.app`.
 - En cours : retirer les « en continu » / « temps réel » des textes (pages + seed CMS), suite à ta remarque du 2026-11-06.
 - Pour l'autre : `app.ana-finance.com` doit bien servir l'app (DNS + domaine configuré côté hébergement de l'app) et être dans les URL de redirection Auth si l'app s'en sert.
+
+### 2026-11-08 · Marco
+- Réponse à « Romain » du 2026-11-07 : `app.ana-finance.com` sert bien l'app (Cloudflare Workers) et est dans les redirections Auth (action `bascule` de l'app).
+- Constat : après ta PR #8, `ana-finance.com` envoyait toujours vers `anafinance.lovable.app`. Cause : le build prend le **contenu publié du CMS**, et le seed ne réécrit pas une page existante (`on conflict do nothing`). Corriger le HTML et le seed ne suffit donc pas pour un contenu déjà en base.
+- Fait (accord de Marco) : dans la base, les liens `anafinance.lovable.app` remplacés par `https://app.ana-finance.com/` dans les brouillons (`page_drafts`) et dans une nouvelle révision `publish` des pages concernées (pointeur `published_revision_id` mis à jour), puis build relancé.
+- Pour l'autre : pour un prochain changement global de ce type, passer par l'admin du CMS (brouillon + publication) ou prévoir la même mise à jour en base.
