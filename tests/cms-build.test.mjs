@@ -52,8 +52,13 @@ describe('annotation du HTML source', () => {
   it('ne modifie que des attributs data-cms* par rapport au site d\'origine', () => {
     let original;
     try { original = execFileSync('git', ['show', PRE_CMS + ':index.html'], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { return; } // historique absent (CI shallow)
-    // Changement volontaire : le lien « Accéder à la plateforme » pointe vers le domaine de l'app.
+    // Changements volontaires : « Accéder à la plateforme » (lien vers l'app) remplacé par « Se connecter »
+    // (/auth) + « Créer un compte » (/inscription), en-tête et menu mobile ; domaine de l'app.
+    const ANCIEN_HAUT = '<a href="https://app.ana-finance.com/" target="_blank" rel="noopener" style="text-decoration:none;font-size:14px;font-weight:600;color:#16151c;white-space:nowrap;" class="ana-nav-platform">Accéder à la plateforme</a>';
+    const ANCIEN_MOBILE = '<a href="https://app.ana-finance.com/" target="_blank" rel="noopener" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;text-decoration:none;">Accéder à la plateforme</a>';
     const strip = (s) => s.replace(/ data-cms(-type|-section)?="[^"]*"/g, '')
+      .replace(/<a href="https:\/\/app\.ana-finance\.com\/auth" style="text-decoration:none;[^"]*" class="ana-nav-platform">Se connecter<\/a>\r?\n\s*<a href="https:\/\/app\.ana-finance\.com\/inscription"[^>]*class="ana-nav-platform">Créer un compte<\/a>/g, ANCIEN_HAUT)
+      .replace(/<a href="https:\/\/app\.ana-finance\.com\/auth" style="padding:13px 4px;[^"]*">Se connecter<\/a>\r?\n\s*<a href="https:\/\/app\.ana-finance\.com\/inscription" style="padding:13px 4px;[^"]*">Créer un compte<\/a>/g, ANCIEN_MOBILE)
       .replaceAll('https://app.ana-finance.com/', 'https://anafinance.lovable.app/');
     // Fichiers modifiés volontairement (envoi réel des formulaires) : vérifiés par les tests de formulaires.
     const INTENTIONAL = new Set(['demo.html', 'ressources.html']);
