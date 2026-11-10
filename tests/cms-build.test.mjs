@@ -56,7 +56,9 @@ describe('annotation du HTML source', () => {
     // (/auth) + « Créer un compte » (/inscription), en-tête et menu mobile ; domaine de l'app.
     const ANCIEN_HAUT = '<a href="https://app.ana-finance.com/" target="_blank" rel="noopener" style="text-decoration:none;font-size:14px;font-weight:600;color:#16151c;white-space:nowrap;" class="ana-nav-platform">Accéder à la plateforme</a>';
     const ANCIEN_MOBILE = '<a href="https://app.ana-finance.com/" target="_blank" rel="noopener" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;text-decoration:none;">Accéder à la plateforme</a>';
-    const strip = (s) => s.replace(/ data-cms(-type|-section)?="[^"]*"/g, '')
+    // Ajout volontaire (SEO) : canonical, og:url, og:site_name et JSON-LD WebSite/Organization de l'accueil.
+    const strip = (s) => s.replace(/<link rel="canonical" href="[^"]*">\r?\n|<meta property="og:(url|site_name)" content="[^"]*">\r?\n|<script type="application\/ld\+json">[^\n]*<\/script>\r?\n/g, '')
+      .replace(/ data-cms(-type|-section)?="[^"]*"/g, '')
       .replace(/<a href="https:\/\/app\.ana-finance\.com\/auth" style="text-decoration:none;[^"]*" class="ana-nav-platform">Se connecter<\/a>\r?\n\s*<a href="https:\/\/app\.ana-finance\.com\/inscription"[^>]*class="ana-nav-platform">Créer un compte<\/a>/g, ANCIEN_HAUT)
       .replace(/<a href="https:\/\/app\.ana-finance\.com\/auth" style="padding:13px 4px;[^"]*">Se connecter<\/a>\r?\n\s*<a href="https:\/\/app\.ana-finance\.com\/inscription" style="padding:13px 4px;[^"]*">Créer un compte<\/a>/g, ANCIEN_MOBILE)
       .replaceAll('https://app.ana-finance.com/', 'https://anafinance.lovable.app/');
@@ -142,7 +144,7 @@ describe('configuration publique injectée au build', () => {
     const doc = new JSDOM(readFileSync(join(dir, 'index.html'), 'utf8')).window.document;
     expect(doc.querySelector('link[rel="canonical"]').getAttribute('href')).toBe('https://ana.example/site/');
     const ld = JSON.parse(doc.querySelector('script[type="application/ld+json"]').textContent);
-    expect(ld).toMatchObject({ '@type': 'Organization', name: 'Ana Finance', email: 'contact@ana.example', sameAs: ['https://linkedin.com/company/ana'] });
+    const org = ld['@graph'].find((n) => n['@type'] === 'Organization'); expect(ld['@graph'].some((n) => n['@type'] === 'WebSite')).toBe(true); expect(org).toMatchObject({ '@type': 'Organization', name: 'Ana Finance', email: 'contact@ana.example', sameAs: ['https://linkedin.com/company/ana'] });
     const sitemap = readFileSync(join(dir, 'sitemap.xml'), 'utf8');
     expect(sitemap).toContain('<loc>https://ana.example/site/agents.html</loc>');
     expect(readFileSync(join(dir, 'robots.txt'), 'utf8')).toContain('Disallow: /site/admin/');

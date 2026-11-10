@@ -138,8 +138,18 @@ export async function build() {
     const content = mergeContent(globalContent, row ? row.content : null);
     // Image de partage par défaut (Paramètres → SEO global) pour les pages qui n'en ont pas.
     if (content.seo && !content.seo.ogImage && settings.seo && settings.seo.defaultOgImage) content.seo = { ...content.seo, ogImage: { ...settings.seo.defaultOgImage } };
+    const srcCanon = (doc.head.querySelector('link[rel="canonical"]') || { getAttribute: () => '' }).getAttribute('href');
     const res = applyContent(doc, content, { resolveMedia, siteUrl: SITE_URL !== '/' ? SITE_URL : undefined, pagePath });
     if (res.missing.length) log(`! ${slug} : ${res.missing.length} clé(s) sans élément HTML (ignorées)`);
+    // Le canonical / og:url statiques du HTML source suivent l'URL du site configurée (hors canonical saisi dans le CMS).
+    if (SITE_URL !== '/') {
+      const abs = new URL(pagePath === 'index.html' ? '' : pagePath, SITE_URL).href;
+      const cms = content.seo && typeof content.seo.canonical === 'string' && content.seo.canonical.trim() !== srcCanon && content.seo.canonical.trim();
+      const can = doc.head.querySelector('link[rel="canonical"]');
+      if (can && !cms) can.setAttribute('href', abs);
+      const ou = doc.head.querySelector('meta[property="og:url"]');
+      if (ou) ou.setAttribute('content', (can && can.getAttribute('href')) || abs);
+    }
     injectPublicConfig(doc, exp && exp.public);
     if (slug === 'index') injectOrganization(doc, settings, SITE_URL !== '/' ? SITE_URL : null);
     writeFileSync(join(OUT, pagePath), dom.serialize());
@@ -183,9 +193,12 @@ function injectOrganization(doc, settings, siteUrl) {
   if (c.phone) data.telephone = c.phone;
   if (c.address) data.address = c.address;
   if (sameAs.length) data.sameAs = sameAs;
+  // Le JSON-LD statique du HTML source (Organization + WebSite) est remplacé : pas de doublon.
+  const website = { '@type': 'WebSite', name: g.siteName, url: siteUrl, inLanguage: 'fr-FR' };
+  doc.head.querySelectorAll('script[type="application/ld+json"]').forEach((n) => n.remove());
   const s = doc.createElement('script');
   s.setAttribute('type', 'application/ld+json');
-  s.textContent = JSON.stringify(data).replace(/</g, '\\u003c');
+  s.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ ...data, '@context': undefined }, website] }).replace(/</g, '\\u003c');
   doc.head.appendChild(s);
 }
 
