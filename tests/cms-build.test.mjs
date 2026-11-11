@@ -60,13 +60,20 @@ describe('annotation du HTML source', () => {
       .replace(/<a href="https:\/\/app\.ana-finance\.com\/auth" style="text-decoration:none;[^"]*" class="ana-nav-platform">Se connecter<\/a>\r?\n\s*<a href="https:\/\/app\.ana-finance\.com\/inscription"[^>]*class="ana-nav-platform">Créer un compte<\/a>/g, ANCIEN_HAUT)
       .replace(/<a href="https:\/\/app\.ana-finance\.com\/auth" style="padding:13px 4px;[^"]*">Se connecter<\/a>\r?\n\s*<a href="https:\/\/app\.ana-finance\.com\/inscription" style="padding:13px 4px;[^"]*">Créer un compte<\/a>/g, ANCIEN_MOBILE)
       .replaceAll('https://app.ana-finance.com/', 'https://anafinance.lovable.app/');
+    // Changement volontaire : fond décoratif retiré (dégradés, grille, dessins animés « ana-bg »).
+    const sansDecor = (s) => s
+      .replace(/\n[ \t]*\.ana-canvas::(before|after) \{[^\n]*\}/g, '')
+      .replace(/\n[ \t]*@keyframes ana(Drift|FloatA|FloatB|Dash|NodePulse) \{[^\n]*\}/g, '')
+      .replace(/\n[ \t]*(\.ana-bg-|@media \(max-width: 1560px\) \{ \.ana-bg-art)[^\n]*/g, '')
+      .replace(/\n[ \t]*<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;[^"]*">[\s\S]*?\n[ \t]*<\/div>/, '')
+      .replace(' class="ana-bg-dash" d="M2 7h28"', ' d="M2 7h28"');
     // Fichiers modifiés volontairement (envoi réel des formulaires) : vérifiés par les tests de formulaires.
     const INTENTIONAL = new Set(['demo.html', 'ressources.html']);
     for (const file of listPages()) {
       if (INTENTIONAL.has(file)) continue;
       let base;
       try { base = execFileSync('git', ['show', PRE_CMS + ':' + file], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { continue; }
-      expect(strip(readFileSync(join(ROOT, file), 'utf8')), file).toBe(base);
+      expect(sansDecor(strip(readFileSync(join(ROOT, file), 'utf8'))), file).toBe(sansDecor(base));
     }
     expect(original.length).toBeGreaterThan(0);
   });
