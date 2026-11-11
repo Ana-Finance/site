@@ -69,21 +69,6 @@
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
     .ana-canvas { position: relative; isolation: isolate; }
     .ana-canvas > * { position: relative; z-index: 1; }
-    .ana-canvas::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(44rem 34rem at 10% -8%, rgba(139,31,224,0.18), transparent 70%), radial-gradient(40rem 30rem at 97% 6%, rgba(242,63,214,0.14), transparent 70%), radial-gradient(48rem 36rem at 46% 106%, rgba(43,10,77,0.16), transparent 72%); animation: anaDrift 30s ease-in-out infinite alternate; }
-    .ana-canvas::after { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(43,10,77,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(43,10,77,0.06) 1px, transparent 1px); background-size: 68px 68px; -webkit-mask-image: radial-gradient(90% 70% at 50% 0%, #000 0%, transparent 80%); mask-image: radial-gradient(90% 70% at 50% 0%, #000 0%, transparent 80%); }
-    @keyframes anaDrift { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(-2.5%, 2%, 0) scale(1.08); } }
-    @keyframes anaFloatA { from { transform: translateY(0) rotate(0deg); } to { transform: translateY(-26px) rotate(2.5deg); } }
-    @keyframes anaFloatB { from { transform: translateY(0) rotate(0deg); } to { transform: translateY(22px) rotate(-2deg); } }
-    @keyframes anaDash { to { stroke-dashoffset: -260; } }
-    @keyframes anaNodePulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
-    .ana-bg-float-a { animation: anaFloatA 13s ease-in-out infinite alternate; }
-    .ana-bg-float-b { animation: anaFloatB 16s ease-in-out infinite alternate; }
-    .ana-bg-dash { stroke-dasharray: 10 14; animation: anaDash 9s linear infinite; }
-    .ana-bg-node { animation: anaNodePulse 4.5s ease-in-out infinite; }
-    .ana-bg-node:nth-of-type(2) { animation-delay: .9s; }
-    .ana-bg-node:nth-of-type(3) { animation-delay: 1.8s; }
-    .ana-bg-node:nth-of-type(4) { animation-delay: 2.7s; }
-    @media (max-width: 1560px) { .ana-bg-art { display: none !important; } }
   
     .ana-skip:focus { top: 12px !important; }
       @media (max-width: 720px) { .ana-breath-q { font-size: 28px !important; line-height: 36px !important; max-width: none !important; } }
@@ -102,34 +87,6 @@
 <body>
 <div class="ana-canvas" style="font-family:'Inter',system-ui,sans-serif;background:#f8f9fc;color:#16151c;padding-top:60px;">
   <a href="#main" class="ana-skip" style="position:absolute;left:12px;top:-60px;z-index:200;background:#fff;color:#16151c;border:1.5px solid #8b1fe0;border-radius:10px;padding:10px 16px;font-size:14.5px;font-weight:600;transition:top .15s ease;" data-cms="pme-et-startups.page.a-1" data-cms-type="link">Aller au contenu</a>
-  <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;padding-top:60px;">
-    <svg class="ana-bg-art ana-bg-float-a" viewBox="0 0 240 130" fill="none" style="position:absolute;top:15%;left:clamp(8px, calc(50% - 636px - 176px), 7%);width:min(176px, 15vw);opacity:0.42;" aria-hidden="true">
-      <defs><linearGradient id="g1a" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2b0a4d"></stop><stop offset="0.6" stop-color="#8b1fe0"></stop><stop offset="1" stop-color="#f23fd6"></stop></linearGradient></defs>
-      <path d="M4 108 L44 84 L82 96 L120 52 L160 66 L200 22 L236 34" stroke="url(#g1a)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-      <path d="M4 108 L44 84 L82 96 L120 52 L160 66 L200 22 L236 34 L236 130 L4 130 Z" fill="url(#g1a)" opacity="0.1"></path>
-      <circle class="ana-bg-node" cx="120" cy="52" r="5" fill="#8b1fe0"></circle>
-      <circle class="ana-bg-node" cx="200" cy="22" r="5" fill="#f23fd6"></circle>
-    </svg>
-    <svg class="ana-bg-art ana-bg-float-b" viewBox="0 0 200 140" fill="none" style="position:absolute;top:43%;right:clamp(8px, calc(50% - 636px - 140px), 7%);width:min(140px, 12vw);opacity:0.4;" aria-hidden="true">
-      <defs><linearGradient id="g1b" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#2b0a4d"></stop><stop offset="1" stop-color="#f23fd6"></stop></linearGradient></defs>
-      <rect x="10" y="80" width="26" height="52" rx="7" fill="url(#g1b)" opacity="0.5"></rect>
-      <rect x="52" y="54" width="26" height="78" rx="7" fill="url(#g1b)" opacity="0.65"></rect>
-      <rect x="94" y="94" width="26" height="38" rx="7" fill="url(#g1b)" opacity="0.45"></rect>
-      <rect x="136" y="24" width="26" height="108" rx="7" fill="url(#g1b)" opacity="0.8"></rect>
-    </svg>
-    <svg class="ana-bg-art ana-bg-float-a" viewBox="0 0 180 160" fill="none" style="position:absolute;bottom:11%;left:clamp(8px, calc(50% - 636px - 158px), 7%);width:min(158px, 13vw);opacity:0.36;" aria-hidden="true">
-      <path class="ana-bg-dash" d="M30 30 L142 58 M142 58 L58 118 M58 118 L150 132 M30 30 L58 118" stroke="#8b1fe0" stroke-width="2" stroke-linecap="round"></path>
-      <circle class="ana-bg-node" cx="30" cy="30" r="8" fill="#2b0a4d"></circle>
-      <circle class="ana-bg-node" cx="142" cy="58" r="8" fill="#8b1fe0"></circle>
-      <circle class="ana-bg-node" cx="58" cy="118" r="8" fill="#f23fd6"></circle>
-      <circle class="ana-bg-node" cx="150" cy="132" r="6" fill="#8b1fe0"></circle>
-    </svg>
-    <svg class="ana-bg-art ana-bg-float-b" viewBox="0 0 120 120" fill="none" style="position:absolute;top:11%;right:clamp(8px, calc(50% - 636px - 112px), 7%);width:min(112px, 10vw);opacity:0.34;" aria-hidden="true">
-      <circle cx="60" cy="60" r="44" stroke="#8b1fe0" stroke-width="2" opacity="0.35"></circle>
-      <circle class="ana-bg-dash" cx="60" cy="60" r="30" stroke="#f23fd6" stroke-width="2" fill="none"></circle>
-      <circle class="ana-bg-node" cx="60" cy="16" r="6" fill="#8b1fe0"></circle>
-    </svg>
-  </div>
 
 
   <div data-on-mouseleave="closeMenu" style="position:fixed;top:0;left:0;right:0;z-index:60;background:#fff;border-bottom:1px solid #eceaf3;z-index:60;">

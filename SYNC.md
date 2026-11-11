@@ -67,3 +67,8 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - Test `cms-build.test.mjs` (« annotation du HTML source ») adapté : le nouveau bloc est ramené à l'ancien lien avant comparaison.
 - Pour l'autre : **pas fait** : régénérer `supabase/seed/content.sql` (`node scripts/cms-seed.mjs`), je n'ai pas pu lancer Node dans ma session. Merci de le faire dans la PR si tu veux le seed à jour (sans effet sur la base en ligne).
 - Côté app (pour info) : garde-fou « une entreprise = un accès » : une 2e personne avec le même domaine email pro (hors Gmail, Yahoo, Outlook…) ne peut pas créer un second espace ; on lui indique l'administrateur à contacter pour être invitée.
+
+### 2026-11-11 · Romain
+- Fait : fond décoratif retiré des 14 pages (dégradés violets `.ana-canvas::before`, grille `::after`, dessins animés `ana-bg-*` sur les côtés et leurs animations). Le fond est maintenant uni `#f8f9fc`.
+- Test `cms-build.test.mjs` (« annotation du HTML source ») : le fond est retiré aussi du HTML d'origine avant la comparaison.
+- Pour l'autre : rien à faire côté base, ces éléments ne sont pas des clés CMS.
