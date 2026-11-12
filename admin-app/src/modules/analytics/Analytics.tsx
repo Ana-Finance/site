@@ -9,6 +9,7 @@ import { Badge, Button, Card, Empty, Notice, Segmented, Skeleton, Tabs, Trend } 
 import { BarList, ConversionsChart, Donut, Legend, TrafficChart } from './charts';
 import { DEFINITIONS, useReport, type Metrics, type NotConfigured, type PeriodKey, type Report } from './report';
 import type { PageRow } from '../../lib/types';
+import { leadKind } from '../../lib/leads';
 
 export const PERIODS: { value: PeriodKey; label: string }[] = [
   { value: 'today', label: 'Aujourd\'hui' }, { value: '7d', label: '7 jours' }, { value: '30d', label: '30 jours' }, { value: '90d', label: '90 jours' }, { value: 'custom', label: 'Personnalisée' },
@@ -111,11 +112,11 @@ function Conversions({ r }: { r: Report }) {
         <Button size="sm" icon={<Download />} disabled={!leads.data?.length} onClick={() => download('demandes.csv', toCsv((leads.data || []).map((l) => ({ date: l.created_at, formulaire: l.form, nom: l.name, email: l.email, societe: l.company, telephone: l.phone, profil: l.profile, message: l.message, page: l.page }))))}>CSV</Button>
       } bodyClass="table-wrap">
         {leads.error && <Notice tone="danger">{errorMessage(leads.error)}</Notice>}
-        {leads.data && !leads.data.length ? <Empty icon={<Inbox />} title="Aucune demande">Les demandes de démo et de ressources apparaîtront ici dès que les formulaires seront reliés (publication avec Supabase configuré).</Empty> : (
+        {leads.data && !leads.data.length ? <Empty icon={<Inbox />} title="Aucune demande" action={<Link className="btn sm" to="/demandes">Ouvrir la page Demandes</Link>}>Les demandes de démo, les messages de contact et les candidatures apparaîtront ici dès leur envoi.</Empty> : (
           <table className="table responsive">
             <thead><tr><th>Date</th><th>Formulaire</th><th>Contact</th><th>Société</th><th>Profil</th></tr></thead>
             <tbody>{(leads.data || []).slice(0, 50).map((l) => (
-              <tr key={l.id}><td>{dateTime(l.created_at)}</td><td><Badge>{l.form === 'demo' ? 'Démo' : l.form === 'resource' ? 'Ressource' : 'Contact'}</Badge></td>
+              <tr key={l.id}><td>{dateTime(l.created_at)}</td><td><Badge>{leadKind(l)}</Badge></td>
                 <td><b>{l.name}</b><div className="small"><a href={`mailto:${l.email}`}>{l.email}</a>{l.phone && ` · ${l.phone}`}</div></td><td data-hide-mobile>{l.company || '—'}</td><td data-hide-mobile>{l.profile || '—'}</td></tr>
             ))}</tbody>
           </table>

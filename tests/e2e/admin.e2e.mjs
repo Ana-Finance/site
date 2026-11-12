@@ -76,14 +76,46 @@ try {
     expect(await page.locator('[data-if="formSent"]').isVisible(), 'confirmation affichée');
   });
 
-  await step('formulaire ressources : erreur serveur affichée, aucune conversion', async () => {
+  await step('formulaire de contact : bouton inactif tant qu\'il est incomplet, puis envoi réel', async () => {
     await page.goto(BASE + 'ressources.html');
-    await page.fill('form input[name="nom"]', 'Camille');
-    await page.fill('form input[name="email"]', 'camille@cabinet.fr');
-    await page.click('form button[type="submit"]'); // consentement non coché : refusé par le serveur
-    await page.getByRole('alert').filter({ hasText: 'consentement' }).waitFor({ timeout: 5000 });
-    expect(!(await page.evaluate(() => (window.plausible.q || []).some((a) => a[0] === 'form_resource_success'))), 'pas de conversion');
-    expect(fake.db.leads.length === 1, 'aucune demande enregistrée');
+    const submit = page.locator('#contact form button[type="submit"]');
+    await page.fill('#contact input[name="nom"]', 'Camille Roy');
+    await page.fill('#contact input[name="email"]', 'camille@cabinet.fr');
+    expect(await submit.isDisabled(), 'envoi impossible sans message ni consentement');
+    expect(fake.db.leads.length === 1, 'rien n\'est parti');
+    await page.fill('#contact textarea[name="message"]', 'Une question sur la sécurité.');
+    await page.check('#contact input[name="consent"]');
+    expect(await submit.isEnabled(), 'envoi possible une fois le formulaire complet');
+    await submit.click();
+    await page.waitForFunction(() => (window.plausible.q || []).some((a) => a[0] === 'form_resource_success'), null, { timeout: 5000 });
+    const lead = fake.db.leads[1];
+    expect(fake.db.leads.length === 2 && lead.form === 'contact' && lead.page === 'ressources', 'message enregistré comme contact');
+    expect(await page.locator('#contact [data-if="formSent"]').isVisible(), 'confirmation affichée');
+  });
+
+  await step('formulaire de contact : refus du serveur affiché, avec l\'adresse de secours', async () => {
+    await page.getByRole('button', { name: 'Envoyer un autre message' }).click();
+    await page.fill('#contact input[name="nom"]', 'Camille Roy');
+    await page.fill('#contact input[name="email"]', 'trop@test.fr');
+    await page.fill('#contact textarea[name="message"]', 'Encore une question.');
+    await page.check('#contact input[name="consent"]');
+    await page.click('#contact form button[type="submit"]');
+    await page.getByRole('alert').filter({ hasText: 'Trop de demandes' }).waitFor({ timeout: 5000 });
+    expect(fake.db.leads.length === 2, 'aucune demande enregistrée');
+  });
+
+  await step('candidature : enregistrée comme demande, avec le lien vers le CV', async () => {
+    await page.goto(BASE + 'carrieres.html');
+    await page.fill('#candidature input[name="nom"]', 'Alex Martin');
+    await page.fill('#candidature input[name="email"]', 'alex@exemple.fr');
+    await page.fill('#candidature input[name="lien"]', 'https://exemple.fr/cv-alex');
+    await page.fill('#candidature textarea[name="message"]', 'Ingénieur, intéressé par les agents.');
+    await page.check('#candidature input[name="consent"]');
+    await page.click('#candidature form button[type="submit"]');
+    await page.locator('#candidature [data-if="formSent"]').waitFor({ state: 'visible', timeout: 5000 });
+    const lead = fake.db.leads[2];
+    expect(fake.db.leads.length === 3 && lead.page === 'carrieres' && lead.profile === 'Candidature spontanée', 'candidature enregistrée');
+    expect(lead.message.includes('Lien : https://exemple.fr/cv-alex'), 'lien du CV joint au message');
   });
 
   await step('accès direct à /admin/ : écran de connexion', async () => {
@@ -110,6 +142,15 @@ try {
     await page.getByText('Analytics non configuré').first().waitFor();
     await page.getByText('Santé du site').waitFor();
     await page.getByText('Site public en ligne').waitFor();
+  });
+
+  await step('tableau de bord : alerte des nouvelles demandes, puis « marquer comme vues »', async () => {
+    await page.getByText('3 nouvelles demandes').waitFor({ timeout: 8000 });
+    await page.getByText('alex@exemple.fr').first().waitFor();
+    expect((await page.locator('.sidebar .nav-item', { hasText: 'Demandes' }).locator('.count').textContent()) === '3', 'pastille du menu');
+    await page.getByRole('button', { name: 'Marquer comme vues' }).click();
+    await page.getByText('Aucune nouvelle demande').waitFor({ timeout: 5000 });
+    expect(await page.locator('.sidebar .nav-item', { hasText: 'Demandes' }).locator('.count').count() === 0, 'pastille retirée');
     await page.waitForTimeout(600);
     if (SCREENS) await page.screenshot({ path: join(shots, '02-dashboard.png') });
   });
@@ -145,12 +186,21 @@ try {
     await frame.locator('h1', { hasText: 'Un titre modifié' }).waitFor({ timeout: 3000 });
   });
 
-  await step('masquer une section dans l\'aperçu', async () => {
+  await step('masquer et réafficher une section dans l\'aperçu', async () => {
     const frame = page.frameLocator('iframe[title="Aperçu de la page"]');
-    await page.getByRole('button', { name: 'Masquer la section' }).nth(2).click();
-    expect(await frame.locator('[data-cms-section="s3"]').isHidden(), 'section s3 masquée');
+    await page.getByRole('button', { name: 'Masquer la section' }).nth(2).click(); // 3e section visible : s4
+    expect(await frame.locator('[data-cms-section="s4"]').isHidden(), 'section s4 masquée');
+    await page.getByRole('button', { name: 'Afficher la section' }).nth(1).click();
+    expect(await frame.locator('[data-cms-section="s4"]').isVisible(), 'section s4 réaffichée');
+  });
+
+  await step('section masquée par défaut (références clients) : réaffichable depuis l\'éditeur', async () => {
+    const frame = page.frameLocator('iframe[title="Aperçu de la page"]');
+    expect(await frame.locator('[data-cms-section="s3"]').isHidden(), 'section s3 masquée par défaut');
     await page.getByRole('button', { name: 'Afficher la section' }).first().click();
-    expect(await frame.locator('[data-cms-section="s3"]').isVisible(), 'section s3 réaffichée');
+    expect(await frame.locator('[data-cms-section="s3"]').isVisible(), 'section s3 affichée');
+    await page.getByRole('button', { name: 'Masquer la section' }).nth(2).click();
+    expect(await frame.locator('[data-cms-section="s3"]').isHidden(), 'section s3 de nouveau masquée');
   });
 
   await step('modes tablette et mobile (largeur réelle de la page)', async () => {
@@ -189,7 +239,7 @@ try {
   });
 
   await step('SEO, médias, paramètres et recherche globale se chargent', async () => {
-    for (const [hash, text] of [['seo', 'Redirections'], ['media', 'Glissez des images ici'], ['settings', 'URL publique du site'], ['analytics', 'Analytics non configuré']]) {
+    for (const [hash, text] of [['seo', 'Redirections'], ['media', 'Glissez des images ici'], ['settings', 'URL publique du site'], ['analytics', 'Analytics non configuré'], ['demandes', 'Ingénieur, intéressé par les agents.']]) {
       await page.goto(BASE + 'admin/#/' + hash);
       await page.getByText(text).first().waitFor({ timeout: 8000 });
     }

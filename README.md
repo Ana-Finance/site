@@ -5,7 +5,7 @@ administration privée (`/admin/`) pour modifier les contenus, les images, le SE
 
 | | |
 |---|---|
-| Site public | pages `.html` à la racine + `assets/` (inchangés, zones éditables annotées `data-cms`) |
+| Site public | pages `.html` à la racine + `assets/` (zones éditables annotées `data-cms`) |
 | Administration | `admin-app/` (Vite, React, TypeScript), servie sous `/admin/` |
 | Moteur de contenu | `cms/core.js`, partagé par le build et l'aperçu de l'éditeur |
 | Données | Supabase : Auth, PostgreSQL avec RLS, Storage privé, Edge Functions (`supabase/`) |
@@ -25,7 +25,8 @@ npm install
 npm run dev:admin        # administration en local (http://localhost:5173/admin/)
 npm run build            # admin + site complet dans _site/
 npm run check            # liens, chemins relatifs, absence de secrets dans _site/
-npm test                 # tests unitaires (moteur CMS, build fidèle au HTML d'origine, analytics)
+npm test                 # tests unitaires (moteur CMS, build fidèle au HTML source, clés à jour, analytics)
+npm run cms:rekey        # après une modification du HTML : nouvelles clés pour les textes modifiés
 npm run test:sql         # migrations + permissions RLS sur PostgreSQL
 node tests/e2e/admin.e2e.mjs   # parcours complet de l'administration dans Chromium
 ```

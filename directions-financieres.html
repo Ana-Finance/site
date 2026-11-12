@@ -11,9 +11,7 @@
 <meta property="og:description" content="Automatisez le rapprochement, le reporting et le contrôle de gestion de votre DAF, avec une supervision totale.">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/img/ana-logo-icon.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 <style>
     html { scroll-behavior: smooth; }
@@ -92,8 +90,8 @@
   <div data-on-mouseleave="closeMenu" style="position:fixed;top:0;left:0;right:0;z-index:60;background:#fff;border-bottom:1px solid #eceaf3;z-index:60;">
     <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 40px;max-width:1440px;margin:0 auto;">
       <a href="index.html" style="display:flex;align-items:center;gap:9px;" data-cms="directions-financieres.header.card_index-1" data-cms-type="href">
-        <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.header.img-1" data-cms-type="image">
-        <span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;color:#16151c;" data-cms="g.header.span-1" data-cms-type="rich">Ana <span style="font-weight:600;background:linear-gradient(90deg,#8b1fe0,#f23fd6);-webkit-background-clip:text;background-clip:text;color:transparent;">finance</span></span>
+        <img src="assets/img/ana-logo-icon.png" alt="" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.header.img-2" data-cms-type="image">
+        <span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;color:#16151c;white-space:nowrap;" data-cms="g.header.span-1" data-cms-type="rich">Ana <span style="font-weight:600;background:linear-gradient(90deg,#8b1fe0,#f23fd6);-webkit-background-clip:text;background-clip:text;color:transparent;">finance</span></span>
       </a>
       <div class="ana-nav-links" style="display:flex;align-items:center;gap:4px;">
         <button type="button" data-on-mouseenter="openFeatures" data-on-click="openFeatures" data-b-style="display:flex;align-items:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:{{ wgtFeatures }};border-radius:999px;padding:9px 12px;white-space:nowrap;color:{{ colFeatures }};background:{{ bgFeatures }};" data-cms="g.header.button-1" data-cms-type="text">Fonctionnalités<svg width="14" height="14" style="flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
@@ -160,7 +158,7 @@
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 7-8"></path><path d="M3 21h18"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
               <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-12" data-cms-type="text">Directions financières</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-13" data-cms-type="text">Trésorerie, écarts budgétaires et reporting comité tenus à jour en continu.</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-16" data-cms-type="text">Trésorerie, écarts budgétaires et reporting comité remis à jour à chaque import.</span>
             </span>
           </a>
           <a href="pme-et-startups.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_pme_et_startups-1" data-cms-type="href">
@@ -204,6 +202,7 @@
 
   </div>
 
+  <main>
   <nav id="main" aria-label="Fil d'ariane" style="max-width:1440px;margin:0 auto;padding:22px 40px 0;display:flex;align-items:center;gap:8px;font-size:13px;color:#5b586b;">
     <a href="index.html" style="color:#5b586b;" data-cms="directions-financieres.page.a-2" data-cms-type="link">Accueil</a>
     <span aria-hidden="true">/</span>
@@ -213,8 +212,8 @@
   </nav>
   <section style="max-width:1440px;margin:0 auto;padding:36px 40px 8px;" data-cms-section="s1">
     <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 14px;" data-cms="directions-financieres.s1.span-1" data-cms-type="text">Cas d'usage, Directions financières</span>
-    <h1 class="ana-hero-h1" style="font-size:clamp(28px,5.2vw,57px);line-height:1.14;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:820px;" data-cms="directions-financieres.s1.h1-1" data-cms-type="text">Décidez sur les chiffres du jour, pas sur ceux du mois dernier.</h1>
-    <p style="font-size:17.5px;line-height:28px;max-width:84ch;margin:20px 0 0;color:#514f60;" data-cms="directions-financieres.s1.p-1" data-cms-type="text">Vos chiffres arrivent après la clôture, quand les décisions sont déjà prises. Ana tient le cockpit financier à jour en continu et signale les écarts pendant qu'ils sont encore corrigeables.</p>
+    <h1 class="ana-hero-h1" style="font-size:clamp(28px,5.2vw,57px);line-height:1.14;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:820px;" data-cms="directions-financieres.s1.h1-2" data-cms-type="text">Décidez sur des chiffres à jour, pas sur ceux du mois dernier.</h1>
+    <p style="font-size:17.5px;line-height:28px;max-width:84ch;margin:20px 0 0;color:#514f60;" data-cms="directions-financieres.s1.p-2" data-cms-type="text">Vos chiffres arrivent après la clôture, quand les décisions sont déjà prises. Ana remet le cockpit financier à jour à chaque import et signale les écarts pendant qu'ils sont encore corrigeables.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;">
       <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="directions-financieres.s1.span-2" data-cms-type="text">Connexion en lecture seule</span>
       <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="directions-financieres.s1.span-3" data-cms-type="text">Données hébergées dans l'UE</span>
@@ -231,8 +230,8 @@
         <summary style="display:flex;gap:14px;align-items:flex-start;">
           <span class="ana-pill" style="width:36px;height:36px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 7-8"></path><path d="M3 21h18"></path></svg></span>
           <span style="display:flex;flex-direction:column;gap:8px;">
-            <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;" data-cms="directions-financieres.s2.span-2" data-cms-type="text">Trésorerie &amp; runway en continu</span>
-            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="directions-financieres.s2.span-3" data-cms-type="text">Position de trésorerie et runway recalculés à chaque flux, avec la projection à 3, 6 et 12 mois.</span>
+            <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;" data-cms="directions-financieres.s2.span-38" data-cms-type="text">Trésorerie &amp; runway à jour</span>
+            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="directions-financieres.s2.span-39" data-cms-type="text">Position de trésorerie et runway recalculés à chaque import, avec la projection à 3, 6 et 12 mois.</span>
             <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;" data-cms="directions-financieres.s2.span-4" data-cms-type="text">Voir le détail <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
@@ -308,7 +307,7 @@
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="directions-financieres.s2.span-29" data-cms-type="text">Comparaison facture, commande et réception</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="directions-financieres.s2.span-30" data-cms-type="text">Détection des changements de coordonnées bancaires</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="directions-financieres.s2.span-31" data-cms-type="text">Blocage du paiement et pièces présentées côte à côte</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="directions-financieres.s2.span-40" data-cms-type="text">Alerte avant paiement et pièces présentées côte à côte</span></li>
         </ul>
         </div>
       </details>
@@ -317,13 +316,13 @@
           <span class="ana-pill" style="width:36px;height:36px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13-6M20 12a8 8 0 0 1-13 6M17 3v4h-4M7 21v-4h4"></path></svg></span>
           <span style="display:flex;flex-direction:column;gap:8px;">
             <span style="font-size:17.5px;font-weight:700;letter-spacing:-0.01em;" data-cms="directions-financieres.s2.span-32" data-cms-type="text">Transmission à votre expert-comptable</span>
-            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="directions-financieres.s2.span-33" data-cms-type="text">Écritures, pièces et justifications transmises en continu et déjà rapprochées.</span>
+            <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="directions-financieres.s2.span-41" data-cms-type="text">Écritures, pièces et justifications transmises à chaque clôture, déjà rapprochées.</span>
             <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;" data-cms="directions-financieres.s2.span-34" data-cms-type="text">Voir le détail <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail" style="margin-top:18px;padding-top:18px;border-top:1px solid #eceaf3;">
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="directions-financieres.s2.span-35" data-cms-type="text">Envoi continu au format attendu par votre cabinet</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="directions-financieres.s2.span-42" data-cms-type="text">Envoi à chaque clôture, au format attendu par votre cabinet</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="directions-financieres.s2.span-36" data-cms-type="text">Pièces déjà rattachées et lettrées</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="directions-financieres.s2.span-37" data-cms-type="text">Moins d'allers-retours et de questions à la clôture</span></li>
         </ul>
@@ -334,28 +333,28 @@
 
   <section id="pilote" style="max-width:1440px;margin:0 auto;padding:64px 40px 8px;" data-cms-section="s3">
     <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 12px;" data-cms="directions-financieres.s3.span-1" data-cms-type="text">Le pilote</span>
-    <h2 style="font-size:clamp(23px,3.8vw,38px);font-weight:800;letter-spacing:-0.02em;margin:0 0 12px;max-width:62ch;" data-cms="directions-financieres.s3.h2-1" data-cms-type="text">Un cockpit opérationnel en quatre semaines.</h2>
-    <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 26px;max-width:84ch;" data-cms="directions-financieres.s3.p-1" data-cms-type="text">Pas de projet SI : on branche vos outils existants en lecture, et le pilotage se met à jour tout seul.</p>
+    <h2 style="font-size:clamp(23px,3.8vw,38px);font-weight:800;letter-spacing:-0.02em;margin:0 0 12px;max-width:62ch;" data-cms="directions-financieres.s3.h2-2" data-cms-type="text">Un cockpit opérationnel dès le pilote.</h2>
+    <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 26px;max-width:84ch;" data-cms="directions-financieres.s3.p-8" data-cms-type="text">Pas de projet SI : on branche vos outils existants en lecture, et le pilotage se met à jour à chaque import.</p>
     <div style="border-radius:24px;background:#fff;border:1px solid #eceaf3;padding:8px 32px 24px;">
         <div class="ana-step-row" style="display:grid;grid-template-columns:140px minmax(0,1fr);gap:20px;padding:22px 0;border-top:1px solid #eceaf3;">
-          <span style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;" data-cms="directions-financieres.s3.span-2" data-cms-type="text">Semaine 1</span>
+          <span style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;" data-cms="directions-financieres.s3.span-5" data-cms-type="text">Étape 1</span>
           <div>
             <p style="margin:0 0 4px;font-size:16px;font-weight:700;" data-cms="directions-financieres.s3.p-2" data-cms-type="text">Connexion des flux</p>
             <p style="margin:0;font-size:14.5px;line-height:23px;color:#4f4d61;max-width:97ch;" data-cms="directions-financieres.s3.p-3" data-cms-type="text">Comptabilité, banques et facturation reliées en lecture seule, sans migration ni changement d'outil.</p>
           </div>
         </div>
         <div class="ana-step-row" style="display:grid;grid-template-columns:140px minmax(0,1fr);gap:20px;padding:22px 0;border-top:1px solid #eceaf3;">
-          <span style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;" data-cms="directions-financieres.s3.span-3" data-cms-type="text">Semaines 2 et 3</span>
+          <span style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;" data-cms="directions-financieres.s3.span-6" data-cms-type="text">Étape 2</span>
           <div>
             <p style="margin:0 0 4px;font-size:16px;font-weight:700;" data-cms="directions-financieres.s3.p-4" data-cms-type="text">Cockpit opérationnel</p>
-            <p style="margin:0;font-size:14.5px;line-height:23px;color:#4f4d61;max-width:97ch;" data-cms="directions-financieres.s3.p-5" data-cms-type="text">Trésorerie, runway et écarts budgétaires suivis en continu, avec les seuils et les alertes que vous définissez.</p>
+            <p style="margin:0;font-size:14.5px;line-height:23px;color:#4f4d61;max-width:97ch;" data-cms="directions-financieres.s3.p-9" data-cms-type="text">Trésorerie, runway et écarts budgétaires remis à jour à chaque import, avec les seuils et les alertes que vous définissez.</p>
           </div>
         </div>
         <div class="ana-step-row" style="display:grid;grid-template-columns:140px minmax(0,1fr);gap:20px;padding:22px 0;border-top:1px solid #eceaf3;">
-          <span style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;" data-cms="directions-financieres.s3.span-4" data-cms-type="text">Semaine 4</span>
+          <span style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;" data-cms="directions-financieres.s3.span-7" data-cms-type="text">Étape 3</span>
           <div>
             <p style="margin:0 0 4px;font-size:16px;font-weight:700;" data-cms="directions-financieres.s3.p-6" data-cms-type="text">Reporting de pilotage</p>
-            <p style="margin:0;font-size:14.5px;line-height:23px;color:#4f4d61;max-width:97ch;" data-cms="directions-financieres.s3.p-7" data-cms-type="text">Reporting comité prêt à diffuser, et transmission propre et continue à votre expert-comptable.</p>
+            <p style="margin:0;font-size:14.5px;line-height:23px;color:#4f4d61;max-width:97ch;" data-cms="directions-financieres.s3.p-10" data-cms-type="text">Reporting comité prêt à diffuser, et transmission propre à votre expert-comptable à chaque clôture.</p>
           </div>
         </div>
     </div>
@@ -373,7 +372,7 @@
       <span style="font-size:12.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#8b1fe0;" data-cms="directions-financieres.s5.span-1" data-cms-type="text">Ce qui change en direction financière</span>
     </div>
     <p class="ana-breath-q" style="font-size:40px;line-height:50px;font-weight:700;letter-spacing:-0.025em;color:#16151c;margin:0;max-width:30ch;text-wrap:pretty;" data-cms="directions-financieres.s5.p-1" data-cms-type="text">Décider sur les chiffres du mois dernier, c'est piloter en regardant dans le rétroviseur.</p>
-    <p style="font-size:16.5px;line-height:27px;color:#4f4d61;margin:26px 0 0;max-width:70ch;" data-cms="directions-financieres.s5.p-2" data-cms-type="text">Des données tenues en continu changent la nature des arbitrages : on corrige pendant, plus après.</p>
+    <p style="font-size:16.5px;line-height:27px;color:#4f4d61;margin:26px 0 0;max-width:70ch;" data-cms="directions-financieres.s5.p-3" data-cms-type="text">Des données remises à jour à chaque import changent la nature des arbitrages : on corrige pendant, plus après.</p>
   </section>
 
   <section style="max-width:1440px;margin:0 auto;padding:80px 40px 96px;" data-cms-section="s6">
@@ -385,11 +384,12 @@
     </div>
   </section>
 
+  </main>
   <footer style="background:#0b0a10;color:#c9c7d4;">
     <div style="max-width:1440px;margin:0 auto;padding:56px 40px 48px;">
       <div style="display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-start;">
         <a href="index.html" style="display:flex;align-items:center;gap:9px;" data-cms="g.footer.card_index-1" data-cms-type="href">
-          <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.footer.img-1" data-cms-type="image">
+          <img src="assets/img/ana-logo-icon.png" alt="" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.footer.img-2" data-cms-type="image">
           <span style="font-size:17px;font-weight:800;color:#fff;white-space:nowrap;" data-cms="g.footer.span-1" data-cms-type="rich">Ana <span style="font-weight:600;color:#d98cf0;">finance</span></span>
         </a>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px 32px;flex:1 1 300px;min-width:0;max-width:760px;">
@@ -426,12 +426,13 @@
         <a href="mentions-legales.html#mentions-legales" style="color:#c9c7d4;" data-cms="g.footer.a-15" data-cms-type="link">Mentions légales</a>
         <a href="mentions-legales.html#confidentialite" style="color:#c9c7d4;" data-cms="g.footer.a-16" data-cms-type="link">Politique de confidentialité</a>
         <a href="mentions-legales.html#cgu" style="color:#c9c7d4;" data-cms="g.footer.a-17" data-cms-type="link">CGU / CGV</a>
+        <a href="mailto:contact@ana-finance.com" style="color:#c9c7d4;" data-cms="g.footer.a-18" data-cms-type="link">contact@ana-finance.com</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:20px;color:#a7a4b5;max-width:122ch;">
         <p style="margin:0;" data-cms="g.footer.p-1" data-cms-type="text">Ana Finance est un outil d'automatisation à destination des professionnels. Il ne se substitue ni à l'expert-comptable ni au commissaire aux comptes et ne constitue pas un conseil comptable, fiscal ou juridique ; la validation et la responsabilité des écritures restent celles du professionnel.</p>
-        <p style="margin:0;" data-cms="g.footer.p-2" data-cms-type="text">Les chiffres présentés (heures économisées, décisions autonomes, précision, coûts évités) sont issus de mesures internes sur un périmètre client anonymisé, à titre illustratif. Ils ne constituent ni une moyenne garantie ni une promesse de résultat.</p>
+        <p style="margin:0;" data-cms="g.footer.p-5" data-cms-type="text">Les estimations affichées (heures récupérées) sont indicatives : elles reposent sur une hypothèse de 55 % du temps de production repris par les agents, et ne constituent ni une moyenne garantie ni une promesse de résultat.</p>
         <p style="margin:0;" data-cms="g.footer.p-3" data-cms-type="text">Traitements réalisés par des systèmes d'IA sous supervision humaine : chaque action est journalisée, explicable et réversible. Données hébergées dans l'Union européenne ; accès bancaire en lecture seule via prestataire agréé DSP2.</p>
-        <p style="margin:0;" data-cms="g.footer.p-4" data-cms-type="rich">© 2026 Ana Finance. Tous droits réservés. Informations légales complètes sur la page <a href="mentions-legales.html#mentions-legales" style="color:#8b1fe0;">Mentions légales</a>.</p>
+        <p style="margin:0;" data-cms="g.footer.p-6" data-cms-type="rich">© 2026 Ana Finance. Tous droits réservés. Informations légales complètes sur la page <a href="mentions-legales.html#mentions-legales" style="color:#d98cf0;text-decoration:underline;">Mentions légales</a>.</p>
       </div>
     </div>
   </footer>

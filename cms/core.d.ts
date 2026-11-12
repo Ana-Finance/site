@@ -1,16 +1,17 @@
 // Types du moteur de contenu partagé (cms/core.js).
 export type FieldType = 'text' | 'rich' | 'link' | 'href' | 'image' | 'slot';
 export type FieldValue = { text?: string; html?: string; href?: string; src?: string; alt?: string; mediaId?: string; width?: number; height?: number };
-export type Seo = { title?: string; description?: string; ogTitle?: string; ogDescription?: string; ogImage?: FieldValue | null; canonical?: string; noindex?: boolean };
-export type Content = { fields: Record<string, FieldValue>; sections?: { order: string[]; hidden: string[] }; seo?: Seo };
+export type Seo = { title?: string; description?: string; ogTitle?: string; ogDescription?: string; ogImage?: FieldValue | null; canonical?: string; noindex?: boolean; rev?: number };
+export type Content = { fields: Record<string, FieldValue>; sections?: { order: string[]; hidden: string[]; shown?: string[] }; seo?: Seo };
 export type ModelField = { key: string; type: FieldType; label: string; tag: string; region: 'header' | 'footer' | 'section' | 'page'; section: string | null; global: boolean; value: FieldValue };
-export type ModelSection = { key: string; label: string; id: string | null };
+export type ModelSection = { key: string; label: string; id: string | null; hiddenByDefault?: boolean };
 export type Model = { fields: ModelField[]; sections: ModelSection[]; seo: Seo };
 type ApplyOpts = { resolveMedia?: (v: FieldValue) => string | null | undefined; siteUrl?: string; pagePath?: string };
 
 export const ATTR: string;
 export const TYPE_ATTR: string;
 export const SECTION_ATTR: string;
+export const DEFAULT_HIDDEN_ATTR: string;
 export const FIELD_TYPES: FieldType[];
 export function isSafeUrl(url: string, opts?: { allowData?: boolean }): boolean;
 export function sanitizeRich(html: string, doc: Document): string;
@@ -19,9 +20,11 @@ export function readValue(el: Element, type?: FieldType): FieldValue;
 export function extractModel(doc: Document): Model;
 export function extractContent(doc: Document, opts?: { scope?: 'page' | 'global' | 'all' }): Content;
 export function readSeo(doc: Document): Seo;
+export function seoRevision(doc: Document): number;
 export function applySeo(doc: Document, seo: Seo, opts?: ApplyOpts): void;
 export function applyValue(el: Element, value: FieldValue, opts?: ApplyOpts & { type?: FieldType }): void;
 export function applySections(doc: Document, sections: Content['sections']): void;
+export function isSectionHidden(sections: Content['sections'] | null | undefined, key: string, hiddenByDefault?: boolean): boolean;
 export function applyContent(doc: Document, content: Partial<Content>, opts?: ApplyOpts): { applied: number; missing: string[] };
 export function mergeContent(globalContent: Partial<Content> | null, pageContent: Partial<Content> | null): Content;
 export function diffContent(a: Partial<Content> | null, b: Partial<Content> | null): { fields: string[]; seo: boolean; sections: boolean; count: number };

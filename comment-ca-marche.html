@@ -11,9 +11,7 @@
 <meta property="og:description" content="De la connexion de vos outils à la validation humaine : comment Ana Finance automatise vos tâches financières étape par étape.">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/img/ana-logo-icon.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 <style>
     html { scroll-behavior: smooth; }
@@ -91,8 +89,8 @@
   <div data-on-mouseleave="closeMenu" style="position:fixed;top:0;left:0;right:0;z-index:60;background:#fff;border-bottom:1px solid #eceaf3;z-index:60;">
     <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 40px;max-width:1440px;margin:0 auto;">
       <a href="index.html" style="display:flex;align-items:center;gap:9px;" data-cms="comment-ca-marche.header.card_index-1" data-cms-type="href">
-        <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.header.img-1" data-cms-type="image">
-        <span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;color:#16151c;" data-cms="g.header.span-1" data-cms-type="rich">Ana <span style="font-weight:600;background:linear-gradient(90deg,#8b1fe0,#f23fd6);-webkit-background-clip:text;background-clip:text;color:transparent;">finance</span></span>
+        <img src="assets/img/ana-logo-icon.png" alt="" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.header.img-2" data-cms-type="image">
+        <span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;color:#16151c;white-space:nowrap;" data-cms="g.header.span-1" data-cms-type="rich">Ana <span style="font-weight:600;background:linear-gradient(90deg,#8b1fe0,#f23fd6);-webkit-background-clip:text;background-clip:text;color:transparent;">finance</span></span>
       </a>
       <div class="ana-nav-links" style="display:flex;align-items:center;gap:4px;">
         <button type="button" data-on-mouseenter="openFeatures" data-on-click="openFeatures" data-b-style="display:flex;align-items:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:{{ wgtFeatures }};border-radius:999px;padding:9px 12px;white-space:nowrap;color:{{ colFeatures }};background:{{ bgFeatures }};" data-cms="g.header.button-1" data-cms-type="text">Fonctionnalités<svg width="14" height="14" style="flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
@@ -159,7 +157,7 @@
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 7-8"></path><path d="M3 21h18"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
               <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-12" data-cms-type="text">Directions financières</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-13" data-cms-type="text">Trésorerie, écarts budgétaires et reporting comité tenus à jour en continu.</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-16" data-cms-type="text">Trésorerie, écarts budgétaires et reporting comité remis à jour à chaque import.</span>
             </span>
           </a>
           <a href="pme-et-startups.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_pme_et_startups-1" data-cms-type="href">
@@ -203,6 +201,7 @@
 
   </div>
 
+  <main>
   <nav id="main" aria-label="Fil d'ariane" style="max-width:1440px;margin:0 auto;padding:22px 40px 0;display:flex;align-items:center;gap:8px;font-size:13px;color:#5b586b;">
     <a href="index.html" style="color:#5b586b;" data-cms="comment-ca-marche.page.a-2" data-cms-type="link">Accueil</a>
     <span aria-hidden="true">/</span>
@@ -215,7 +214,7 @@
     <h1 class="ana-hero-h1" style="font-size:clamp(28px,5.2vw,57px);line-height:1.14;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:820px;" data-cms="comment-ca-marche.s1.h1-1" data-cms-type="text">Ce qu'Ana fait, et comment elle le fait.</h1>
     <p style="font-size:17.5px;line-height:28px;max-width:84ch;margin:20px 0 0;color:#514f60;" data-cms="comment-ca-marche.s1.p-1" data-cms-type="text">Sept tâches reprises par les agents, connectées à vos outils existants en quatre étapes. Aucun projet informatique, aucune migration : vous gardez la validation.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;">
-      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="comment-ca-marche.s1.span-2" data-cms-type="text">Pilote en 4 à 5 semaines</span>
+      <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="comment-ca-marche.s1.span-5" data-cms-type="text">Pilote de quelques semaines</span>
       <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="comment-ca-marche.s1.span-3" data-cms-type="text">Sans engagement</span>
       <span style="background:#fff;border:1px solid #eceaf3;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:#3f3d4d;" data-cms="comment-ca-marche.s1.span-4" data-cms-type="text">Vous gardez la validation</span>
     </div>
@@ -243,12 +242,12 @@
           </span>
           <span class="ana-task-compare" style="display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #f0eef6;">
             <span style="display:flex;gap:10px;align-items:baseline;">
-              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-5" data-cms-type="text">Aujourd'hui</span>
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-5" data-cms-type="text">Aujourd'hui</span>
               <span style="font-size:14.5px;line-height:22px;color:#4f4d61;" data-cms="comment-ca-marche.s2.span-6" data-cms-type="text">Des heures de pointage ligne par ligne, chaque semaine.</span>
             </span>
             <span style="display:flex;gap:10px;align-items:baseline;">
               <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-7" data-cms-type="text">Avec Ana</span>
-              <span style="font-size:14.5px;line-height:22px;color:#16151c;font-weight:600;" data-cms="comment-ca-marche.s2.span-8" data-cms-type="text">Rapproché en continu, écarts isolés et expliqués.</span>
+              <span style="font-size:14.5px;line-height:22px;color:#16151c;font-weight:600;" data-cms="comment-ca-marche.s2.span-77" data-cms-type="text">Rapproché à chaque import, écarts isolés et expliqués.</span>
             </span>
           </span>
         </summary>
@@ -272,7 +271,7 @@
           </span>
           <span class="ana-task-compare" style="display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #f0eef6;">
             <span style="display:flex;gap:10px;align-items:baseline;">
-              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-15" data-cms-type="text">Aujourd'hui</span>
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-15" data-cms-type="text">Aujourd'hui</span>
               <span style="font-size:14.5px;line-height:22px;color:#4f4d61;" data-cms="comment-ca-marche.s2.span-16" data-cms-type="text">Un fichier Excel, des relances oubliées, du retard de paiement.</span>
             </span>
             <span style="display:flex;gap:10px;align-items:baseline;">
@@ -301,7 +300,7 @@
           </span>
           <span class="ana-task-compare" style="display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #f0eef6;">
             <span style="display:flex;gap:10px;align-items:baseline;">
-              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-25" data-cms-type="text">Aujourd'hui</span>
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-25" data-cms-type="text">Aujourd'hui</span>
               <span style="font-size:14.5px;line-height:22px;color:#4f4d61;" data-cms="comment-ca-marche.s2.span-26" data-cms-type="text">Courir après les justificatifs, ressaisir les factures.</span>
             </span>
             <span style="display:flex;gap:10px;align-items:baseline;">
@@ -330,7 +329,7 @@
           </span>
           <span class="ana-task-compare" style="display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #f0eef6;">
             <span style="display:flex;gap:10px;align-items:baseline;">
-              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-35" data-cms-type="text">Aujourd'hui</span>
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-35" data-cms-type="text">Aujourd'hui</span>
               <span style="font-size:14.5px;line-height:22px;color:#4f4d61;" data-cms="comment-ca-marche.s2.span-36" data-cms-type="text">Contrôles manuels dans l'urgence avant échéance.</span>
             </span>
             <span style="display:flex;gap:10px;align-items:baseline;">
@@ -353,13 +352,13 @@
             <span class="ana-pill" style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V8l8-5 8 5v12"></path><path d="M9 20v-6h6v6"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:7px;">
               <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;" data-cms="comment-ca-marche.s2.span-42" data-cms-type="text">Clôture mensuelle</span>
-              <span style="font-size:14.5px;line-height:23px;color:#4f4d61;max-width:59ch;" data-cms="comment-ca-marche.s2.span-43" data-cms-type="text">Cut-off, provisions, abonnements récurrents : Ana prépare, justifie, et laisse une journal complet.</span>
+              <span style="font-size:14.5px;line-height:23px;color:#4f4d61;max-width:59ch;" data-cms="comment-ca-marche.s2.span-78" data-cms-type="text">Cut-off, provisions, abonnements récurrents : Ana prépare, justifie, et laisse un journal complet.</span>
               <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;" data-cms="comment-ca-marche.s2.span-44" data-cms-type="text">Comment Ana procède <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
             </span>
           </span>
           <span class="ana-task-compare" style="display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #f0eef6;">
             <span style="display:flex;gap:10px;align-items:baseline;">
-              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-45" data-cms-type="text">Aujourd'hui</span>
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-45" data-cms-type="text">Aujourd'hui</span>
               <span style="font-size:14.5px;line-height:22px;color:#4f4d61;" data-cms="comment-ca-marche.s2.span-46" data-cms-type="text">Une semaine sous tension, des régularisations à la chaîne.</span>
             </span>
             <span style="display:flex;gap:10px;align-items:baseline;">
@@ -388,7 +387,7 @@
           </span>
           <span class="ana-task-compare" style="display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #f0eef6;">
             <span style="display:flex;gap:10px;align-items:baseline;">
-              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-55" data-cms-type="text">Aujourd'hui</span>
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-55" data-cms-type="text">Aujourd'hui</span>
               <span style="font-size:14.5px;line-height:22px;color:#4f4d61;" data-cms="comment-ca-marche.s2.span-56" data-cms-type="text">Un reporting reconstruit à la main chaque mois.</span>
             </span>
             <span style="display:flex;gap:10px;align-items:baseline;">
@@ -399,7 +398,7 @@
         </summary>
         <div class="ana-detail" style="margin-top:20px;padding:20px 24px;border-radius:16px;background:#f8f9fc;">
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s2.span-59" data-cms-type="text">Trésorerie et runway recalculés à chaque flux, projection à 3, 6 et 12 mois</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s2.span-79" data-cms-type="text">Trésorerie et runway recalculés à chaque import, projection à 3, 6 et 12 mois</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s2.span-60" data-cms-type="text">Écarts réel / budget par poste, commentés en langage clair</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s2.span-61" data-cms-type="text">Export au format attendu par votre comité ou votre client</span></li>
         </ul>
@@ -411,18 +410,18 @@
             <span class="ana-pill" style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 16H3l9-16z"></path><path d="M12 10v4M12 17h.01"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:7px;">
               <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;" data-cms="comment-ca-marche.s2.span-62" data-cms-type="text">Détection d'anomalies</span>
-              <span style="font-size:14.5px;line-height:23px;color:#4f4d61;max-width:59ch;" data-cms="comment-ca-marche.s2.span-63" data-cms-type="text">Doublons, montants aberrants, fournisseurs inhabituels, risques de fraude : Ana surveille en continu.</span>
+              <span style="font-size:14.5px;line-height:23px;color:#4f4d61;max-width:59ch;" data-cms="comment-ca-marche.s2.span-80" data-cms-type="text">Doublons, montants aberrants, fournisseurs inhabituels, risques de fraude : Ana contrôle chaque import.</span>
               <span style="display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#8b1fe0;" data-cms="comment-ca-marche.s2.span-64" data-cms-type="text">Comment Ana procède <svg class="ana-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
             </span>
           </span>
           <span class="ana-task-compare" style="display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #f0eef6;">
             <span style="display:flex;gap:10px;align-items:baseline;">
-              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-65" data-cms-type="text">Aujourd'hui</span>
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-65" data-cms-type="text">Aujourd'hui</span>
               <span style="font-size:14.5px;line-height:22px;color:#4f4d61;" data-cms="comment-ca-marche.s2.span-66" data-cms-type="text">Les erreurs se découvrent au contrôle, trop tard.</span>
             </span>
             <span style="display:flex;gap:10px;align-items:baseline;">
               <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;min-width:78px;flex:none;" data-cms="comment-ca-marche.s2.span-67" data-cms-type="text">Avec Ana</span>
-              <span style="font-size:14.5px;line-height:22px;color:#16151c;font-weight:600;" data-cms="comment-ca-marche.s2.span-68" data-cms-type="text">Alerte le jour même, triée par sévérité.</span>
+              <span style="font-size:14.5px;line-height:22px;color:#16151c;font-weight:600;" data-cms="comment-ca-marche.s2.span-81" data-cms-type="text">Alerte dès l'import, triée par sévérité.</span>
             </span>
           </span>
         </summary>
@@ -430,7 +429,7 @@
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s2.span-69" data-cms-type="text">Doublons de facture et montants hors tendance historique</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s2.span-70" data-cms-type="text">Fournisseurs inconnus et changements de coordonnées bancaires</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s2.span-71" data-cms-type="text">Alerte le jour même, classée par sévérité, paiement bloqué si besoin</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s2.span-82" data-cms-type="text">Alerte dès l'import, classée par sévérité, avec recommandation de suspendre le paiement si besoin</span></li>
         </ul>
         </div>
       </details>
@@ -439,12 +438,12 @@
     <div data-if="viewDay" hidden>
       <div style="border-radius:24px;background:#0b0a10;padding:40px 44px 32px;">
         <h3 style="font-size:26px;font-weight:800;letter-spacing:-0.02em;color:#fff;margin:0 0 8px;max-width:54ch;" data-cms="comment-ca-marche.s2.h3-1" data-cms-type="text">Le travail est déjà fait quand vous ouvrez votre poste.</h3>
-        <p style="font-size:15.5px;line-height:25px;color:#b6b3c4;margin:0 0 16px;max-width:78ch;" data-cms="comment-ca-marche.s2.p-2" data-cms-type="text">Les agents travaillent en continu. Vous arrivez sur des décisions, pas sur une pile de saisie.</p>
+        <p style="font-size:15.5px;line-height:25px;color:#b6b3c4;margin:0 0 16px;max-width:78ch;" data-cms="comment-ca-marche.s2.p-13" data-cms-type="text">Après chaque import, les agents déroulent leur travail. Vous arrivez sur des décisions, pas sur une pile de saisie.</p>
         <div class="ana-hour-row" style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:20px;padding:22px 0;border-top:1px solid rgba(255,255,255,0.14);">
           <span style="font-size:15px;font-weight:700;color:#d98cf0;font-variant-numeric:tabular-nums;" data-cms="comment-ca-marche.s2.span-72" data-cms-type="text">07:40</span>
           <div>
-            <p style="margin:0 0 5px;font-size:16px;font-weight:700;color:#fff;" data-cms="comment-ca-marche.s2.p-3" data-cms-type="text">Les flux de la veille sont rapprochés</p>
-            <p style="margin:0;font-size:14.5px;line-height:23px;color:#b6b3c4;max-width:84ch;" data-cms="comment-ca-marche.s2.p-4" data-cms-type="text">Ana a intégré les mouvements bancaires, imputé les pièces et placé les quelques écarts restants dans votre file de validation.</p>
+            <p style="margin:0 0 5px;font-size:16px;font-weight:700;color:#fff;" data-cms="comment-ca-marche.s2.p-14" data-cms-type="text">Le dernier import est rapproché</p>
+            <p style="margin:0;font-size:14.5px;line-height:23px;color:#b6b3c4;max-width:84ch;" data-cms="comment-ca-marche.s2.p-15" data-cms-type="text">Ana a intégré les écritures du dernier import, imputé les pièces et placé les quelques écarts restants dans votre file de validation.</p>
           </div>
         </div>
         <div class="ana-hour-row" style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:20px;padding:22px 0;border-top:1px solid rgba(255,255,255,0.14);">
@@ -458,7 +457,7 @@
           <span style="font-size:15px;font-weight:700;color:#d98cf0;font-variant-numeric:tabular-nums;" data-cms="comment-ca-marche.s2.span-74" data-cms-type="text">11:00</span>
           <div>
             <p style="margin:0 0 5px;font-size:16px;font-weight:700;color:#fff;" data-cms="comment-ca-marche.s2.p-7" data-cms-type="text">Une anomalie est signalée</p>
-            <p style="margin:0;font-size:14.5px;line-height:23px;color:#b6b3c4;max-width:84ch;" data-cms="comment-ca-marche.s2.p-8" data-cms-type="text">Un fournisseur facture deux fois la même prestation. Ana bloque le paiement et joint les deux pièces côte à côte.</p>
+            <p style="margin:0;font-size:14.5px;line-height:23px;color:#b6b3c4;max-width:84ch;" data-cms="comment-ca-marche.s2.p-16" data-cms-type="text">Un fournisseur facture deux fois la même prestation. Ana signale le doublon, recommande de suspendre le paiement et joint les deux pièces côte à côte.</p>
           </div>
         </div>
         <div class="ana-hour-row" style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:20px;padding:22px 0;border-top:1px solid rgba(255,255,255,0.14);">
@@ -510,7 +509,7 @@
         </ul>
         </div>
         <div style="border-radius:16px;background:#f8f9fc;border:1px solid #eceaf3;padding:24px;align-self:start;">
-          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;margin:0 0 10px;" data-cms="comment-ca-marche.s4.p-2" data-cms-type="text">À retenir</p>
+          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;margin:0 0 10px;" data-cms="comment-ca-marche.s4.p-2" data-cms-type="text">À retenir</p>
           <p style="margin:0;font-size:14.5px;line-height:23px;color:#3f3d4d;" data-cms="comment-ca-marche.s4.p-3" data-cms-type="text">Aucun identifiant bancaire ne transite par Ana, et aucun paiement ne peut être initié.</p>
         </div>
       </div>
@@ -522,7 +521,7 @@
             <span style="width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;" data-cms="comment-ca-marche.s4.span-6" data-cms-type="text">02</span>
             <h3 style="font-size:23px;font-weight:800;letter-spacing:-0.02em;margin:0;" data-cms="comment-ca-marche.s4.h3-2" data-cms-type="text">Exécution</h3>
           </div>
-          <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 22px;max-width:84ch;" data-cms="comment-ca-marche.s4.p-4" data-cms-type="text">Les agents traitent la saisie, les rapprochements, les régularisations et les relances, en continu et la nuit.</p>
+          <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 22px;max-width:84ch;" data-cms="comment-ca-marche.s4.p-13" data-cms-type="text">Les agents traitent la saisie, les rapprochements, les régularisations et les relances à chaque import.</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s4.span-7" data-cms-type="text">Chaque action est justifiée par sa pièce source</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s4.span-8" data-cms-type="text">Les cas ambigus sont mis de côté, pas devinés</span></li>
@@ -530,7 +529,7 @@
         </ul>
         </div>
         <div style="border-radius:16px;background:#f8f9fc;border:1px solid #eceaf3;padding:24px;align-self:start;">
-          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;margin:0 0 10px;" data-cms="comment-ca-marche.s4.p-5" data-cms-type="text">À retenir</p>
+          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;margin:0 0 10px;" data-cms="comment-ca-marche.s4.p-5" data-cms-type="text">À retenir</p>
           <p style="margin:0;font-size:14.5px;line-height:23px;color:#3f3d4d;" data-cms="comment-ca-marche.s4.p-6" data-cms-type="text">Vous réglez ce qu'Ana fait seule, tâche par tâche, et vous pouvez le changer à tout moment.</p>
         </div>
       </div>
@@ -550,7 +549,7 @@
         </ul>
         </div>
         <div style="border-radius:16px;background:#f8f9fc;border:1px solid #eceaf3;padding:24px;align-self:start;">
-          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;margin:0 0 10px;" data-cms="comment-ca-marche.s4.p-8" data-cms-type="text">À retenir</p>
+          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;margin:0 0 10px;" data-cms="comment-ca-marche.s4.p-8" data-cms-type="text">À retenir</p>
           <p style="margin:0;font-size:14.5px;line-height:23px;color:#3f3d4d;" data-cms="comment-ca-marche.s4.p-9" data-cms-type="text">C'est votre signature au bout de la chaîne : la validation reste humaine, toujours.</p>
         </div>
       </div>
@@ -566,11 +565,11 @@
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s4.span-15" data-cms-type="text">Journal complet exportable en CSV et PDF</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s4.span-16" data-cms-type="text">Note de synthèse commentée pour le comité</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s4.span-17" data-cms-type="text">Transmission continue à l'expert-comptable</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s4.span-18" data-cms-type="text">Transmission à l'expert-comptable à chaque clôture</span></li>
         </ul>
         </div>
         <div style="border-radius:16px;background:#f8f9fc;border:1px solid #eceaf3;padding:24px;align-self:start;">
-          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9b98a8;margin:0 0 10px;" data-cms="comment-ca-marche.s4.p-11" data-cms-type="text">À retenir</p>
+          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6880;margin:0 0 10px;" data-cms="comment-ca-marche.s4.p-11" data-cms-type="text">À retenir</p>
           <p style="margin:0;font-size:14.5px;line-height:23px;color:#3f3d4d;" data-cms="comment-ca-marche.s4.p-12" data-cms-type="text">Le rapport est relu, pas reconstruit : le temps passe du montage à l'analyse.</p>
         </div>
       </div>
@@ -594,7 +593,7 @@
         <div class="ana-detail" style="margin-top:18px;padding-top:18px;border-top:1px solid #eceaf3;">
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:23px;color:#3f3d4d;">
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s5.span-5" data-cms-type="text">Un accès en lecture à vos outils et 3 à 5 dossiers représentatifs</span></li>
-          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s5.span-6" data-cms-type="text">Un référent qui valide et corrige la première semaine</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s5.span-14" data-cms-type="text">Un référent qui valide et corrige au démarrage</span></li>
           <li style="display:flex;gap:10px;align-items:flex-start;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b1fe0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-cms="comment-ca-marche.s5.span-7" data-cms-type="text">Une heure de cadrage pour vos règles, seuils et conventions</span></li>
         </ul>
         </div>
@@ -635,11 +634,12 @@
     </div>
   </section>
 
+  </main>
   <footer style="background:#0b0a10;color:#c9c7d4;">
     <div style="max-width:1440px;margin:0 auto;padding:56px 40px 48px;">
       <div style="display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-start;">
         <a href="index.html" style="display:flex;align-items:center;gap:9px;" data-cms="g.footer.card_index-1" data-cms-type="href">
-          <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.footer.img-1" data-cms-type="image">
+          <img src="assets/img/ana-logo-icon.png" alt="" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.footer.img-2" data-cms-type="image">
           <span style="font-size:17px;font-weight:800;color:#fff;white-space:nowrap;" data-cms="g.footer.span-1" data-cms-type="rich">Ana <span style="font-weight:600;color:#d98cf0;">finance</span></span>
         </a>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px 32px;flex:1 1 300px;min-width:0;max-width:760px;">
@@ -676,12 +676,13 @@
         <a href="mentions-legales.html#mentions-legales" style="color:#c9c7d4;" data-cms="g.footer.a-15" data-cms-type="link">Mentions légales</a>
         <a href="mentions-legales.html#confidentialite" style="color:#c9c7d4;" data-cms="g.footer.a-16" data-cms-type="link">Politique de confidentialité</a>
         <a href="mentions-legales.html#cgu" style="color:#c9c7d4;" data-cms="g.footer.a-17" data-cms-type="link">CGU / CGV</a>
+        <a href="mailto:contact@ana-finance.com" style="color:#c9c7d4;" data-cms="g.footer.a-18" data-cms-type="link">contact@ana-finance.com</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:20px;color:#a7a4b5;max-width:122ch;">
         <p style="margin:0;" data-cms="g.footer.p-1" data-cms-type="text">Ana Finance est un outil d'automatisation à destination des professionnels. Il ne se substitue ni à l'expert-comptable ni au commissaire aux comptes et ne constitue pas un conseil comptable, fiscal ou juridique ; la validation et la responsabilité des écritures restent celles du professionnel.</p>
-        <p style="margin:0;" data-cms="g.footer.p-2" data-cms-type="text">Les chiffres présentés (heures économisées, décisions autonomes, précision, coûts évités) sont issus de mesures internes sur un périmètre client anonymisé, à titre illustratif. Ils ne constituent ni une moyenne garantie ni une promesse de résultat.</p>
+        <p style="margin:0;" data-cms="g.footer.p-5" data-cms-type="text">Les estimations affichées (heures récupérées) sont indicatives : elles reposent sur une hypothèse de 55 % du temps de production repris par les agents, et ne constituent ni une moyenne garantie ni une promesse de résultat.</p>
         <p style="margin:0;" data-cms="g.footer.p-3" data-cms-type="text">Traitements réalisés par des systèmes d'IA sous supervision humaine : chaque action est journalisée, explicable et réversible. Données hébergées dans l'Union européenne ; accès bancaire en lecture seule via prestataire agréé DSP2.</p>
-        <p style="margin:0;" data-cms="g.footer.p-4" data-cms-type="rich">© 2026 Ana Finance. Tous droits réservés. Informations légales complètes sur la page <a href="mentions-legales.html#mentions-legales" style="color:#8b1fe0;">Mentions légales</a>.</p>
+        <p style="margin:0;" data-cms="g.footer.p-6" data-cms-type="rich">© 2026 Ana Finance. Tous droits réservés. Informations légales complètes sur la page <a href="mentions-legales.html#mentions-legales" style="color:#d98cf0;text-decoration:underline;">Mentions légales</a>.</p>
       </div>
     </div>
   </footer>

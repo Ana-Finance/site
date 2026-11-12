@@ -86,6 +86,7 @@ export function startFakeSupabase(port = 54321) {
       if (fn === 'submit_lead') {
         if (!body.p_consent) return pgErr('CONSENT_REQUIRED');
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.p_email || '')) return pgErr('INVALID_EMAIL');
+        if (body.p_email === 'trop@test.fr') return pgErr('RATE_LIMITED'); // refus serveur, pour tester l'affichage de l'erreur
         const id = randomUUID();
         db.leads.push({ id, form: body.p_form, name: body.p_name, email: body.p_email, company: body.p_company, phone: body.p_phone, profile: body.p_profile, message: body.p_message, page: body.p_page, created_at: new Date().toISOString() });
         return send(200, id);

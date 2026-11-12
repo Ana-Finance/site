@@ -41,7 +41,7 @@
   window.__anaAnalytics = api;
   window.anaAnalytics = api;
 
-  // Clics commerciaux : téléphone, e-mail, demande de démo, accès plateforme, ou attribut data-ana-event.
+  // Clics commerciaux : téléphone, e-mail, demande de démo, accès à l'application, ou attribut data-ana-event.
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest && e.target.closest('a[href], [data-ana-event]');
     if (!a) return;
@@ -51,9 +51,10 @@
     if (/^tel:/i.test(href)) api.track('click_phone');
     else if (/^mailto:/i.test(href)) api.track('click_email');
     else if (/(^|\/)demo\.html/i.test(href)) api.track('cta_demo');
-    else if (/anafinance\.lovable\.app/i.test(href)) api.track('click_platform');
+    else if (/^https:\/\/app\.ana-finance\.com(\/|$)/i.test(href)) api.track('click_platform');
   }, true);
 
+  var CONTACT = 'contact@ana-finance.com';
   var ERRORS = {
     CONSENT_REQUIRED: 'Merci de cocher la case de consentement.',
     INVALID_EMAIL: 'Adresse e-mail invalide.',
@@ -69,9 +70,11 @@
     var key = meta('ana:supabase-key');
     if (!url || !key || preview) return Promise.resolve({ sent: false, configured: false });
     var v = function (n) { var el = form.elements[n]; return el ? (el.type === 'checkbox' ? el.checked : String(el.value || '').trim()) : null; };
+    var lien = v('lien');
+    var message = [v('message'), lien ? 'Lien : ' + lien : ''].filter(Boolean).join('\n\n');
     var body = {
       p_form: kind, p_name: v('nom') || '', p_email: v('email') || '', p_company: v('societe') || null, p_phone: v('tel') || null,
-      p_profile: v('profil') || null, p_message: v('message') || null, p_consent: v('consent') === true, p_page: pageName()
+      p_profile: v('profil') || null, p_message: message || null, p_consent: v('consent') === true, p_page: pageName()
     };
     return fetch(url.replace(/\/$/, '') + '/rest/v1/rpc/submit_lead', {
       method: 'POST',
@@ -81,8 +84,8 @@
       if (res.ok) return { sent: true, configured: true };
       return res.json().catch(function () { return {}; }).then(function (j) {
         var code = Object.keys(ERRORS).filter(function (k) { return (j.message || '').indexOf(k) > -1; })[0];
-        throw new Error(ERRORS[code] || 'L\'envoi a échoué. Réessayez ou écrivez-nous directement.');
+        throw new Error(ERRORS[code] || 'L\'envoi a échoué. Réessayez ou écrivez-nous à ' + CONTACT + '.');
       });
-    }, function () { throw new Error('Connexion impossible. Vérifiez votre réseau et réessayez.'); });
+    }, function () { throw new Error('Connexion impossible. Vérifiez votre réseau et réessayez, ou écrivez-nous à ' + CONTACT + '.'); });
   };
 })();

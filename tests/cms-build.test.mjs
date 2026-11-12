@@ -40,6 +40,18 @@ describe('build du site avec le contenu initial', () => {
     });
   }
 
+  it('page 404 aux couleurs du site, non indexée et sans clé du CMS', () => {
+    const html = readFileSync(join(dir, '404.html'), 'utf8');
+    const doc = new JSDOM(html).window.document;
+    expect(doc.title).toBe('Page introuvable — Ana Finance');
+    expect(doc.querySelector('meta[name="robots"]').getAttribute('content')).toBe('noindex');
+    expect(doc.querySelector('nav'), 'en-tête du site').not.toBeNull();
+    expect(doc.querySelector('footer'), 'pied de page du site').not.toBeNull();
+    expect(doc.querySelector('main h1').textContent).toContain("n'existe pas");
+    expect(doc.querySelector('[data-cms]')).toBeNull();
+    expect(html).toContain('<base href=');
+  });
+
   it('écrit les fichiers techniques', () => {
     for (const f of ['404.html', 'robots.txt', 'cms-publication.json', 'assets/css/site.css', '.nojekyll', 'cms/core.js']) expect(existsSync(join(dir, f)), f).toBe(true);
     expect(JSON.parse(readFileSync(join(dir, 'cms-publication.json'), 'utf8')).publication_id).toBe('test-publication');
@@ -47,35 +59,15 @@ describe('build du site avec le contenu initial', () => {
 });
 
 describe('annotation du HTML source', () => {
-  // Dernier commit avant l'introduction du CMS : référence fixe du HTML d'origine.
-  const PRE_CMS = '521a2bab98b5dababc882df93565bf41ee672a95';
-  it('ne modifie que des attributs data-cms* par rapport au site d\'origine', () => {
-    let original;
-    try { original = execFileSync('git', ['show', PRE_CMS + ':index.html'], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { return; } // historique absent (CI shallow)
-    // Changements volontaires : « Accéder à la plateforme » (lien vers l'app) remplacé par « Se connecter »
-    // (/auth) + « Créer un compte » (/inscription), en-tête et menu mobile ; domaine de l'app.
-    const ANCIEN_HAUT = '<a href="https://app.ana-finance.com/" target="_blank" rel="noopener" style="text-decoration:none;font-size:14px;font-weight:600;color:#16151c;white-space:nowrap;" class="ana-nav-platform">Accéder à la plateforme</a>';
-    const ANCIEN_MOBILE = '<a href="https://app.ana-finance.com/" target="_blank" rel="noopener" style="padding:13px 4px;font-size:15.5px;font-weight:600;color:#16151c;text-decoration:none;">Accéder à la plateforme</a>';
-    const strip = (s) => s.replace(/ data-cms(-type|-section)?="[^"]*"/g, '')
-      .replace(/<a href="https:\/\/app\.ana-finance\.com\/auth" style="text-decoration:none;[^"]*" class="ana-nav-platform">Se connecter<\/a>\r?\n\s*<a href="https:\/\/app\.ana-finance\.com\/inscription"[^>]*class="ana-nav-platform">Créer un compte<\/a>/g, ANCIEN_HAUT)
-      .replace(/<a href="https:\/\/app\.ana-finance\.com\/auth" style="padding:13px 4px;[^"]*">Se connecter<\/a>\r?\n\s*<a href="https:\/\/app\.ana-finance\.com\/inscription" style="padding:13px 4px;[^"]*">Créer un compte<\/a>/g, ANCIEN_MOBILE)
-      .replaceAll('https://app.ana-finance.com/', 'https://anafinance.lovable.app/');
-    // Changement volontaire : fond décoratif retiré (dégradés, grille, dessins animés « ana-bg »).
-    const sansDecor = (s) => s
-      .replace(/\n[ \t]*\.ana-canvas::(before|after) \{[^\n]*\}/g, '')
-      .replace(/\n[ \t]*@keyframes ana(Drift|FloatA|FloatB|Dash|NodePulse) \{[^\n]*\}/g, '')
-      .replace(/\n[ \t]*(\.ana-bg-|@media \(max-width: 1560px\) \{ \.ana-bg-art)[^\n]*/g, '')
-      .replace(/\n[ \t]*<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;[^"]*">[\s\S]*?\n[ \t]*<\/div>/, '')
-      .replace(' class="ana-bg-dash" d="M2 7h28"', ' d="M2 7h28"');
-    // Fichiers modifiés volontairement (envoi réel des formulaires) : vérifiés par les tests de formulaires.
-    const INTENTIONAL = new Set(['demo.html', 'ressources.html']);
-    for (const file of listPages()) {
-      if (INTENTIONAL.has(file)) continue;
-      let base;
-      try { base = execFileSync('git', ['show', PRE_CMS + ':' + file], { cwd: ROOT, stdio: 'pipe' }).toString(); } catch { continue; }
-      expect(sansDecor(strip(readFileSync(join(ROOT, file), 'utf8'))), file).toBe(sansDecor(base));
-    }
-    expect(original.length).toBeGreaterThan(0);
+  // Le contenu des pages évolue désormais dans le HTML comme dans le CMS : on ne compare plus au site
+  // d'avant le CMS. On vérifie à la place que tout élément éditable porte une clé, et qu'aucun champ
+  // modifié n'a gardé une clé dont l'ancienne valeur est encore enregistrée en base (scripts/cms-rekey.mjs).
+  it('clés à jour : aucun élément éditable sans clé, aucun champ modifié sous une ancienne clé', () => {
+    let hasBase = true;
+    try { execFileSync('git', ['rev-parse', '--verify', '--quiet', 'origin/main^{commit}'], { cwd: ROOT, stdio: 'pipe' }); } catch { hasBase = false; }
+    const args = ['scripts/cms-rekey.mjs', '--check'];
+    if (!hasBase) args.push('--base', 'HEAD'); // historique absent (CI en clone superficiel) : contrôle des clés manquantes seulement
+    execFileSync('node', args, { cwd: ROOT, stdio: 'pipe' });
   });
 
   it('clés uniques par page, sauf éléments partagés de valeur identique', () => {
@@ -119,6 +111,33 @@ describe('publication d\'une modification', () => {
   });
 });
 
+describe('textes SEO révisés dans le HTML', () => {
+  const dirOld = join(out, 'site-seo-ancien');
+  const dirNew = join(out, 'site-seo-cms');
+  const withSeo = (seo) => {
+    const pages = initialContent(ROOT);
+    const home = pages.find((p) => p.slug === 'index');
+    home.content.seo = { ...home.content.seo, ...seo };
+    return exportFrom(pages);
+  };
+  beforeAll(() => {
+    const stale = withSeo({ title: 'Ancien titre enregistré', description: 'Ancienne description' });
+    delete stale.pages.find((p) => p.slug === 'index').content.seo.rev; // contenu enregistré avant la révision du HTML
+    runBuild(stale, dirOld);
+    runBuild(withSeo({ title: 'Titre choisi dans le CMS' }), dirNew); // seo.rev à jour (lu dans le HTML)
+  });
+  it('un contenu plus ancien que la révision du HTML ne remplace pas le titre ni la description', () => {
+    const src = new JSDOM(readFileSync(join(ROOT, 'index.html'), 'utf8')).window.document;
+    const doc = new JSDOM(readFileSync(join(dirOld, 'index.html'), 'utf8')).window.document;
+    expect(doc.title).toBe(src.title);
+    expect(doc.querySelector('meta[name="description"]').getAttribute('content')).toBe(src.querySelector('meta[name="description"]').getAttribute('content'));
+  });
+  it('un contenu enregistré depuis la révision prime de nouveau', () => {
+    const doc = new JSDOM(readFileSync(join(dirNew, 'index.html'), 'utf8')).window.document;
+    expect(doc.title).toBe('Titre choisi dans le CMS');
+  });
+});
+
 describe('cms/core en mémoire', () => {
   it('assainit le HTML riche', () => {
     const doc = new JSDOM('<p data-cms="k" data-cms-type="rich">a</p>').window.document;
@@ -153,6 +172,16 @@ describe('configuration publique injectée au build', () => {
     const sitemap = readFileSync(join(dir, 'sitemap.xml'), 'utf8');
     expect(sitemap).toContain('<loc>https://ana.example/site/agents.html</loc>');
     expect(readFileSync(join(dir, 'robots.txt'), 'utf8')).toContain('Disallow: /site/admin/');
+  });
+  it('balises de partage : image par défaut du dépôt, adresse de la page, carte large', () => {
+    for (const file of ['index.html', 'agents.html']) {
+      const doc = new JSDOM(readFileSync(join(dir, file), 'utf8')).window.document;
+      const meta = (sel) => doc.head.querySelector(sel)?.getAttribute('content');
+      expect(meta('meta[property="og:image"]'), file).toBe('https://ana.example/site/assets/img/partage-ana-finance.png');
+      expect(meta('meta[property="og:url"]'), file).toBe('https://ana.example/site/' + (file === 'index.html' ? '' : file));
+      expect(meta('meta[name="twitter:card"]'), file).toBe('summary_large_image');
+    }
+    expect(existsSync(join(dir, 'assets/img/partage-ana-finance.png'))).toBe(true);
   });
 });
 

@@ -1,7 +1,8 @@
-import { BarChart3, FileText, Image, LayoutDashboard, MousePointerClick, Rocket, Settings, SearchCheck } from 'lucide-react';
+import { BarChart3, FileText, Image, Inbox, LayoutDashboard, MousePointerClick, Rocket, Settings, SearchCheck } from 'lucide-react';
 
 export const NAV = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/demandes', label: 'Demandes', icon: Inbox },
   { to: '/analytics', label: 'Analytics', icon: BarChart3 },
   { to: '/pages', label: 'Pages', icon: FileText },
   { to: '/editor', label: 'Éditeur visuel', icon: MousePointerClick },

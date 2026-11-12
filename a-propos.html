@@ -11,9 +11,7 @@
 <meta property="og:description" content="L'équipe et la mission d'Ana Finance : automatiser la finance sans jamais remplacer le jugement humain.">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/img/ana-logo-icon.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 <style>
     html { scroll-behavior: smooth; }
@@ -91,8 +89,8 @@
   <div data-on-mouseleave="closeMenu" style="position:fixed;top:0;left:0;right:0;z-index:60;background:#fff;border-bottom:1px solid #eceaf3;z-index:60;">
     <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 40px;max-width:1440px;margin:0 auto;">
       <a href="index.html" style="display:flex;align-items:center;gap:9px;" data-cms="a-propos.header.card_index-1" data-cms-type="href">
-        <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.header.img-1" data-cms-type="image">
-        <span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;color:#16151c;" data-cms="g.header.span-1" data-cms-type="rich">Ana <span style="font-weight:600;background:linear-gradient(90deg,#8b1fe0,#f23fd6);-webkit-background-clip:text;background-clip:text;color:transparent;">finance</span></span>
+        <img src="assets/img/ana-logo-icon.png" alt="" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.header.img-2" data-cms-type="image">
+        <span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;color:#16151c;white-space:nowrap;" data-cms="g.header.span-1" data-cms-type="rich">Ana <span style="font-weight:600;background:linear-gradient(90deg,#8b1fe0,#f23fd6);-webkit-background-clip:text;background-clip:text;color:transparent;">finance</span></span>
       </a>
       <div class="ana-nav-links" style="display:flex;align-items:center;gap:4px;">
         <button type="button" data-on-mouseenter="openFeatures" data-on-click="openFeatures" data-b-style="display:flex;align-items:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:{{ wgtFeatures }};border-radius:999px;padding:9px 12px;white-space:nowrap;color:{{ colFeatures }};background:{{ bgFeatures }};" data-cms="g.header.button-1" data-cms-type="text">Fonctionnalités<svg width="14" height="14" style="flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
@@ -159,7 +157,7 @@
             <span style="width:38px;height:38px;flex:none;border-radius:11px;background:#3f2569;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 7-8"></path><path d="M3 21h18"></path></svg></span>
             <span style="display:flex;flex-direction:column;gap:5px;">
               <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em;" data-cms="g.header.span-12" data-cms-type="text">Directions financières</span>
-              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-13" data-cms-type="text">Trésorerie, écarts budgétaires et reporting comité tenus à jour en continu.</span>
+              <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="g.header.span-16" data-cms-type="text">Trésorerie, écarts budgétaires et reporting comité remis à jour à chaque import.</span>
             </span>
           </a>
           <a href="pme-et-startups.html" style="display:flex;gap:14px;align-items:flex-start;color:#16151c;" data-cms="g.header.card_pme_et_startups-1" data-cms-type="href">
@@ -203,6 +201,7 @@
 
   </div>
 
+  <main>
   <section id="main" style="max-width:1440px;margin:0 auto;padding:56px 40px 0;" data-cms-section="s1">
     <div style="display:inline-flex;align-items:center;gap:8px;background:#f1ecff;border:1px solid #e4d9ff;border-radius:999px;padding:6px 14px;margin-bottom:24px;">
       <span style="width:7px;height:7px;border-radius:50%;background:#8b1fe0;"></span>
@@ -260,7 +259,7 @@
       </div>
       <div style="border-radius:16px;background:#faf8ff;border:1px solid #efeaf9;padding:22px;">
         <p style="font-size:17px;font-weight:700;margin:0 0 6px;" data-cms="a-propos.s4.p-7" data-cms-type="text">Souverain par conception</p>
-        <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="a-propos.s4.p-8" data-cms-type="text">Données pseudonymisées avant traitement, hébergement en France, RGPD intégré dès la conception.</p>
+        <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="a-propos.s4.p-9" data-cms-type="text">Données pseudonymisées avant traitement, hébergement dans l'Union européenne, RGPD intégré dès la conception.</p>
       </div>
     </div>
   </section>
@@ -338,17 +337,18 @@
   <section style="max-width:1440px;margin:0 auto;padding:72px 40px 80px;" data-cms-section="s8">
     <div style="border-radius:24px;background:linear-gradient(135deg,#0a0713 0%,#2b0a4d 45%,#8b1fe0 85%,#f23fd6 100%);padding:44px 44px 40px;color:#fff;">
       <h2 class="ana-close-h3" style="font-size:clamp(24px,4.2vw,40px);line-height:1.2;font-weight:800;letter-spacing:-0.02em;margin:0;max-width:41ch;" data-cms="a-propos.s8.h2-1" data-cms-type="text">Envie de voir ce que les agents Ana peuvent faire pour votre fonction finance ?</h2>
-      <p style="font-size:16px;line-height:26px;margin:14px 0 0;max-width:76ch;color:rgba(255,255,255,0.82);" data-cms="a-propos.s8.p-1" data-cms-type="text">Trente minutes, sur vos propres flux : on cartographie les tâches automatisables et le gain attendu.</p>
+      <p style="font-size:16px;line-height:26px;margin:14px 0 0;max-width:76ch;color:rgba(255,255,255,0.82);" data-cms="a-propos.s8.p-2" data-cms-type="text">Une courte démo, sur vos propres flux : on cartographie les tâches automatisables et le gain attendu.</p>
       <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;">
         <a href="demo.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#16151c;border:none;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:600;font-family:inherit;" data-cms="a-propos.s8.a-1" data-cms-type="link">Demander une démo</a>
       </div>
     </div>
   </section>
+  </main>
   <footer style="background:#0b0a10;color:#c9c7d4;">
     <div style="max-width:1440px;margin:0 auto;padding:56px 40px 48px;">
       <div style="display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-start;">
         <a href="index.html" style="display:flex;align-items:center;gap:9px;" data-cms="g.footer.card_index-1" data-cms-type="href">
-          <img src="assets/img/ana-logo-icon.png" alt="Ana finance" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.footer.img-1" data-cms-type="image">
+          <img src="assets/img/ana-logo-icon.png" alt="" style="width:30px;height:30px;border-radius:9px;display:block;" data-cms="g.footer.img-2" data-cms-type="image">
           <span style="font-size:17px;font-weight:800;color:#fff;white-space:nowrap;" data-cms="g.footer.span-1" data-cms-type="rich">Ana <span style="font-weight:600;color:#d98cf0;">finance</span></span>
         </a>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px 32px;flex:1 1 300px;min-width:0;max-width:760px;">
@@ -385,12 +385,13 @@
         <a href="mentions-legales.html#mentions-legales" style="color:#c9c7d4;" data-cms="g.footer.a-15" data-cms-type="link">Mentions légales</a>
         <a href="mentions-legales.html#confidentialite" style="color:#c9c7d4;" data-cms="g.footer.a-16" data-cms-type="link">Politique de confidentialité</a>
         <a href="mentions-legales.html#cgu" style="color:#c9c7d4;" data-cms="g.footer.a-17" data-cms-type="link">CGU / CGV</a>
+        <a href="mailto:contact@ana-finance.com" style="color:#c9c7d4;" data-cms="g.footer.a-18" data-cms-type="link">contact@ana-finance.com</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:20px;color:#a7a4b5;max-width:122ch;">
         <p style="margin:0;" data-cms="g.footer.p-1" data-cms-type="text">Ana Finance est un outil d'automatisation à destination des professionnels. Il ne se substitue ni à l'expert-comptable ni au commissaire aux comptes et ne constitue pas un conseil comptable, fiscal ou juridique ; la validation et la responsabilité des écritures restent celles du professionnel.</p>
-        <p style="margin:0;" data-cms="g.footer.p-2" data-cms-type="text">Les chiffres présentés (heures économisées, décisions autonomes, précision, coûts évités) sont issus de mesures internes sur un périmètre client anonymisé, à titre illustratif. Ils ne constituent ni une moyenne garantie ni une promesse de résultat.</p>
+        <p style="margin:0;" data-cms="g.footer.p-5" data-cms-type="text">Les estimations affichées (heures récupérées) sont indicatives : elles reposent sur une hypothèse de 55 % du temps de production repris par les agents, et ne constituent ni une moyenne garantie ni une promesse de résultat.</p>
         <p style="margin:0;" data-cms="g.footer.p-3" data-cms-type="text">Traitements réalisés par des systèmes d'IA sous supervision humaine : chaque action est journalisée, explicable et réversible. Données hébergées dans l'Union européenne ; accès bancaire en lecture seule via prestataire agréé DSP2.</p>
-        <p style="margin:0;" data-cms="g.footer.p-4" data-cms-type="rich">© 2026 Ana Finance. Tous droits réservés. Informations légales complètes sur la page <a href="mentions-legales.html#mentions-legales" style="color:#8b1fe0;">Mentions légales</a>.</p>
+        <p style="margin:0;" data-cms="g.footer.p-6" data-cms-type="rich">© 2026 Ana Finance. Tous droits réservés. Informations légales complètes sur la page <a href="mentions-legales.html#mentions-legales" style="color:#d98cf0;text-decoration:underline;">Mentions légales</a>.</p>
       </div>
     </div>
   </footer>

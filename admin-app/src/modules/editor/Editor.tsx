@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowDown, ArrowUp, Eye, EyeOff, Hand, Layers, Monitor, MousePointerClick, Redo2, Rocket, Save, Search, Smartphone, Tablet, Undo2, ExternalLink, PanelLeft, Globe2 } from 'lucide-react';
-import { mergeContent, type ModelField } from '@cms';
+import { isSectionHidden, mergeContent, type ModelField } from '@cms';
 import { usePageDraft } from '../../lib/draft';
 import { api } from '../../lib/api';
 import { errorMessage } from '../../lib/supabase';
@@ -82,18 +82,24 @@ export default function Editor() {
   }
 
   const sectionsOrder = st ? (st.content.sections?.order?.length ? st.content.sections.order : st.model.sections.map((s) => s.key)) : [];
-  const hidden = new Set(st?.content.sections?.hidden || []);
+  // Sections masquées par le contenu, ou masquées par défaut dans le HTML et pas encore affichées (sections.shown).
+  const explicitHidden = st?.content.sections?.hidden || [];
+  const shown = st?.content.sections?.shown || [];
+  const byDefault = (key: string) => !!st?.model.sections.find((s) => s.key === key)?.hiddenByDefault;
+  const hidden = new Set(sectionsOrder.filter((k) => isSectionHidden(st?.content.sections, k, byDefault(k))));
   const moveSection = (key: string, dir: -1 | 1) => {
     const order = [...sectionsOrder];
     const i = order.indexOf(key); const j = i + dir;
     if (i < 0 || j < 0 || j >= order.length) return;
     [order[i], order[j]] = [order[j], order[i]];
-    d.setSections({ order, hidden: [...hidden] });
+    d.setSections({ ...st?.content.sections, order, hidden: explicitHidden });
   };
   const toggleSection = (key: string) => {
-    const h = new Set(hidden);
-    if (h.has(key)) h.delete(key); else h.add(key);
-    d.setSections({ order: sectionsOrder, hidden: [...h] });
+    const without = (list: string[]) => list.filter((k) => k !== key);
+    const next = hidden.has(key)
+      ? { hidden: without(explicitHidden), shown: byDefault(key) ? [...without(shown), key] : shown }
+      : byDefault(key) ? { hidden: explicitHidden, shown: without(shown) } : { hidden: [...explicitHidden, key], shown };
+    d.setSections({ order: sectionsOrder, hidden: next.hidden, ...(next.shown.length ? { shown: next.shown } : {}) });
   };
 
   const groups = useMemo(() => {

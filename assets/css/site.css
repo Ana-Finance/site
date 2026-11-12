@@ -1,3 +1,10 @@
+/* Police Inter hébergée avec le site : aucun appel à un serveur tiers. Licence OFL, voir assets/fonts/LICENSE-Inter.txt */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url(../fonts/inter-latin-ext-wght-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url(../fonts/inter-latin-wght-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
 [data-if] { display: contents; }
 [data-if][hidden] { display: none !important; }
 /* Correctif responsive : les colonnes de la page démo ne doivent pas imposer leur largeur minimale. */
@@ -6,5 +13,37 @@
 .ana-sch-6 > * { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 600px) { .ana-two-grid { grid-template-columns: minmax(0, 1fr) !important; } }
 .ana-slot { position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
-  background: rgba(127,127,127,.08); color: #8b8899; border: 1.5px dashed rgba(127,127,127,.45);
+  background: rgba(127,127,127,.08); color: #5b586b; border: 1.5px dashed rgba(127,127,127,.45);
   font: 500 13px/1.4 Inter, system-ui, sans-serif; text-align: center; padding: 8px 14px; }
+/* Zone de contenu principal (<main>) : mêmes règles d'empilement que les enfants directs du canevas. */
+.ana-canvas > main { display: block; }
+.ana-canvas > main > * { position: relative; z-index: 1; }
+/* Téléphone : la barre fixe du bas porte déjà « Demander une démo », inutile de le répéter dans l'en-tête et le menu. */
+@media (max-width: 760px) {
+  .ana-nav-demo, .ana-mobile-panel a[href="demo.html"] { display: none !important; }
+  .ana-nav-cta-group { flex: none !important; }
+  /* Ligne de réassurance de l'accueil : une mention par ligne, sans séparateur resté seul en bout de ligne. */
+  .ana-reassurance { flex-direction: column; gap: 6px !important; }
+  .ana-reassurance > [aria-hidden="true"] { display: none; }
+}
+/* Statut d'un connecteur (pages Intégrations et Connecteurs). */
+.ana-statut { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 700; line-height: 18px; letter-spacing: 0; text-transform: none; white-space: nowrap; }
+.ana-statut::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.ana-statut-ok { background: #e6f6ec; color: #14713f; }
+.ana-statut-prevu { background: #f1eff5; color: #5b586b; }
+.ana-statut-etude { background: #f4e6ff; color: #6d28d9; }
+/* Bandeau défilant des logiciels compatibles (page Intégrations). Sans script ou sans animation, la liste reste lisible sur plusieurs lignes. */
+.ana-marquee { overflow: hidden; }
+.ana-marquee-track { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 0; margin: 0; padding: 6px 0; list-style: none; }
+.ana-marquee-track > li { flex: none; display: flex; align-items: center; margin: 0 52px 0 0; padding: 0; }
+.ana-outil, .ana-outil.ana-slot { display: flex; align-items: center; height: 34px; padding: 0; border: 0; background: none;
+  font: 700 21px/1 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; color: #6b6880; white-space: nowrap; }
+/* Un logo déposé depuis l'administration s'affiche en une seule couleur, quelle que soit sa couleur d'origine. */
+.ana-outil img { height: 100% !important; width: auto !important; max-width: 170px; object-fit: contain; filter: grayscale(1) brightness(0) opacity(.6); }
+@keyframes anaMarquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: no-preference) {
+  .ana-marquee:has(.is-loop) { -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+  .ana-marquee-track.is-loop { flex-wrap: nowrap; width: max-content; animation: anaMarquee 42s linear infinite; }
+  .ana-marquee:hover .ana-marquee-track.is-loop, .ana-marquee:focus-within .ana-marquee-track.is-loop { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) { .ana-marquee-track.is-loop > [aria-hidden="true"] { display: none; } }

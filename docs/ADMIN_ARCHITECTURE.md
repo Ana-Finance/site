@@ -58,7 +58,7 @@ Comparaison rapide :
 
 Principe :
 - Chaque élément éditable porte `data-cms="<clé>"` et `data-cms-type="text|rich|link|image|slot"`. Chaque `<section>` porte `data-cms-section="<clé>"`.
-- Les clés sont ajoutées **une fois** par un script (`scripts/cms-annotate.mjs`) puis versionnées dans le HTML : elles sont stables.
+- Les clés sont ajoutées **une fois** par un script (`scripts/cms-annotate.mjs`) puis versionnées dans le HTML : elles sont stables tant que le texte du HTML ne change pas (voir « Modifier le HTML d'une page déjà publiée » ci-dessous).
 - Header et footer partagés reçoivent des clés `g.header.*` / `g.footer.*` et sont édités **une seule fois** (pseudo-page `_global`). Si un élément du header diffère sur une page (cas réel : une description du méga-menu sur `agents.html`), il reçoit une clé locale pour ne jamais écraser silencieusement une variante.
 - Le **HTML source est le schéma** : l'admin lit le HTML déployé pour connaître les champs, la base ne stocke que les **valeurs**.
 - Une seule bibliothèque (`cms/core.js`, ESM pure, sans dépendance) applique le contenu à un `Document` : utilisée **à l'identique** par le build Node (via `linkedom`) et par la prévisualisation dans l'admin (DOM natif). Aperçu et production ne peuvent pas diverger.
@@ -74,6 +74,19 @@ Types de champs :
 | `slot` | emplacement `data-slot` vide | `{ src, alt, mediaId? }` ou vide | médiathèque + alt |
 
 Sections : masquage et réordonnancement entre sections sœurs. Le code (`<script>`, attributs `data-on-*`, `data-b-*`, `data-text`) n'est **jamais** éditable.
+Une section peut être livrée **masquée par défaut** (`data-cms-default-hidden hidden` sur la `<section>`) : elle ne s'affiche que si l'éditeur la réactive (`sections.shown`). Cas réel : les références clients de l'accueil, en attente de logos.
+
+#### Modifier le HTML d'une page déjà publiée
+
+Le build applique le contenu publié **par-dessus** le HTML : pour une clé déjà en base, c'est la valeur enregistrée qui s'affiche, même si le texte du HTML a changé depuis. Trois mécanismes évitent de devoir corriger la base à la main :
+
+| Cas | Mécanisme |
+|---|---|
+| Texte, lien ou image modifié dans le HTML | `npm run cms:rekey` donne une **nouvelle clé** à tout champ dont la valeur diffère de `origin/main` et annote les nouveaux éléments. L'ancienne valeur publiée n'a plus d'élément où s'appliquer (« clé sans élément HTML », ignorée au build). Les clés partagées `g.*` sont décidées sur `index.html` puis reprises sur toutes les pages. |
+| `<title>`, description, titre et description de partage modifiés dans le HTML | Incrémenter `<meta name="cms:seo-rev" content="N">` sur la page : un contenu SEO enregistré avant cette révision ne remplace plus ces quatre textes ; dès qu'ils sont réenregistrés depuis l'admin, c'est de nouveau l'admin qui prime. |
+| Section à ne plus afficher | `data-cms-default-hidden hidden` (voir ci-dessus). |
+
+Le test « clés à jour » (`cms-rekey --check`) échoue si un champ modifié garde son ancienne clé ou si un élément éditable n'a pas de clé. À lancer **avant** la fusion dans `main` : une fois le changement fusionné, il n'y a plus de différence à détecter.
 
 ### 3.2 Publication : génération statique (approche B) + aperçu dynamique côté admin (hybride)
 
@@ -168,7 +181,7 @@ Mono-site (pas de multi-tenant) — extensible en ajoutant une colonne `site_id`
 | `redirects` | Redirections générées lors d'un changement de slug (pages HTML de redirection au build) |
 | `site_settings` | Paramètres (général, coordonnées, réseaux, SEO global, analytics non secret) |
 | `conversion_definitions` | Événements considérés comme conversions |
-| `leads` | Envois réels des formulaires (lecture réservée aux membres) |
+| `leads` | Envois réels des formulaires : démo, contact, candidature (lecture réservée aux membres ; page « Demandes » et alerte du tableau de bord) |
 | `audit_logs` | Journal d'activité, alimenté uniquement par les fonctions SQL |
 | `analytics_cache` | Cache des réponses Analytics (non lisible par les clients) |
 
@@ -194,11 +207,11 @@ Les pages publiques **ne bougent pas** (elles restent à la racine : c'est ce qu
 /                         pages publiques (*.html) + assets/   ← inchangé, annoté data-cms
 admin-app/                application d'administration (Vite/React/TS)
   src/app/                layout, navigation, routage, auth
-  src/modules/            dashboard, analytics, pages, editor, media, seo, publications, settings
+  src/modules/            dashboard, leads (demandes reçues), analytics, pages, editor, media, seo, publications, settings
   src/components/         composants UI réutilisables
   src/lib/                client Supabase, accès données, analytics
 cms/core.js               moteur de contenu partagé (build + aperçu)
-scripts/                  cms-annotate, cms-seed, build-site, check-site
+scripts/                  cms-annotate, cms-rekey, cms-seed, build-site, check-site
 supabase/
   migrations/             schéma, RLS, RPC, storage
   functions/              publish, cms-export, analytics, admin-users (+ _shared)
@@ -229,7 +242,7 @@ docs/
 
 | Risque | Mitigation |
 |---|---|
-| Régression visuelle du site public | Test automatique « build sans modification = DOM identique à l'original » sur les 14 pages ; seuls des attributs `data-cms*` sont ajoutés aux sources |
+| Régression visuelle du site public | Test automatique « build sans modification = DOM identique à la source » sur les 14 pages ; test « clés à jour » pour qu'un texte corrigé dans le HTML ne soit pas remplacé par l'ancienne valeur publiée |
 | Désynchronisation des clés si le HTML est refondu à la main | Les clés sont dans le HTML ; `npm run check` signale les clés en double et les contenus orphelins |
 | Échec du workflow de publication | Statut `failed` visible dans l'admin avec le lien du run ; le site en ligne reste sur la version précédente |
 | Supabase gratuit mis en pause après inactivité | N'affecte pas le site public (statique). L'admin affiche l'erreur ; relance dans le tableau de bord Supabase |
@@ -257,9 +270,9 @@ docs/
 
 | Suite | Contenu | Commande |
 |---|---|---|
-| Unitaires (30) | build identique au DOM d'origine sur les 14 pages, annotation sans autre modification, assainissement HTML/URL, SEO/sitemap/JSON-LD, script de mesure sur toutes les pages, détection de clés service_role, adaptateur Plausible, périodes | `npm test` |
+| Unitaires (36) | build identique au HTML source sur les 14 pages, clés à jour (`cms-rekey --check`), page 404, révision des textes SEO, balises de partage, assainissement HTML/URL, SEO/sitemap/JSON-LD, script de mesure sur toutes les pages, détection de clés service_role, adaptateur Plausible, périodes | `npm test` |
 | SQL (~80 assertions) | anonyme, compte non invité, éditeur, admin, workflow (service_role) : lecture, brouillons, conflits, publication, finalisation, échec, restauration, médias, storage, dernier admin, formulaires et limites anti-abus | `npm run test:sql` |
-| E2E (20 scénarios) | site public sous `/site/`, formulaires réels + conversion, connexion/refus, dashboard sans faux chiffres, éditeur (sélection, édition, annuler/rétablir, sections, mobile/tablette), brouillon, publication, aperçu, éditeur sans droit de publier, mobile sans débordement, thème sombre, aucune erreur JS | `node tests/e2e/admin.e2e.mjs` |
+| E2E (24 scénarios) | site public sous `/site/`, formulaires réels (démo, contact, candidature) + conversion + refus du serveur, connexion/refus, dashboard sans faux chiffres, alerte des nouvelles demandes, éditeur (sélection, édition, annuler/rétablir, sections dont section masquée par défaut, mobile/tablette), brouillon, publication, aperçu, éditeur sans droit de publier, mobile sans débordement, thème sombre, aucune erreur JS | `node tests/e2e/admin.e2e.mjs` |
 | CI | typage, lint, unitaires, SQL (service PostgreSQL), e2e sur PR, build, `check` | `.github/workflows/deploy.yml` |
 
 Voir `docs/SETUP.md` pour la mise en service et `docs/LIMITATIONS.md` pour les limites restantes.
