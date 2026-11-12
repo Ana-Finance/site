@@ -169,10 +169,12 @@ try {
     const frame = page.frameLocator('iframe[title="Aperçu de la page"]');
     await frame.locator('h1').first().waitFor({ timeout: 10000 });
     await frame.locator('h1').first().click();
-    const box = page.locator('.editor-props textarea').first();
+    // Le grand titre est un texte enrichi (un mot en dégradé) : il se modifie dans la zone de saisie riche.
+    const box = page.locator('.editor-props .rich').first();
     await box.waitFor();
-    expect((await box.inputValue()).includes('ressaisir'), 'valeur initiale dans le panneau');
-    await box.fill('Un titre modifié depuis l\'éditeur');
+    expect((await box.innerText()).includes('ressaisir'), 'valeur initiale dans le panneau');
+    expect(await box.locator('.ana-grad').count() === 1, 'mot en dégradé repris dans le panneau');
+    await box.evaluate((el) => { el.focus(); document.execCommand('selectAll'); document.execCommand('insertText', false, 'Un titre modifié depuis l\'éditeur'); });
     await frame.locator('h1', { hasText: 'Un titre modifié depuis l\'éditeur' }).waitFor({ timeout: 3000 });
     await page.getByText('Modifications non enregistrées').waitFor();
     if (SCREENS) await page.screenshot({ path: join(shots, '04-editor.png') });
@@ -184,6 +186,28 @@ try {
     await frame.locator('h1', { hasText: 'ressaisir' }).waitFor({ timeout: 3000 });
     await page.getByRole('button', { name: /Rétablir/ }).click();
     await frame.locator('h1', { hasText: 'Un titre modifié' }).waitFor({ timeout: 3000 });
+  });
+
+  await step('mot en dégradé : posé depuis l\'éditeur sur le mot sélectionné', async () => {
+    const frame = page.frameLocator('iframe[title="Aperçu de la page"]');
+    const box = page.locator('.editor-props .rich').first();
+    await box.evaluate((el) => {
+      const node = Array.from(el.childNodes).find((n) => n.nodeType === Node.TEXT_NODE && n.nodeValue.includes('modifié'));
+      const at = node.nodeValue.indexOf('modifié');
+      const range = document.createRange();
+      range.setStart(node, at); range.setEnd(node, at + 'modifié'.length);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    });
+    await page.getByRole('button', { name: 'Mot en dégradé' }).dispatchEvent('mousedown');
+    await frame.locator('h1 .ana-grad', { hasText: 'modifié' }).waitFor({ timeout: 3000 });
+    expect((await frame.locator('h1').first().innerText()).replace(/\s+/g, ' ').trim() === 'Un titre modifié depuis l\'éditeur', 'texte du titre inchangé');
+  });
+
+  await step('scène du visuel produit : l\'emplacement de la capture se sélectionne dans l\'aperçu', async () => {
+    const frame = page.frameLocator('iframe[title="Aperçu de la page"]');
+    expect(await frame.locator('.ana-scene-gabarit').isVisible(), 'gabarit visible tant qu\'aucune capture n\'est déposée');
+    await frame.locator('.ana-scene-capture').click({ position: { x: 220, y: 140 } });
+    await page.locator('.editor-props').getByRole('button', { name: 'Choisir une image' }).waitFor({ timeout: 3000 });
   });
 
   await step('masquer et réafficher une section dans l\'aperçu', async () => {
@@ -220,7 +244,9 @@ try {
     await page.getByText('Brouillon enregistré').first().waitFor({ timeout: 5000 });
     const d = fake.db.page_drafts.find((x) => x.page_id === fake.db.pages.find((p) => p.slug === 'index').id);
     expect(d.version === 2, 'version ' + d.version);
-    expect(Object.values(d.content.fields).some((v) => v.text === 'Un titre modifié depuis l\'éditeur'), 'contenu enregistré');
+    const titre = Object.values(d.content.fields).find((v) => (v.html || '').replace(/<[^>]+>/g, '') === 'Un titre modifié depuis l\'éditeur');
+    expect(!!titre, 'contenu enregistré');
+    expect(titre.html.includes('<span class="ana-grad">modifié</span>'), 'mot en dégradé enregistré');
   });
 
   await step('publication : demande réelle puis suivi (aucun succès annoncé avant confirmation)', async () => {

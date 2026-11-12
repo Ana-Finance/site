@@ -6,7 +6,9 @@
  * sans toucher à la base :
  *   1. un champ dont la valeur diffère de la version de référence (par défaut origin/main) reçoit une
  *      NOUVELLE clé : l'ancienne valeur en base ne s'applique plus, c'est le HTML qui fait foi ;
- *   2. un élément éditable sans clé (nouveau texte, nouveau lien…) en reçoit une.
+ *   2. un élément éditable sans clé (nouveau texte, nouveau lien…) en reçoit une ;
+ *   3. un champ dont le type déclaré ne correspond plus à son contenu (un texte simple où l'on a mis une partie
+ *      en forme, par exemple) reçoit le bon type, et une nouvelle clé si l'ancienne existe déjà en base.
  * Les clés partagées (g.header.*, g.footer.*) sont décidées sur la page de référence puis reprises à
  * l'identique sur toutes les pages. Seuls des attributs data-cms* sont écrits : le reste du fichier est
  * conservé octet pour octet.
@@ -127,7 +129,19 @@ if (refBase) {
   });
 }
 
-let renamed = 0; let added = 0;
+/** Types interchangeables selon le contenu de l'élément : un texte devient « riche » dès qu'il contient une balise. */
+const TEXTUAL = ['text', 'rich', 'link'];
+/** Type réel d'un élément annoté s'il diffère du type déclaré, sinon null. */
+function mismatch(el) {
+  const declared = el.getAttribute(TYPE_ATTR);
+  if (!TEXTUAL.includes(declared)) return null;
+  const probe = el.cloneNode(true);
+  probe.removeAttribute(ATTR);
+  const actual = classifyDetached(el, probe);
+  return actual && actual !== declared && TEXTUAL.includes(actual) ? actual : null;
+}
+
+let renamed = 0; let added = 0; let retyped = 0;
 for (const page of pages) {
   const edits = []; // { at, del, text }
   const startTag = (el) => page.dom.nodeLocation(el).startTag;
@@ -147,27 +161,39 @@ for (const page of pages) {
     const before = base && base.get(key);
     if (before && before.value !== f.value) renames.set(key, numbering.next(splitKey(key).family));
   });
+  // Type déclaré ≠ contenu réel : la valeur enregistrée sous cette clé n'a plus la bonne forme, il faut une nouvelle clé
+  // si la clé existe déjà dans la version de référence (sinon corriger le type suffit).
+  const seenKeys = new Set();
+  page.doc.querySelectorAll('[' + ATTR + ']').forEach((el) => {
+    const key = el.getAttribute(ATTR);
+    if (seenKeys.has(key)) return;
+    seenKeys.add(key);
+    if (!mismatch(el) || renames.has(key)) return;
+    if (key.startsWith('g.')) { problems.push(`${page.file} : « ${key} » (élément partagé) n'a plus le type de son contenu : corriger ${TYPE_ATTR} à la main, avec une nouvelle clé g.* sur toutes les pages`); return; }
+    if (base && base.has(key)) renames.set(key, numbering.next(splitKey(key).family));
+  });
 
   page.doc.querySelectorAll('[' + ATTR + ']').forEach((el) => {
     const key = el.getAttribute(ATTR);
-    if (!renames.has(key)) return;
+    const actual = mismatch(el);
+    if (!renames.has(key) && !actual) return;
     const loc = startTag(el);
     const tag = page.src.slice(loc.startOffset, loc.endOffset);
-    const needle = `${ATTR}="${key}"`;
-    const i = tag.indexOf(needle);
-    if (i < 0) { problems.push(`${page.file} : attribut ${needle} introuvable dans la balise`); return; }
-    edits.push({ at: loc.startOffset + i, del: needle.length, text: `${ATTR}="${renames.get(key)}"` });
-    // Le type suit le contenu réel (un texte devenu riche, par exemple).
-    const declared = el.getAttribute(TYPE_ATTR);
-    const probe = el.cloneNode(true);
-    probe.removeAttribute(ATTR);
-    const actual = classifyDetached(el, probe);
-    if (actual && actual !== declared && ['text', 'rich', 'link'].includes(declared) && ['text', 'rich', 'link'].includes(actual)) {
-      const tNeedle = `${TYPE_ATTR}="${declared}"`;
-      const j = tag.indexOf(tNeedle);
-      if (j > -1) edits.push({ at: loc.startOffset + j, del: tNeedle.length, text: `${TYPE_ATTR}="${actual}"` });
+    if (renames.has(key)) {
+      const needle = `${ATTR}="${key}"`;
+      const i = tag.indexOf(needle);
+      if (i < 0) { problems.push(`${page.file} : attribut ${needle} introuvable dans la balise`); return; }
+      edits.push({ at: loc.startOffset + i, del: needle.length, text: `${ATTR}="${renames.get(key)}"` });
+      renamed++;
     }
-    renamed++;
+    // Le type suit le contenu réel (un texte devenu riche, par exemple).
+    if (actual) {
+      const tNeedle = `${TYPE_ATTR}="${el.getAttribute(TYPE_ATTR)}"`;
+      const j = tag.indexOf(tNeedle);
+      if (j < 0) { problems.push(`${page.file} : attribut ${tNeedle} introuvable dans la balise de « ${key} »`); return; }
+      edits.push({ at: loc.startOffset + j, del: tNeedle.length, text: `${TYPE_ATTR}="${actual}"` });
+      if (!renames.has(key)) retyped++;
+    }
   });
 
   for (const { el, type } of unannotated(page)) {
@@ -185,7 +211,7 @@ for (const page of pages) {
   edits.sort((a, b) => b.at - a.at);
   let out = page.src;
   for (const e of edits) out = out.slice(0, e.at) + e.text + out.slice(e.at + e.del);
-  console.log(`${DRY ? '~' : '+'} ${page.file.padEnd(28)} ${String(renames.size).padStart(3)} clé(s) renommée(s), ${edits.filter((e) => e.del === 0).length} ajoutée(s)`);
+  console.log(`${DRY ? '~' : '+'} ${page.file.padEnd(28)} ${String(renames.size).padStart(3)} clé(s) renommée(s), ${edits.filter((e) => e.del === 0).length} ajoutée(s), ${edits.filter((e) => e.text.startsWith(TYPE_ATTR + '=')).length} type(s) corrigé(s)`);
   if (!DRY) writeFileSync(join(ROOT, page.file), out);
 }
 
@@ -198,6 +224,6 @@ function classifyDetached(el, probe) {
 }
 
 if (!BASE) console.log('! Aucune version de référence (origin/main ou main) : seules les clés manquantes sont traitées.');
-console.log(`${renamed} clé(s) renommée(s), ${added} clé(s) ajoutée(s)${DRY ? ' (simulation)' : ''}${BASE ? ' — référence ' + BASE : ''}.`);
+console.log(`${renamed} clé(s) renommée(s), ${added} clé(s) ajoutée(s), ${retyped} type(s) corrigé(s) sans changement de clé${DRY ? ' (simulation)' : ''}${BASE ? ' — référence ' + BASE : ''}.`);
 if (problems.length) { console.error('✗ ' + problems.join('\n✗ ')); process.exit(1); }
-if (CHECK && (renamed || added)) { console.error('✗ Des clés data-cms sont à mettre à jour : lancer « npm run cms:rekey ».'); process.exit(1); }
+if (CHECK && (renamed || added || retyped)) { console.error('✗ Des clés data-cms sont à mettre à jour : lancer « npm run cms:rekey ».'); process.exit(1); }

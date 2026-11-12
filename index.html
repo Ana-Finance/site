@@ -186,7 +186,7 @@
       <span style="width:7px;height:7px;border-radius:50%;background:#8b1fe0;"></span>
       <span style="font-size:13px;font-weight:600;color:#6d28d9;" data-cms="index.s1.span-1" data-cms-type="text">Agents IA pour la finance</span>
     </div>
-    <h1 class="ana-hero-h1" style="font-size:clamp(32px,6.6vw,85px);line-height:1.1;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:32ch;text-wrap:pretty;" data-cms="index.s1.h1-1" data-cms-type="text">Vos meilleurs profils passent leurs journées à ressaisir.</h1>
+    <h1 class="ana-hero-h1" style="font-size:clamp(32px,6.6vw,85px);line-height:1.1;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:32ch;text-wrap:pretty;" data-cms="index.s1.h1-2" data-cms-type="rich">Vos meilleurs profils passent leurs journées à <span class="ana-grad">ressaisir.</span></h1>
     <p style="font-size:19px;line-height:30px;max-width:100ch;margin:24px 0 0;color:#514f60;" data-cms="index.s1.p-1" data-cms-type="text">Collecte de pièces, rapprochements, relances, reporting : la production récurrente absorbe le temps que vous voudriez passer en révision, en analyse et en conseil. Ana déploie des agents IA qui la reprennent, sous votre contrôle.</p>
     <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;">
       <a href="demo.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;border:none;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;" data-cms="index.s1.a-1" data-cms-type="link">Demander une démo</a>
@@ -202,8 +202,28 @@
   </section>
 
   <section style="max-width:1440px;margin:0 auto;padding:56px 40px 0;" data-cms-section="s2">
-    <div style="border-radius:24px;overflow:hidden;border:1px solid #eceaf3;box-shadow:0 26px 60px -36px rgba(20,10,60,0.28);">
-      <div class="ana-slot" data-slot="ana-hero-product-shot" role="img" aria-label="Capture d'écran : file de validation Ana (agents, actions en attente, journal)" style="width:100%;aspect-ratio:16/9;display:block;" data-cms="index.s2.slot-1" data-cms-type="slot">Capture d'écran : file de validation Ana (agents, actions en attente, journal)</div>
+    <!-- Scène du visuel produit. Tant qu'aucune capture n'est déposée depuis l'administration, un gabarit abstrait occupe la fenêtre ;
+         l'image déposée dans l'emplacement « ana-hero-product-shot » le recouvre entièrement. -->
+    <div style="border-radius:24px;overflow:hidden;box-shadow:0 26px 60px -36px rgba(20,10,60,0.28);">
+      <div class="ana-scene">
+        <div class="ana-scene-fenetre">
+          <div class="ana-scene-barre"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span data-cms="index.s2.span-1" data-cms-type="text">File de validation</span></div>
+          <div class="ana-scene-corps">
+            <div class="ana-scene-gabarit" aria-hidden="true">
+              <div class="ana-scene-menu"><span class="ana-scene-trait fort" style="width:70%;"></span><span class="ana-scene-trait" style="width:88%;"></span><span class="ana-scene-trait" style="width:62%;"></span><span class="ana-scene-trait" style="width:80%;"></span><span class="ana-scene-trait" style="width:54%;"></span></div>
+              <div>
+              <div class="ana-scene-ligne"><span class="ana-scene-case"></span><span><span class="ana-scene-trait fort" style="width:46%;"></span><span class="ana-scene-trait" style="width:70%;"></span></span><span class="ana-scene-trait"></span><span class="ana-scene-statut ana-t-indigo"></span></div>
+              <div class="ana-scene-ligne"><span class="ana-scene-case"></span><span><span class="ana-scene-trait fort" style="width:58%;"></span><span class="ana-scene-trait" style="width:52%;"></span></span><span class="ana-scene-trait"></span><span class="ana-scene-statut ana-t-violet"></span></div>
+              <div class="ana-scene-ligne"><span class="ana-scene-case"></span><span><span class="ana-scene-trait fort" style="width:40%;"></span><span class="ana-scene-trait" style="width:64%;"></span></span><span class="ana-scene-trait"></span><span class="ana-scene-statut ana-t-magenta"></span></div>
+              <div class="ana-scene-ligne"><span class="ana-scene-case"></span><span><span class="ana-scene-trait fort" style="width:52%;"></span><span class="ana-scene-trait" style="width:44%;"></span></span><span class="ana-scene-trait"></span><span class="ana-scene-statut ana-t-corail"></span></div>
+              <div class="ana-scene-ligne"><span class="ana-scene-case"></span><span><span class="ana-scene-trait fort" style="width:62%;"></span><span class="ana-scene-trait" style="width:58%;"></span></span><span class="ana-scene-trait"></span><span class="ana-scene-statut ana-t-violet"></span></div>
+              <div class="ana-scene-ligne"><span class="ana-scene-case"></span><span><span class="ana-scene-trait fort" style="width:44%;"></span><span class="ana-scene-trait" style="width:50%;"></span></span><span class="ana-scene-trait"></span><span class="ana-scene-statut ana-t-indigo"></span></div>
+              </div>
+            </div>
+            <div class="ana-slot ana-scene-capture" data-slot="ana-hero-product-shot" role="img" aria-label="Aperçu de la file de validation d'Ana" data-cms="index.s2.slot-2" data-cms-type="slot">Capture d'écran : file de validation Ana (agents, actions en attente, journal)</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -226,22 +246,22 @@
     <div style="border-radius:24px;background:linear-gradient(135deg,#0a0713 0%,#2b0a4d 42%,#8b1fe0 82%,#f23fd6 100%);padding:40px 40px 36px;color:#fff;">
       <div class="ana-chain" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
       <div style="display:flex;flex-direction:column;gap:12px;padding:24px 22px;border-radius:18px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16);">
-        <span style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;color:rgba(255,255,255,0.62);" data-cms="index.s4.span-2" data-cms-type="text">01 INGESTION</span>
+        <span class="ana-etape ana-t-indigo" style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;" data-cms="index.s4.span-2" data-cms-type="text">01 INGESTION</span>
         <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;" data-cms="index.s4.span-3" data-cms-type="text">Flux connectés</span>
         <span style="font-size:13.5px;line-height:21px;color:rgba(255,255,255,0.8);" data-cms="index.s4.span-4" data-cms-type="text">Banques DSP2, factures, logiciel comptable, ERP.</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:12px;padding:24px 22px;border-radius:18px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16);">
-        <span style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;color:rgba(255,255,255,0.62);" data-cms="index.s4.span-5" data-cms-type="text">02 RAISONNEMENT</span>
+        <span class="ana-etape ana-t-violet" style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;" data-cms="index.s4.span-5" data-cms-type="text">02 RAISONNEMENT</span>
         <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;" data-cms="index.s4.span-6" data-cms-type="text">Agents spécialisés</span>
         <span style="font-size:13.5px;line-height:21px;color:rgba(255,255,255,0.8);" data-cms="index.s4.span-7" data-cms-type="text">Un agent par tâche, avec vos règles de gestion.</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:12px;padding:24px 22px;border-radius:18px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16);">
-        <span style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;color:rgba(255,255,255,0.62);" data-cms="index.s4.span-8" data-cms-type="text">03 CONTRÔLE</span>
+        <span class="ana-etape ana-t-magenta" style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;" data-cms="index.s4.span-8" data-cms-type="text">03 CONTRÔLE</span>
         <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;" data-cms="index.s4.span-9" data-cms-type="text">Validation humaine</span>
         <span style="font-size:13.5px;line-height:21px;color:rgba(255,255,255,0.8);" data-cms="index.s4.span-10" data-cms-type="text">Trois niveaux d'autonomie, au choix, par tâche.</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:12px;padding:24px 22px;border-radius:18px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16);">
-        <span style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;color:rgba(255,255,255,0.62);" data-cms="index.s4.span-11" data-cms-type="text">04 RESTITUTION</span>
+        <span class="ana-etape ana-t-corail" style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;" data-cms="index.s4.span-11" data-cms-type="text">04 RESTITUTION</span>
         <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em;" data-cms="index.s4.span-12" data-cms-type="text">Écritures &amp; reporting</span>
         <span style="font-size:13.5px;line-height:21px;color:rgba(255,255,255,0.8);" data-cms="index.s4.span-13" data-cms-type="text">Poussées dans vos outils, journal complet à l'appui.</span>
       </div>
@@ -258,26 +278,32 @@
     <p style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#5b586b;margin:40px 0 18px;" data-cms="index.s4.p-2" data-cms-type="text">Ce que les agents exécutent</p>
     <div class="ana-tasks-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
       <div style="border-radius:18px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:24px 22px;display:flex;flex-direction:column;gap:8px;">
+        <span class="ana-picto ana-r1" style="margin-bottom:6px;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6"/><path d="m9 14 3 3 3-3"/></svg></span>
         <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="index.s4.span-16" data-cms-type="text">Collecte des pièces</span>
         <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="index.s4.span-17" data-cms-type="text">Factures, relevés, justificatifs récupérés et lus automatiquement, manquants relancés.</span>
       </div>
       <div style="border-radius:18px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:24px 22px;display:flex;flex-direction:column;gap:8px;">
+        <span class="ana-picto ana-r2" style="margin-bottom:6px;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h13"/><path d="m16 3 4 4-4 4"/><path d="M17 17H4"/><path d="m8 13-4 4 4 4"/></svg></span>
         <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="index.s4.span-18" data-cms-type="text">Rapprochement bancaire</span>
         <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="index.s4.span-28" data-cms-type="text">Lettrage des mouvements aux pièces, écarts signalés dès l'import.</span>
       </div>
       <div style="border-radius:18px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:24px 22px;display:flex;flex-direction:column;gap:8px;">
+        <span class="ana-picto ana-r3" style="margin-bottom:6px;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
         <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="index.s4.span-20" data-cms-type="text">Relances clients</span>
         <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="index.s4.span-21" data-cms-type="text">Scénario de relance déroulé, arrêté dès le paiement, litiges remontés.</span>
       </div>
       <div style="border-radius:18px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:24px 22px;display:flex;flex-direction:column;gap:8px;">
+        <span class="ana-picto ana-r4" style="margin-bottom:6px;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></span>
         <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="index.s4.span-22" data-cms-type="text">TVA &amp; déclaratif</span>
         <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="index.s4.span-23" data-cms-type="text">Cohérence des taux contrôlée, bases préparées, dépôt laissé au professionnel.</span>
       </div>
       <div style="border-radius:18px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:24px 22px;display:flex;flex-direction:column;gap:8px;">
+        <span class="ana-picto ana-r5" style="margin-bottom:6px;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span>
         <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="index.s4.span-24" data-cms-type="text">Clôture</span>
         <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="index.s4.span-25" data-cms-type="text">Checklist déroulée, écritures récurrentes préparées, blocages remontés.</span>
       </div>
       <div style="border-radius:18px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:24px 22px;display:flex;flex-direction:column;gap:8px;">
+        <span class="ana-picto ana-r6" style="margin-bottom:6px;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 17v-5"/><path d="M13 17V8"/><path d="M18 17v-9"/></svg></span>
         <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="index.s4.span-26" data-cms-type="text">Reporting de gestion</span>
         <span style="font-size:14px;line-height:22px;color:#4f4d61;" data-cms="index.s4.span-27" data-cms-type="text">Tableaux de bord et points de trésorerie mis à jour et diffusés.</span>
       </div>
@@ -288,24 +314,28 @@
   </section>
 
   <section style="max-width:1440px;margin:0 auto;padding:88px 40px 0;" data-cms-section="s5">
-    <div style="border-radius:24px;background:#fff;border:1px solid #eceaf3;box-shadow:0 14px 40px -28px rgba(20,10,60,0.22);padding:40px 42px 36px;">
+    <div style="border-radius:24px;background:linear-gradient(135deg,#ffffff 0%,#fbf7ff 55%,#fff4fb 100%);border:1px solid #eceaf3;box-shadow:0 14px 40px -28px rgba(20,10,60,0.22);padding:40px 42px 36px;">
       <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 14px;" data-cms="index.s5.span-1" data-cms-type="text">La question qu'on nous pose en premier</span>
-      <h2 style="font-size:clamp(24px,4.2vw,40px);line-height:1.2;font-weight:800;letter-spacing:-0.022em;margin:0 0 14px;max-width:30ch;text-wrap:pretty;" data-cms="index.s5.h2-1" data-cms-type="text">Ana ne signe pas vos comptes.</h2>
+      <h2 style="font-size:clamp(24px,4.2vw,40px);line-height:1.2;font-weight:800;letter-spacing:-0.022em;margin:0 0 14px;max-width:30ch;text-wrap:pretty;" data-cms="index.s5.h2-2" data-cms-type="rich">Ana <span class="ana-grad">ne signe pas</span> vos comptes.</h2>
       <p style="font-size:16.5px;line-height:27px;color:#4f4d61;margin:0 0 32px;max-width:89ch;" data-cms="index.s5.p-1" data-cms-type="text">Confier de la production à une IA n'a de sens que si vous pouvez vérifier ce qu'elle a fait, et revenir en arrière. Ana prépare et propose ; la validation, la signature et la responsabilité restent celles du professionnel. Quatre garde-fous rendent cela vrai en pratique.</p>
       <div class="ana-features-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;">
-        <div style="border-radius:16px;background:#faf8ff;border:1px solid #efeaf9;padding:22px;">
+        <div class="ana-pastel ana-t-indigo" style="border-radius:16px;padding:22px;">
+          <span class="ana-trait" aria-hidden="true"></span>
           <p style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 6px;color:#16151c;" data-cms="index.s5.p-2" data-cms-type="text">Trois niveaux d'autonomie</p>
           <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="index.s5.p-3" data-cms-type="text">Observation, validation, ou autonome sous un seuil que vous fixez. Réglable par tâche et par dossier.</p>
         </div>
-        <div style="border-radius:16px;background:#faf8ff;border:1px solid #efeaf9;padding:22px;">
+        <div class="ana-pastel ana-t-violet" style="border-radius:16px;padding:22px;">
+          <span class="ana-trait" aria-hidden="true"></span>
           <p style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 6px;color:#16151c;" data-cms="index.s5.p-4" data-cms-type="text">Rien d'irréversible</p>
           <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="index.s5.p-5" data-cms-type="text">Chaque action est journalisée avec son état antérieur. Toute écriture peut être annulée.</p>
         </div>
-        <div style="border-radius:16px;background:#faf8ff;border:1px solid #efeaf9;padding:22px;">
+        <div class="ana-pastel ana-t-magenta" style="border-radius:16px;padding:22px;">
+          <span class="ana-trait" aria-hidden="true"></span>
           <p style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 6px;color:#16151c;" data-cms="index.s5.p-6" data-cms-type="text">Tout est explicable</p>
           <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="index.s5.p-7" data-cms-type="text">Pour chaque décision : la pièce, la règle appliquée, l'horodatage. Pas de boîte noire.</p>
         </div>
-        <div style="border-radius:16px;background:#faf8ff;border:1px solid #efeaf9;padding:22px;">
+        <div class="ana-pastel ana-t-corail" style="border-radius:16px;padding:22px;">
+          <span class="ana-trait" aria-hidden="true"></span>
           <p style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 6px;color:#16151c;" data-cms="index.s5.p-8" data-cms-type="text">Le calcul avant le texte</p>
           <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="index.s5.p-9" data-cms-type="text">Les montants viennent d'un moteur déterministe. L'IA rédige et explique, elle n'invente jamais un chiffre.</p>
         </div>
@@ -321,41 +351,41 @@
     <h2 style="font-size:clamp(24px,4.2vw,40px);line-height:1.2;font-weight:800;letter-spacing:-0.02em;margin:0 0 14px;max-width:35ch;text-wrap:pretty;" data-cms="index.s6.h2-1" data-cms-type="text">Le même moteur, trois façons de s'en servir.</h2>
     <p style="font-size:16.5px;line-height:27px;color:#4f4d61;margin:0 0 36px;max-width:84ch;" data-cms="index.s6.p-2" data-cms-type="text">Un cabinet cherche à absorber un portefeuille, une direction financière à piloter sur des chiffres à jour, une PME à y voir clair sans équipe dédiée. Chacun démarre par un pilote sur son propre périmètre.</p>
     <div class="ana-features-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;">
-      <a href="cabinets.html" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:28px;display:flex;flex-direction:column;color:#16151c;" data-cms="index.s6.card_cabinets-1" data-cms-type="href">
-        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;margin-bottom:14px;" data-cms="index.s6.span-2" data-cms-type="text">Cabinets comptables</span>
+      <a href="cabinets.html" class="ana-halo ana-t-indigo" style="border-radius:20px;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:28px;display:flex;flex-direction:column;color:#16151c;" data-cms="index.s6.card_cabinets-1" data-cms-type="href">
+        <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;" data-cms="index.s6.span-2" data-cms-type="text">Cabinets comptables</span>
         <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;margin-bottom:8px;" data-cms="index.s6.span-3" data-cms-type="text">Absorber la production du portefeuille</span>
         <span style="font-size:14.5px;line-height:23px;color:#4f4d61;margin-bottom:18px;" data-cms="index.s6.span-4" data-cms-type="text">Reprendre la saisie et le rapprochement dossier par dossier, pour rendre du temps à la révision et au conseil.</span>
-        <span style="margin-top:auto;font-size:14.5px;font-weight:600;color:#8b1fe0;" data-cms="index.s6.span-5" data-cms-type="text">Découvrir →</span>
+        <span class="ana-accent" style="margin-top:auto;font-size:14.5px;font-weight:600;" data-cms="index.s6.span-5" data-cms-type="text">Découvrir →</span>
       </a>
-      <a href="directions-financieres.html" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:28px;display:flex;flex-direction:column;color:#16151c;" data-cms="index.s6.card_directions_financieres-1" data-cms-type="href">
-        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;margin-bottom:14px;" data-cms="index.s6.span-6" data-cms-type="text">Directions financières</span>
+      <a href="directions-financieres.html" class="ana-halo ana-t-violet" style="border-radius:20px;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:28px;display:flex;flex-direction:column;color:#16151c;" data-cms="index.s6.card_directions_financieres-1" data-cms-type="href">
+        <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;" data-cms="index.s6.span-6" data-cms-type="text">Directions financières</span>
         <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;margin-bottom:8px;" data-cms="index.s6.span-7" data-cms-type="text">Piloter sur des chiffres à jour</span>
         <span style="font-size:14.5px;line-height:23px;color:#4f4d61;margin-bottom:18px;" data-cms="index.s6.span-14" data-cms-type="text">Clôtures raccourcies, reporting remis à jour à chaque import, écarts repérés pendant le mois plutôt qu'après.</span>
-        <span style="margin-top:auto;font-size:14.5px;font-weight:600;color:#8b1fe0;" data-cms="index.s6.span-9" data-cms-type="text">Découvrir →</span>
+        <span class="ana-accent" style="margin-top:auto;font-size:14.5px;font-weight:600;" data-cms="index.s6.span-9" data-cms-type="text">Découvrir →</span>
       </a>
-      <a href="pme-et-startups.html" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:28px;display:flex;flex-direction:column;color:#16151c;" data-cms="index.s6.card_pme_et_startups-1" data-cms-type="href">
-        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;margin-bottom:14px;" data-cms="index.s6.span-10" data-cms-type="text">PME &amp; startups</span>
+      <a href="pme-et-startups.html" class="ana-halo ana-t-magenta" style="border-radius:20px;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:28px;display:flex;flex-direction:column;color:#16151c;" data-cms="index.s6.card_pme_et_startups-1" data-cms-type="href">
+        <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;" data-cms="index.s6.span-10" data-cms-type="text">PME &amp; startups</span>
         <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;margin-bottom:8px;" data-cms="index.s6.span-11" data-cms-type="text">Un contrôle de gestion sans équipe</span>
         <span style="font-size:14.5px;line-height:23px;color:#4f4d61;margin-bottom:18px;" data-cms="index.s6.span-12" data-cms-type="text">Marge, budget et trésorerie suivis automatiquement, sans recruter et sans changer d'expert-comptable.</span>
-        <span style="margin-top:auto;font-size:14.5px;font-weight:600;color:#8b1fe0;" data-cms="index.s6.span-13" data-cms-type="text">Découvrir →</span>
+        <span class="ana-accent" style="margin-top:auto;font-size:14.5px;font-weight:600;" data-cms="index.s6.span-13" data-cms-type="text">Découvrir →</span>
       </a>
     </div>
   </section>
 
   <section style="max-width:1440px;margin:0 auto;padding:64px 40px 0;" data-cms-section="s7">
-    <div class="ana-org-band" style="border-radius:24px;background:#16151c;padding:40px 42px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+    <div class="ana-org-band ana-aurore" style="border-radius:24px;background-color:#16151c;padding:40px 42px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;padding-right:28px;">
-        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#d98cf0;" data-cms="index.s7.span-1" data-cms-type="text">Collaborateurs</span>
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ana-indigo-clair);" data-cms="index.s7.span-1" data-cms-type="text">Collaborateurs</span>
         <span style="font-size:17px;font-weight:700;color:#fff;" data-cms="index.s7.span-2" data-cms-type="text">Le temps rendu</span>
         <span style="font-size:14px;line-height:22px;color:rgba(255,255,255,0.85);" data-cms="index.s7.span-3" data-cms-type="text">Saisie et rapprochement déjà faits, à vérifier plutôt qu'à produire.</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;padding:0 28px;border-left:1px solid rgba(255,255,255,0.14);border-right:1px solid rgba(255,255,255,0.14);">
-        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#d98cf0;" data-cms="index.s7.span-4" data-cms-type="text">Managers</span>
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ana-violet-clair);" data-cms="index.s7.span-4" data-cms-type="text">Managers</span>
         <span style="font-size:17px;font-weight:700;color:#fff;" data-cms="index.s7.span-5" data-cms-type="text">L'avancement sans le relancer</span>
         <span style="font-size:14px;line-height:22px;color:rgba(255,255,255,0.85);" data-cms="index.s7.span-10" data-cms-type="text">L'état de chaque dossier consultable à tout moment, les blocages remontés seuls.</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;padding-left:28px;">
-        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#d98cf0;" data-cms="index.s7.span-7" data-cms-type="text">Direction</span>
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ana-magenta-clair);" data-cms="index.s7.span-7" data-cms-type="text">Direction</span>
         <span style="font-size:17px;font-weight:700;color:#fff;" data-cms="index.s7.span-8" data-cms-type="text">Le contrôle et la preuve</span>
         <span style="font-size:14px;line-height:22px;color:rgba(255,255,255,0.85);" data-cms="index.s7.span-9" data-cms-type="text">Décisions journalisées et réversibles, hébergement UE, RGPD dès la conception.</span>
       </div>
@@ -378,8 +408,8 @@
           <input type="range" min="0.5" max="12" step="0.5" data-b-value="{{ heuresParDossier }}" data-on-input="onHeures" style="accent-color:#8b1fe0;">
           <span style="font-size:13px;color:#6b6880;"><span data-text="heuresParDossier"></span> h</span>
         </label>
-        <div style="border-radius:14px;background:#faf8ff;border:1px solid #efeaf9;padding:16px 18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;">
-          <span style="font-size:30px;font-weight:800;letter-spacing:-0.02em;color:#16151c;white-space:nowrap;">≈ <span data-text="heuresRecuperees"></span> h</span>
+        <div class="ana-resultat" style="border-radius:14px;padding:16px 18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;">
+          <span class="ana-grad" style="font-size:40px;line-height:1.1;font-weight:800;letter-spacing:-0.02em;white-space:nowrap;">≈ <span data-text="heuresRecuperees"></span> h</span>
           <span style="font-size:14px;color:#4f4d61;" data-cms="index.s8.span-3" data-cms-type="text">récupérées par mois</span>
           <span style="flex-basis:100%;font-size:12.5px;line-height:19px;color:#5b586b;" data-cms="index.s8.span-4" data-cms-type="text">Hypothèse : les agents reprennent 55 % du temps de production. Estimation indicative, à affiner sur vos dossiers.</span>
         </div>

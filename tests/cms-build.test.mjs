@@ -87,8 +87,14 @@ describe('publication d\'une modification', () => {
   beforeAll(() => {
     const pages = initialContent(ROOT);
     const home = pages.find((p) => p.slug === 'index');
-    const h1Key = Object.keys(home.content.fields).find((k) => k.endsWith('.h1-1'));
-    home.content.fields[h1Key] = { text: 'Nouveau titre <script>alert(1)</script>' };
+    // Le grand titre est un texte riche (un mot en dégradé), le paragraphe qui le suit un texte simple.
+    const src = new JSDOM(readFileSync(join(ROOT, 'index.html'), 'utf8')).window.document;
+    const h1 = src.querySelector('h1');
+    const lead = src.querySelector('h1 + p');
+    expect(h1.getAttribute('data-cms-type')).toBe('rich');
+    expect(lead.getAttribute('data-cms-type')).toBe('text');
+    home.content.fields[h1.getAttribute('data-cms')] = { html: 'Nouveau <span class="ana-grad">titre</span><script>alert(1)</script>' };
+    home.content.fields[lead.getAttribute('data-cms')] = { text: 'Nouveau texte <script>alert(1)</script>' };
     home.content.seo.title = 'Titre SEO modifié';
     home.content.sections.hidden = ['s3'];
     const g = pages.find((p) => p.slug === '_global');
@@ -98,8 +104,10 @@ describe('publication d\'une modification', () => {
 
   it('applique texte, SEO, masquage de section et contenu partagé sur toutes les pages', () => {
     const doc = new JSDOM(readFileSync(join(dir, 'index.html'), 'utf8')).window.document;
-    expect(doc.querySelector('h1').textContent).toBe('Nouveau titre <script>alert(1)</script>');
-    expect(doc.querySelector('h1 script')).toBeNull();
+    expect(doc.querySelector('h1').textContent).toBe('Nouveau titre'); // texte riche : script supprimé, mise en forme autorisée conservée
+    expect(doc.querySelector('h1 .ana-grad').textContent).toBe('titre');
+    expect(doc.querySelector('h1 + p').textContent).toBe('Nouveau texte <script>alert(1)</script>'); // texte simple : jamais interprété
+    expect(doc.querySelector('h1 script, h1 + p script')).toBeNull();
     expect(doc.title).toBe('Titre SEO modifié');
     expect(doc.querySelector('[data-cms-section="s3"]').hasAttribute('hidden')).toBe(true);
     for (const f of ['index.html', 'agents.html', 'ressources.html']) {

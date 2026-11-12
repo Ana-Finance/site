@@ -73,6 +73,8 @@
     @media (max-width: 1080px) { .ana-sch-6 { grid-template-columns: repeat(3,1fr) !important; row-gap: 14px !important; } .ana-sch-conn > div:nth-child(n+4) { display: none !important; } .ana-sch-6 > div:nth-child(3n) .ana-chain-chev { display: none !important; } }
     @media (max-width: 760px) { .ana-sch-3, .ana-sch-2 { grid-template-columns: 1fr !important; } .ana-sch-6 { grid-template-columns: 1fr 1fr !important; } .ana-sch-conn > div:nth-child(n+3) { display: none !important; } .ana-sch-6 > div:nth-child(2n) .ana-chain-chev { display: none !important; } .ana-sch-6 > div:nth-child(3n) .ana-chain-chev { display: flex !important; } }
     @media (max-width: 520px) { .ana-grid-3 { grid-template-columns: 1fr !important; } }
+    /* Téléphone : la chaîne des six agents passe sur une colonne (sur deux, les noms se coupaient lettre par lettre). */
+    @media (max-width: 520px) { .ana-sch-6 { grid-template-columns: 1fr !important; row-gap: 10px !important; } .ana-sch-conn > div:nth-child(n+2) { display: none !important; } .ana-sch-6 > div:nth-child(n) .ana-chain-chev { display: none !important; } }
   
     .ana-skip:focus { top: 12px !important; }
       @media (max-width: 720px) { .ana-breath-q { font-size: 28px !important; line-height: 36px !important; max-width: none !important; } }
@@ -221,7 +223,7 @@
       <span style="width:7px;height:7px;border-radius:50%;background:#8b1fe0;"></span>
       <span style="font-size:13px;font-weight:600;color:#6d28d9;" data-cms="agents.s1.span-1" data-cms-type="text">Fonctionnalités</span>
     </div>
-    <h1 class="ana-hero-h1" style="font-size:clamp(30px,5.6vw,61px);line-height:1.12;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:32ch;" data-cms="agents.s1.h1-1" data-cms-type="text">Une famille d'agents par métier de la production financière.</h1>
+    <h1 class="ana-hero-h1" style="font-size:clamp(30px,5.6vw,61px);line-height:1.12;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:32ch;" data-cms="agents.s1.h1-2" data-cms-type="rich">Une <span class="ana-grad">famille d'agents</span> par métier de la production financière.</h1>
     <p style="font-size:18px;line-height:29px;max-width:78ch;margin:24px 0 0;color:#514f60;" data-cms="agents.s1.p-1" data-cms-type="text">Ana n'est pas un agent unique à tout faire. Chaque famille a son périmètre, ses règles de gestion et son niveau d'autonomie, et Agent&nbsp;Control contrôle le travail des autres.</p>
   </section>
 
@@ -232,7 +234,7 @@
       <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 34px;max-width:97ch;" data-cms="agents.s2.p-13" data-cms-type="text">Les agents se passent le travail de proche en proche, dans l'ordre. Au-dessus d'eux, un agent de contrôle rejoue leurs décisions à chaque traitement, c'est ce qui rend l'automatisation acceptable dans un métier où l'erreur se paie.</p>
       <div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:20px;">
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-          <span style="width:36px;height:36px;border-radius:12px;background:#f4ecff;border:1.5px solid #e0d2f7;color:#6d28d9;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-2" data-cms-type="text">01</span>
+          <span class="ana-t-indigo" style="width:36px;height:36px;border-radius:12px;background:var(--t-pastel);border:1.5px solid var(--t-bord);color:var(--t-texte);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-2" data-cms-type="text">01</span>
           <span style="flex:1;width:2px;background:linear-gradient(#e0d2f7,#f2ecfb);border-radius:2px;min-height:18px;"></span>
         </div>
         <div style="padding-bottom:30px;min-width:0;">
@@ -255,7 +257,7 @@
       </div>
       <div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:20px;">
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-          <span style="width:36px;height:36px;border-radius:12px;background:#f4ecff;border:1.5px solid #e0d2f7;color:#6d28d9;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-3" data-cms-type="text">02</span>
+          <span class="ana-t-violet" style="width:36px;height:36px;border-radius:12px;background:var(--t-pastel);border:1.5px solid var(--t-bord);color:var(--t-texte);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-3" data-cms-type="text">02</span>
           <span style="flex:1;width:2px;background:linear-gradient(#e0d2f7,#f2ecfb);border-radius:2px;min-height:18px;"></span>
         </div>
         <div style="padding-bottom:30px;min-width:0;">
@@ -264,7 +266,7 @@
             <div class="ana-sch-6" style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px;">
           <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
             <span style="display:flex;align-items:center;gap:7px;">
-              <span style="width:20px;height:20px;border-radius:7px;background:linear-gradient(135deg,#2b0a4d,#8b1fe0 60%,#f23fd6);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-4" data-cms-type="text">1</span>
+              <span class="ana-pastille ana-r1" style="width:20px;height:20px;border-radius:7px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-4" data-cms-type="text">1</span>
               <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="agents.s2.span-5" data-cms-type="text">Collecte</span>
             </span>
             <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="agents.s2.span-6" data-cms-type="text">Ingestion des pièces</span>
@@ -272,15 +274,15 @@
           </div>
           <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
             <span style="display:flex;align-items:center;gap:7px;">
-              <span style="width:20px;height:20px;border-radius:7px;background:linear-gradient(135deg,#2b0a4d,#8b1fe0 60%,#f23fd6);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-7" data-cms-type="text">2</span>
-              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="agents.s2.span-8" data-cms-type="text">Rapprochement</span>
+              <span class="ana-pastille ana-r2" style="width:20px;height:20px;border-radius:7px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-7" data-cms-type="text">2</span>
+              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="agents.s2.span-36" data-cms-type="text">Rapproche&shy;ment</span>
             </span>
             <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="agents.s2.span-9" data-cms-type="text">Lettrage bancaire</span>
             <svg class="ana-chain-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c3aee2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-11px;top:50%;transform:translateY(-50%);" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
           </div>
           <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
             <span style="display:flex;align-items:center;gap:7px;">
-              <span style="width:20px;height:20px;border-radius:7px;background:linear-gradient(135deg,#2b0a4d,#8b1fe0 60%,#f23fd6);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-10" data-cms-type="text">3</span>
+              <span class="ana-pastille ana-r3" style="width:20px;height:20px;border-radius:7px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-10" data-cms-type="text">3</span>
               <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="agents.s2.span-11" data-cms-type="text">Relances</span>
             </span>
             <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="agents.s2.span-12" data-cms-type="text">Encours clients</span>
@@ -288,7 +290,7 @@
           </div>
           <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
             <span style="display:flex;align-items:center;gap:7px;">
-              <span style="width:20px;height:20px;border-radius:7px;background:linear-gradient(135deg,#2b0a4d,#8b1fe0 60%,#f23fd6);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-13" data-cms-type="text">4</span>
+              <span class="ana-pastille ana-r4" style="width:20px;height:20px;border-radius:7px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-13" data-cms-type="text">4</span>
               <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="agents.s2.span-14" data-cms-type="text">TVA</span>
             </span>
             <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="agents.s2.span-15" data-cms-type="text">Bases déclaratives</span>
@@ -296,7 +298,7 @@
           </div>
           <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
             <span style="display:flex;align-items:center;gap:7px;">
-              <span style="width:20px;height:20px;border-radius:7px;background:linear-gradient(135deg,#2b0a4d,#8b1fe0 60%,#f23fd6);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-16" data-cms-type="text">5</span>
+              <span class="ana-pastille ana-r5" style="width:20px;height:20px;border-radius:7px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-16" data-cms-type="text">5</span>
               <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="agents.s2.span-17" data-cms-type="text">Clôture</span>
             </span>
             <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="agents.s2.span-18" data-cms-type="text">Checklist périodique</span>
@@ -304,7 +306,7 @@
           </div>
           <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
             <span style="display:flex;align-items:center;gap:7px;">
-              <span style="width:20px;height:20px;border-radius:7px;background:linear-gradient(135deg,#2b0a4d,#8b1fe0 60%,#f23fd6);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-19" data-cms-type="text">6</span>
+              <span class="ana-pastille ana-r6" style="width:20px;height:20px;border-radius:7px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-19" data-cms-type="text">6</span>
               <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="agents.s2.span-20" data-cms-type="text">Reporting</span>
             </span>
             <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="agents.s2.span-21" data-cms-type="text">Tableaux de bord</span>
@@ -338,7 +340,7 @@
       </div>
       <div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:20px;">
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-          <span style="width:36px;height:36px;border-radius:12px;background:#f4ecff;border:1.5px solid #e0d2f7;color:#6d28d9;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-28" data-cms-type="text">03</span>
+          <span class="ana-t-magenta" style="width:36px;height:36px;border-radius:12px;background:var(--t-pastel);border:1.5px solid var(--t-bord);color:var(--t-texte);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="agents.s2.span-28" data-cms-type="text">03</span>
           
         </div>
         <div style="padding-bottom:0;min-width:0;">
@@ -370,74 +372,74 @@
     <h2 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;margin:0 0 10px;" data-cms="agents.s3.h2-1" data-cms-type="text">Les six agents d'exécution</h2>
     <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 30px;max-width:89ch;" data-cms="agents.s3.p-1" data-cms-type="text">Chacun a son périmètre, ses règles de gestion et son niveau d'autonomie propre. Cliquez une carte pour voir ce que l'agent fait exactement.</p>
     <div class="ana-features-grid ana-grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;grid-auto-rows:1fr;">
-      <details class="ana-acc" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
+      <details class="ana-acc ana-r1" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
         <summary>
           <span style="display:flex;flex-direction:column;gap:12px;">
-            <span style="display:flex;width:44px;height:44px;border-radius:12px;background:#f4ecff;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path><path d="M3 8l3.5-5h11L21 8"></path><path d="M3 8h18"></path><path d="M9 12a3 3 0 0 0 6 0"></path></svg></span>
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;" data-cms="agents.s3.span-1" data-cms-type="text">Ingestion</span>
+            <span class="ana-picto" style="width:44px;height:44px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path><path d="M3 8l3.5-5h11L21 8"></path><path d="M3 8h18"></path><path d="M9 12a3 3 0 0 0 6 0"></path></svg></span>
+            <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;" data-cms="agents.s3.span-1" data-cms-type="text">Ingestion</span>
             <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;" data-cms="agents.s3.span-2" data-cms-type="text">Agent Collecte</span>
             <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="agents.s3.span-3" data-cms-type="text">Récupère les pièces là où elles arrivent et les prépare pour le traitement.</span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#8b1fe0;" data-cms="agents.s3.span-4" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span class="ana-accent" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;" data-cms="agents.s3.span-4" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail"><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:9px;font-size:14.5px;line-height:23px;color:#3f3d4d;"><li data-cms="agents.s3.li-1" data-cms-type="text">Boîtes mail dédiées, dépôts client, portails fournisseurs, drive partagé.</li><li data-cms="agents.s3.li-2" data-cms-type="text">Lecture des factures et reçus, extraction des montants, TVA, échéances et références.</li><li data-cms="agents.s3.li-3" data-cms-type="text">Détection des doublons et des pièces manquantes avant traitement.</li><li data-cms="agents.s3.li-4" data-cms-type="text">Relance automatique du client ou du fournisseur pour une pièce absente.</li><li data-cms="agents.s3.li-5" data-cms-type="rich"><strong>Passe la main à :</strong> Agent Rapprochement.</li></ul></div>
       </details>
-      <details class="ana-acc" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
+      <details class="ana-acc ana-r2" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
         <summary>
           <span style="display:flex;flex-direction:column;gap:12px;">
-            <span style="display:flex;width:44px;height:44px;border-radius:12px;background:#f4ecff;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="9" height="7" rx="1.5"></rect><rect x="13" y="11" width="9" height="7" rx="1.5"></rect><path d="M9 13l3 3"></path><path d="M9 13l-1.6 4"></path></svg></span>
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;" data-cms="agents.s3.span-5" data-cms-type="text">Trésorerie</span>
+            <span class="ana-picto" style="width:44px;height:44px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="9" height="7" rx="1.5"></rect><rect x="13" y="11" width="9" height="7" rx="1.5"></rect><path d="M9 13l3 3"></path><path d="M9 13l-1.6 4"></path></svg></span>
+            <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;" data-cms="agents.s3.span-5" data-cms-type="text">Trésorerie</span>
             <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;" data-cms="agents.s3.span-6" data-cms-type="text">Agent Rapprochement</span>
             <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="agents.s3.span-7" data-cms-type="text">Associe les mouvements bancaires aux pièces et propose l'écriture.</span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#8b1fe0;" data-cms="agents.s3.span-8" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span class="ana-accent" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;" data-cms="agents.s3.span-8" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail"><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:9px;font-size:14.5px;line-height:23px;color:#3f3d4d;"><li data-cms="agents.s3.li-6" data-cms-type="text">Lettrage facture / paiement, y compris paiements partiels et regroupés.</li><li data-cms="agents.s3.li-7" data-cms-type="text">Gestion des écarts de change et des frais bancaires.</li><li data-cms="agents.s3.li-8" data-cms-type="text">Proposition d'imputation selon votre plan comptable et vos habitudes.</li><li data-cms="agents.s3.li-9" data-cms-type="text">Les cas ambigus partent en file de validation, jamais en écriture forcée.</li><li data-cms="agents.s3.li-10" data-cms-type="rich"><strong>Passe la main à :</strong> Agent Relances pour les impayés, Agent Clôture en fin de période.</li></ul></div>
       </details>
-      <details class="ana-acc" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
+      <details class="ana-acc ana-r3" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
         <summary>
           <span style="display:flex;flex-direction:column;gap:12px;">
-            <span style="display:flex;width:44px;height:44px;border-radius:12px;background:#f4ecff;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2.5 1.5"></path><path d="M8.5 3l-3 2.2M15.5 3l3 2.2"></path></svg></span>
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;" data-cms="agents.s3.span-9" data-cms-type="text">Recouvrement</span>
+            <span class="ana-picto" style="width:44px;height:44px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2.5 1.5"></path><path d="M8.5 3l-3 2.2M15.5 3l3 2.2"></path></svg></span>
+            <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;" data-cms="agents.s3.span-9" data-cms-type="text">Recouvrement</span>
             <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;" data-cms="agents.s3.span-10" data-cms-type="text">Agent Relances</span>
             <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="agents.s3.span-11" data-cms-type="text">Suit les encours clients et relance selon votre scénario.</span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#8b1fe0;" data-cms="agents.s3.span-12" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span class="ana-accent" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;" data-cms="agents.s3.span-12" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail"><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:9px;font-size:14.5px;line-height:23px;color:#3f3d4d;"><li data-cms="agents.s3.li-11" data-cms-type="text">Scénario de relance paramétrable : délais, ton, canaux, escalade.</li><li data-cms="agents.s3.li-12" data-cms-type="text">Arrêt automatique dès réception du paiement, signalé par l'Agent Rapprochement.</li><li data-cms="agents.s3.li-13" data-cms-type="text">Signalement des litiges et des promesses de paiement à traiter en humain.</li><li data-cms="agents.s3.li-14" data-cms-type="text">Historique complet des échanges attaché au compte client.</li></ul></div>
       </details>
-      <details class="ana-acc" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
+      <details class="ana-acc ana-r4" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
         <summary>
           <span style="display:flex;flex-direction:column;gap:12px;">
-            <span style="display:flex;width:44px;height:44px;border-radius:12px;background:#f4ecff;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.6"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></span>
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;" data-cms="agents.s3.span-13" data-cms-type="text">Fiscal</span>
+            <span class="ana-picto" style="width:44px;height:44px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.6"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></span>
+            <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;" data-cms="agents.s3.span-13" data-cms-type="text">Fiscal</span>
             <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;" data-cms="agents.s3.span-14" data-cms-type="text">Agent TVA &amp; déclaratif</span>
             <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="agents.s3.span-15" data-cms-type="text">Prépare les bases déclaratives et signale les anomalies avant dépôt.</span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#8b1fe0;" data-cms="agents.s3.span-16" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span class="ana-accent" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;" data-cms="agents.s3.span-16" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail"><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:9px;font-size:14.5px;line-height:23px;color:#3f3d4d;"><li data-cms="agents.s3.li-15" data-cms-type="text">Contrôle de cohérence des taux et des régimes appliqués.</li><li data-cms="agents.s3.li-16" data-cms-type="text">Rapprochement TVA collectée / déductible et détection des écarts.</li><li data-cms="agents.s3.li-17" data-cms-type="text">Préparation des éléments de la déclaration, avec les pièces justificatives liées.</li><li data-cms="agents.s3.li-18" data-cms-type="text">Le dépôt reste une action humaine : Ana prépare, vous validez.</li></ul></div>
       </details>
-      <details class="ana-acc" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
+      <details class="ana-acc ana-r5" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
         <summary>
           <span style="display:flex;flex-direction:column;gap:12px;">
-            <span style="display:flex;width:44px;height:44px;border-radius:12px;background:#f4ecff;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18"></path><path d="M8 3v4M16 3v4"></path><path d="M8.5 15l1.7 1.7 3.3-3.9"></path></svg></span>
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;" data-cms="agents.s3.span-17" data-cms-type="text">Périodique</span>
+            <span class="ana-picto" style="width:44px;height:44px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18"></path><path d="M8 3v4M16 3v4"></path><path d="M8.5 15l1.7 1.7 3.3-3.9"></path></svg></span>
+            <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;" data-cms="agents.s3.span-17" data-cms-type="text">Périodique</span>
             <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;" data-cms="agents.s3.span-18" data-cms-type="text">Agent Clôture</span>
             <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="agents.s3.span-19" data-cms-type="text">Déroule la checklist de clôture et prépare les écritures récurrentes.</span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#8b1fe0;" data-cms="agents.s3.span-20" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span class="ana-accent" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;" data-cms="agents.s3.span-20" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail"><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:9px;font-size:14.5px;line-height:23px;color:#3f3d4d;"><li data-cms="agents.s3.li-19" data-cms-type="text">Cut-off, abonnements, amortissements, provisions récurrentes.</li><li data-cms="agents.s3.li-20" data-cms-type="text">Suivi d'avancement par dossier et par étape, avec les blocages remontés.</li><li data-cms="agents.s3.li-21" data-cms-type="text">Comparaison à la période précédente pour repérer les variations inexpliquées.</li><li data-cms="agents.s3.li-28" data-cms-type="text">Dossier de clôture constitué au fil des imports, prêt pour la révision.</li><li data-cms="agents.s3.li-23" data-cms-type="rich"><strong>Passe la main à :</strong> Agent Reporting.</li></ul></div>
       </details>
-      <details class="ana-acc" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
+      <details class="ana-acc ana-r6" style="border-radius:20px;background:#fff;border:1px solid #eceaf3;box-shadow:0 8px 24px -16px rgba(20,10,60,0.08);padding:26px;">
         <summary>
           <span style="display:flex;flex-direction:column;gap:12px;">
-            <span style="display:flex;width:44px;height:44px;border-radius:12px;background:#f4ecff;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg></span>
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;" data-cms="agents.s3.span-21" data-cms-type="text">Pilotage</span>
+            <span class="ana-picto" style="width:44px;height:44px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c1fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg></span>
+            <span class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;" data-cms="agents.s3.span-21" data-cms-type="text">Pilotage</span>
             <span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;" data-cms="agents.s3.span-22" data-cms-type="text">Agent Reporting</span>
             <span style="font-size:14.5px;line-height:23px;color:#4f4d61;" data-cms="agents.s3.span-23" data-cms-type="text">Met à jour les tableaux de bord et les livrables récurrents.</span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#8b1fe0;" data-cms="agents.s3.span-24" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+            <span class="ana-accent" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;" data-cms="agents.s3.span-24" data-cms-type="text">Voir en grand<svg class="ana-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
           </span>
         </summary>
         <div class="ana-detail"><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:9px;font-size:14.5px;line-height:23px;color:#3f3d4d;"><li data-cms="agents.s3.li-24" data-cms-type="text">Reporting mensuel, points de trésorerie, écarts budgétaires.</li><li data-cms="agents.s3.li-25" data-cms-type="text">Commentaire automatique des variations les plus significatives.</li><li data-cms="agents.s3.li-26" data-cms-type="text">Diffusion au bon destinataire selon le calendrier convenu.</li><li data-cms="agents.s3.li-27" data-cms-type="text">Export vers vos formats existants, pas de nouveau format à adopter.</li></ul></div>
@@ -514,18 +516,18 @@
       <h2 style="font-size:26px;font-weight:800;letter-spacing:-0.018em;margin:0 0 10px;" data-cms="agents.s5.h2-1" data-cms-type="text">Trois niveaux d'autonomie, à régler agent par agent</h2>
       <p style="font-size:15px;line-height:24px;color:#4f4d61;margin:0 0 26px;max-width:84ch;" data-cms="agents.s5.p-1" data-cms-type="text">Un même agent peut être en observation sur un dossier et autonome sur un autre. Le réglage se change à tout moment, sans interruption de service.</p>
       <div class="ana-features-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;">
-        <div style="border-radius:16px;background:#faf8ff;border:1px solid #efeaf9;padding:22px;">
-          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;margin:0 0 8px;" data-cms="agents.s5.p-2" data-cms-type="text">Niveau 1</p>
+        <div class="ana-pastel ana-t-indigo" style="border-radius:16px;padding:22px;">
+          <p class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px;" data-cms="agents.s5.p-2" data-cms-type="text">Niveau 1</p>
           <p style="font-size:17px;font-weight:700;margin:0 0 6px;" data-cms="agents.s5.p-3" data-cms-type="text">Observation</p>
           <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="agents.s5.p-4" data-cms-type="text">L'agent propose, rien n'est écrit. Utile pour calibrer les règles sur un dossier.</p>
         </div>
-        <div style="border-radius:16px;background:#faf8ff;border:1px solid #efeaf9;padding:22px;">
-          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;margin:0 0 8px;" data-cms="agents.s5.p-5" data-cms-type="text">Niveau 2</p>
+        <div class="ana-pastel ana-t-violet" style="border-radius:16px;padding:22px;">
+          <p class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px;" data-cms="agents.s5.p-5" data-cms-type="text">Niveau 2</p>
           <p style="font-size:17px;font-weight:700;margin:0 0 6px;" data-cms="agents.s5.p-6" data-cms-type="text">Validation</p>
           <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="agents.s5.p-7" data-cms-type="text">Chaque action passe en file d'attente et attend un accord humain avant écriture.</p>
         </div>
-        <div style="border-radius:16px;background:#faf8ff;border:1px solid #efeaf9;padding:22px;">
-          <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b1fe0;margin:0 0 8px;" data-cms="agents.s5.p-8" data-cms-type="text">Niveau 3</p>
+        <div class="ana-pastel ana-t-magenta" style="border-radius:16px;padding:22px;">
+          <p class="ana-accent" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px;" data-cms="agents.s5.p-8" data-cms-type="text">Niveau 3</p>
           <p style="font-size:17px;font-weight:700;margin:0 0 6px;" data-cms="agents.s5.p-9" data-cms-type="text">Autonome sous seuil</p>
           <p style="font-size:14px;line-height:22px;color:#4f4d61;margin:0;" data-cms="agents.s5.p-10" data-cms-type="text">L'agent exécute seul sous un seuil que vous fixez ; au-delà, retour en validation.</p>
         </div>

@@ -232,6 +232,8 @@ code, .mono { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; 
 .switch input:focus-visible + span { box-shadow: 0 0 0 3px var(--accent-ring); }
 .rich { min-height: 84px; padding: 9px 11px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--panel); line-height: 1.55; overflow-wrap: anywhere; }
 .rich-tools { display: flex; gap: 4px; margin-bottom: 6px; }
+/* Le mot en dégradé du site (classe ana-grad) reste visible dans la zone de saisie. */
+.rich .ana-grad { background: linear-gradient(90deg, #8b1fe0, #e02fc5); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 /* ---------- Segmented / tabs ---------- */
 .seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 10px; flex-wrap: wrap; }

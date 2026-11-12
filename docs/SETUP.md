@@ -131,6 +131,8 @@ Le site publié est alors identique au HTML du dépôt (le test « DOM identique
 5. Ouvrir le site public : le nouveau titre est en ligne. *Pages → Accueil → Historique → Restaurer v1* puis publier pour revenir en arrière.
 6. *Médias* → importer un logo → *Éditeur* → page Intégrations → cliquer un nom du bandeau des logiciels (« Sage », « Cegid »…) → *Choisir une image* → publier. Le logo s'affiche en une seule couleur.
 7. *Demandes* : les envois des formulaires (démo, contact, candidature) y arrivent ; le tableau de bord signale les nouvelles.
+8. Capture du produit sur l'accueil : *Médias* → importer la capture (format 16:9 conseillé, par exemple 1920 × 1080) → *Éditeur* → Accueil → cliquer dans la fenêtre « File de validation » → *Choisir une image* → publier. Tant qu'aucune image n'est déposée, la fenêtre montre un gabarit abstrait.
+9. Mot en dégradé d'un titre : *Éditeur* → cliquer le titre → sélectionner le mot → bouton surligneur. Un seul par titre.
 
 ## Développement local
 

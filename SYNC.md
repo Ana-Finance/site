@@ -81,3 +81,11 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - Aucune migration ni changement de schéma : les nouveaux formulaires passent par `submit_lead` avec `p_form = 'contact'`, déjà accepté.
 - Reste côté Romain : capture d'écran de l'accueil (cadre toujours vide), adresse et téléphone de l'éditeur, compte Plausible, logos officiels du bandeau.
 - Pour l'autre : (1) l'inscription de l'app annonce « 14 jours d'essai gratuit, sans carte bancaire » ; Romain confirme qu'il n'y a pas d'essai gratuit, à retirer côté `app`. (2) `contact@ana-finance.com` est maintenant affichée sur le site (pied de page, formulaires, mentions légales) : la boîte doit exister. (3) `tmp/ana-build-vMpDZY/` est suivi par git sur `main` depuis le commit des fondations du CMS (copie d'un ancien build, non publiée) : pas supprimé, dis-moi si tu en as besoin.
+
+### 2026-11-12 · Romain (2)
+- Fait (demande de Romain, même branche que l'entrée précédente) : plus de couleur sur le site, sans sortir de la direction artistique. La palette prolonge le dégradé du logo d'un cran de chaque côté (indigo, corail) ; elle est décrite dans `assets/css/site.css`, bloc « Couleur ».
+- Six changements : un mot en dégradé dans le grand titre de 13 pages ; une teinte par étape de la chaîne et par agent (accueil, Agents, Comment ça marche) ; fonds pastel sur quelques grilles de cartes ; une teinte par public (cabinets indigo, directions financières violet, PME magenta), reprise sur leurs pages ; résultat de l'estimateur mis en valeur ; cadre de l'accueil transformé en scène avec un gabarit abstrait, en attendant la capture du produit.
+- Admin : bouton « mot en dégradé » dans l'éditeur de texte enrichi. `cms:rekey` corrige aussi le type d'un champ devenu « riche » (sinon le build déplaçait le passage mis en forme).
+- Corrigé au passage : la chaîne des six agents se coupait lettre par lettre sur téléphone (déjà le cas en ligne).
+- Aucune migration, aucun changement de schéma. Rien à faire côté base.
+- Pour l'autre : si tu ajoutes un bloc au site, reprends les classes existantes (`ana-t-*`, `ana-picto`, `ana-pastel`, `ana-halo`) plutôt que de nouvelles couleurs en dur ; le magenta et le corail purs sont trop clairs pour du petit texte, utiliser leur valeur `-texte`.

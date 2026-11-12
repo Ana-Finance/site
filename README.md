@@ -7,6 +7,7 @@ administration privée (`/admin/`) pour modifier les contenus, les images, le SE
 |---|---|
 | Site public | pages `.html` à la racine + `assets/` (zones éditables annotées `data-cms`) |
 | Administration | `admin-app/` (Vite, React, TypeScript), servie sous `/admin/` |
+| Couleurs | palette (indigo, violet, magenta, corail) et composants décrits dans `assets/css/site.css`, bloc « Couleur » |
 | Moteur de contenu | `cms/core.js`, partagé par le build et l'aperçu de l'éditeur |
 | Données | Supabase : Auth, PostgreSQL avec RLS, Storage privé, Edge Functions (`supabase/`) |
 | Publication | brouillon → révision → GitHub Actions reconstruit le site statique → vérification en ligne |
