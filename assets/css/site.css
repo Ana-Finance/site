@@ -9,7 +9,7 @@
 [data-if][hidden] { display: none !important; }
 /* Correctif responsive : les colonnes de la page démo ne doivent pas imposer leur largeur minimale. */
 .ana-demo-grid > *, .ana-form-grid > * { min-width: 0; }
-/* Correctif mobile « Les agents Ana » : les cartes de la chaîne ne doivent pas élargir la page. */
+/* Correctif mobile du schéma de la chaîne (page Cabinets) : les cartes ne doivent pas élargir la page. */
 .ana-sch-6 > * { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 600px) { .ana-two-grid { grid-template-columns: minmax(0, 1fr) !important; } }
 .ana-slot { position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
@@ -57,7 +57,7 @@
    Une teinte garde son sens d'une page à l'autre :
      étapes de la chaîne   01 indigo · 02 violet · 03 magenta · 04 corail
      publics               cabinets indigo · directions financières violet · PME magenta
-     six agents            .ana-r1 … .ana-r6 : Collecte, Rapprochement, Relances, TVA, Clôture, Reporting
+     six familles d'agents .ana-r1 … .ana-r6 : Collecte, Rapprochement, Relances, TVA, Clôture, Reporting
    Le magenta et le corail purs sont trop clairs pour du petit texte : utiliser leur valeur -texte.
    ———————————————————————————————————————————————————————————————————————————— */
 :root {
@@ -229,7 +229,7 @@ main > nav[aria-label="Fil d'ariane"] { flex-wrap: wrap; row-gap: 2px; }
   h1.ana-hero-h1, h1.ana-demo-h1 { font-size: 32px !important; line-height: 38px !important; } /* « h1. » : passe devant la règle 38 px des pages */
   .ana-bloc a[style*="white-space:nowrap"] { white-space: normal !important; text-align: center; }
   .ana-bloc { padding-left: 18px !important; padding-right: 18px !important; }
-  /* Schéma des agents : le numéro d'étape passe au-dessus de son contenu au lieu de lui prendre une colonne. */
+  /* Schéma de la chaîne (page Cabinets) : le numéro d'étape passe au-dessus de son contenu au lieu de lui prendre une colonne. */
   .ana-sch-rang { grid-template-columns: minmax(0, 1fr) !important; gap: 10px !important; }
   .ana-sch-rang > :first-child > span[style*="width:2px"] { display: none; }
 }

@@ -106,3 +106,10 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - Test : scénario e2e « schéma des agents : aucun mot coupé », à onze largeurs de 320 à 1440 px (30 scénarios). Les 15 pages ont été repassées de 521 à 1440 px : aucun mot coupé, aucun débordement.
 - Aucune clé CMS modifiée, aucune migration. Rien à faire côté base.
 - Pour l'autre : l'audit de l'entrée précédente s'arrêtait à 430 px ; pour un nouveau bloc en colonnes, vérifier aussi la largeur juste au-dessus de chaque seuil (c'est là que les colonnes sont les plus étroites).
+
+### 2026-11-13 · Romain
+- Fait (demande de Romain) : page « Les agents Ana » réécrite sous l'angle technique. Elle annonce **plus de 80 agents** (une tâche par agent, regroupés en six familles, Agent Control au-dessus) : bloc « L'architecture » (entrée, règles, décision, sortie, trace) et six cartes décrites en entrées / traitement / contrôles / sortie.
+- Le schéma de la chaîne quitte la page Agents pour la page **Cabinets** (`cabinets.html#chaine`), avec le vocabulaire cabinet (pièces de vos clients, logiciel de production, relance des pièces manquantes, dossier de révision). Accueil : « Voir le schéma complet » devient « Voir les agents en détail », « les six agents » devient « tous les agents ».
+- Technique : clés mises à jour par `npm run cms:rekey`, seed régénéré, `cms:seo-rev` ajouté sur `agents.html` (description modifiée), test E2E du schéma déplacé sur `cabinets.html`. Aucune mise à jour de la base.
+- Piège constaté : une **nouvelle `<section>`** sur une page déjà publiée est rangée après toutes les autres au build (`applySections` : absente de `sections.order`) et n'apparaît pas dans la liste des sections de l'éditeur. Le schéma est donc placé **dans** la section `s2` existante de la page Cabinets, pas dans une section à lui.
+- Pour l'autre : le texte technique reprend ce que le site affirmait déjà ; je n'ai pas eu accès au dépôt `platform`. Si le chiffre de 80 agents, le découpage en six familles ou un point d'architecture ne correspond pas au code, dis-le ici.
