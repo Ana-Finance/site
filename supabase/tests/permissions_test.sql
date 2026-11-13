@@ -27,6 +27,15 @@ begin
 end $$;
 grant execute on function pg_temp.expect_error(text, text), pg_temp.check(boolean, text) to anon, authenticated, service_role;
 
+-- Champ de texte de l'accueil modifié par les tests, pris dans le contenu initial : les clés changent quand le HTML
+-- des pages évolue (scripts/cms-rekey.mjs), le test ne doit donc dépendre d'aucune clé précise.
+-- Sans champ de texte dans le seed, \gset échoue (« no rows returned ») et arrête le test.
+select k as champ
+  from public.page_drafts d join public.pages p on p.id = d.page_id
+  cross join lateral jsonb_object_keys(d.content -> 'fields') as k
+ where p.slug = 'index' and (d.content -> 'fields' -> k) ? 'text' and not ((d.content -> 'fields' -> k) ? 'href')
+ order by k limit 1 \gset
+
 -- ================================================================
 -- 1. Visiteur anonyme
 -- ================================================================
@@ -77,7 +86,7 @@ select pg_temp.check((select count(*) from public.leads) >= 1, 'éditeur voit le
 -- Enregistrement d'un brouillon puis conflit sur version périmée
 select pg_temp.check(
   (public.save_draft((select id from public.pages where slug = 'index'),
-    jsonb_set((select content from public.page_drafts d join public.pages p on p.id = d.page_id where p.slug = 'index'), '{fields,index.s1.h1-1}', '{"text":"Titre modifié"}'),
+    jsonb_set((select content from public.page_drafts d join public.pages p on p.id = d.page_id where p.slug = 'index'), array['fields', :'champ'], '{"text":"Titre modifié"}'),
     1, 'Test éditeur') ->> 'version')::int = 2, 'save_draft version 2');
 select pg_temp.expect_error($q$select public.save_draft((select id from public.pages where slug = 'index'), '{"fields":{}}', 1)$q$, 'DRAFT_CONFLICT');
 select pg_temp.expect_error($q$select public.save_draft((select id from public.pages where slug = 'index'), '{"nope":1}', 2)$q$, 'INVALID_CONTENT');
@@ -133,7 +142,7 @@ select pg_temp.check((select jsonb_array_length(manifest) from public.publicatio
 select pg_temp.expect_error($q$select public.create_publication(null, null)$q$, 'PUBLICATION_IN_PROGRESS');
 select pg_temp.expect_error($q$select public.finalize_publication((select id from t_pub))$q$, 'permission denied');
 -- Tant que la publication n'est pas confirmée, la version en ligne ne change pas
-select pg_temp.check((select r.content #>> '{fields,index.s1.h1-1,text}' from public.pages p join public.page_revisions r on r.id = p.published_revision_id where p.slug = 'index') <> 'Titre modifié', 'pointeur publié inchangé avant confirmation');
+select pg_temp.check((select r.content #>> array['fields', :'champ', 'text'] from public.pages p join public.page_revisions r on r.id = p.published_revision_id where p.slug = 'index') is distinct from 'Titre modifié', 'pointeur publié inchangé avant confirmation');
 -- Duplication et renommage
 create temp table t_dup as select public.duplicate_page((select id from public.pages where slug = 'cabinets'), 'cabinets-2', 'Cabinets (copie)') as id;
 select pg_temp.check((select template_path from public.pages where slug = 'cabinets-2') = 'cabinets.html', 'modèle de la copie');
@@ -146,8 +155,8 @@ reset role;
 -- Le workflow (service_role) construit puis confirme
 set role service_role;
 select pg_temp.check((public.cms_export((select id from t_pub)) #>> '{publication,id}')::uuid = (select id from t_pub), 'export lié à la publication');
-select pg_temp.check((select pg #>> '{content,fields,index.s1.h1-1,text}' from jsonb_array_elements(public.cms_export((select id from t_pub)) -> 'pages') pg where pg ->> 'slug' = 'index') = 'Titre modifié', 'export : contenu du manifeste');
-select pg_temp.check((select pg #>> '{content,fields,index.s1.h1-1,text}' from jsonb_array_elements(public.cms_export(null) -> 'pages') pg where pg ->> 'slug' = 'index') <> 'Titre modifié', 'export sans publication : version en ligne');
+select pg_temp.check((select pg #>> array['content', 'fields', :'champ', 'text'] from jsonb_array_elements(public.cms_export((select id from t_pub)) -> 'pages') pg where pg ->> 'slug' = 'index') = 'Titre modifié', 'export : contenu du manifeste');
+select pg_temp.check((select pg #>> array['content', 'fields', :'champ', 'text'] from jsonb_array_elements(public.cms_export(null) -> 'pages') pg where pg ->> 'slug' = 'index') is distinct from 'Titre modifié', 'export sans publication : version en ligne');
 select pg_temp.check(jsonb_array_length(public.cms_export((select id from t_pub)) -> 'media') = 1, 'export : média référencé inclus');
 select pg_temp.check(public.cms_export(null) -> 'global' -> 'fields' ? 'g.header.a-1', 'export : contenu partagé');
 select pg_temp.check(not exists (select 1 from jsonb_array_elements(public.cms_export(null) -> 'pages') pg where pg ->> 'slug' = 'cabinets-2'), 'brouillon jamais publié exclu de l''export');
@@ -156,7 +165,7 @@ select pg_temp.expect_error($q$select public.set_publication_status((select id f
 select public.finalize_publication((select id from t_pub));
 select pg_temp.expect_error($q$select public.finalize_publication((select id from t_pub))$q$, 'PUBLICATION_CLOSED');
 reset role;
-select pg_temp.check((select r.content #>> '{fields,index.s1.h1-1,text}' from public.pages p join public.page_revisions r on r.id = p.published_revision_id where p.slug = 'index') = 'Titre modifié', 'pointeur publié basculé après confirmation');
+select pg_temp.check((select r.content #>> array['fields', :'champ', 'text'] from public.pages p join public.page_revisions r on r.id = p.published_revision_id where p.slug = 'index') = 'Titre modifié', 'pointeur publié basculé après confirmation');
 select pg_temp.check((select status from public.publications where id = (select id from t_pub)) = 'succeeded', 'publication réussie');
 select pg_temp.check(exists (select 1 from public.audit_logs where action = 'publication_succeeded'), 'journal de publication');
 
@@ -167,7 +176,7 @@ select pg_temp.check((select has_unpublished_changes from public.page_overview w
 -- Restauration de la version 1 (contenu d'origine)
 select public.restore_revision((select r.id from public.page_revisions r join public.pages p on p.id = r.page_id where p.slug = 'index' and r.number = 1),
   (select version from public.page_drafts d join public.pages p on p.id = d.page_id where p.slug = 'index'));
-select pg_temp.check((select d.content #>> '{fields,index.s1.h1-1,text}' from public.page_drafts d join public.pages p on p.id = d.page_id where p.slug = 'index') <> 'Titre modifié', 'restauration dans le brouillon');
+select pg_temp.check((select d.content #>> array['fields', :'champ', 'text'] from public.page_drafts d join public.pages p on p.id = d.page_id where p.slug = 'index') is distinct from 'Titre modifié', 'restauration dans le brouillon');
 select pg_temp.expect_error($q$select public.delete_media('11111111-1111-1111-1111-111111111111')$q$, 'MEDIA_IN_USE'); -- encore en ligne
 -- Échec d'une publication : statut failed, pointeurs inchangés
 create temp table t_pub2 as select public.create_publication(null, null) as id;
@@ -176,7 +185,7 @@ reset role;
 set role service_role;
 select public.set_publication_status((select id from t_pub2), 'failed', null, null, 'Build échoué');
 reset role;
-select pg_temp.check((select r.content #>> '{fields,index.s1.h1-1,text}' from public.pages p join public.page_revisions r on r.id = p.published_revision_id where p.slug = 'index') = 'Titre modifié', 'échec : version en ligne conservée');
+select pg_temp.check((select r.content #>> array['fields', :'champ', 'text'] from public.pages p join public.page_revisions r on r.id = p.published_revision_id where p.slug = 'index') = 'Titre modifié', 'échec : version en ligne conservée');
 select pg_temp.check((select count(*) from public.publications where status in ('queued','building','deploying','verifying')) = 0, 'plus aucune publication active');
 \o
 \echo '  ✓ toutes les assertions de permissions sont satisfaites'

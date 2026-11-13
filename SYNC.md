@@ -97,4 +97,5 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - CMS : `typoFr()` dans `cms/core.js` rend insécable l'espace devant `; : ? ! » % €` à l'écriture d'un contenu dans la page ; `cms-rekey` ignore ces espaces. Aucune migration, rien à faire côté base.
 - Texte ajouté (à valider par Romain) : trois puces sous le chapô de la page PME, et la phrase de l'accueil reprise dans le bloc final de six pages.
 - Non vérifié : Safari sur iPhone (tests faits dans Chromium).
+- Test SQL : `permissions_test.sql` ne dépend plus d'une clé précise du contenu (il visait `index.s1.h1-1`, renommée quand le titre de l'accueil a reçu son mot en dégradé ; la CI de la PR échouait sur ce point). Il prend un champ de texte du seed au moment du test.
 - Pour l'autre : pour un nouveau bloc, reprendre ces classes plutôt que des tailles et des marges en dur ; écrire `&nbsp;` devant la ponctuation double dans le HTML (`npm test` le contrôle).
