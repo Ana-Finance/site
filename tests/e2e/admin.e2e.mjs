@@ -178,13 +178,13 @@ try {
     await c.close();
   });
 
-  await step('schéma des agents : aucun mot coupé, du téléphone au grand écran', async () => {
+  await step('schéma de la chaîne (page Cabinets) : aucun mot coupé, du téléphone au grand écran', async () => {
     // 440 px : l'iPhone sur lequel le défaut a été signalé. Les autres largeurs encadrent les seuils de la chaîne
     // (une, deux, trois puis six colonnes) et le cas d'un portable à 1093 px, où six colonnes ne tenaient pas.
     for (const w of [320, 375, 440, 520, 521, 760, 761, 1093, 1180, 1181, 1440]) {
       const c = await browser.newContext({ viewport: { width: w, height: 800 }, isMobile: w < 1000, hasTouch: w < 1000 });
       const p = await c.newPage();
-      await p.goto(BASE + 'agents.html');
+      await p.goto(BASE + 'cabinets.html');
       await p.evaluate(() => document.fonts.ready);
       const m = await p.evaluate(() => {
         const chaine = document.querySelector('.ana-sch-6');
@@ -205,7 +205,7 @@ try {
       });
       expect(m.coupes.length === 0, w + ' px : mot coupé (' + m.coupes.join(', ') + ')');
       expect(m.depasse <= 1, w + ' px : débordement horizontal');
-      if (w <= 520) expect(m.colonnes === 1, w + ' px : les six agents sur une colonne (' + m.colonnes + ')');
+      if (w <= 520) expect(m.colonnes === 1, w + ' px : les six familles sur une colonne (' + m.colonnes + ')');
       await c.close();
     }
   });

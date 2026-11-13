@@ -67,6 +67,12 @@
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
     .ana-canvas { position: relative; isolation: isolate; }
     .ana-canvas > * { position: relative; z-index: 1; }
+    .ana-sch-conn svg { display: block; }
+    /* Chaîne des six familles : six colonnes tant qu'un nom tient sur sa carte (au-dessus de 1180 px), puis trois, deux, une. */
+    @media (max-width: 1180px) { .ana-sch-6 { grid-template-columns: repeat(3,1fr) !important; row-gap: 14px !important; } .ana-sch-conn > div:nth-child(n+4) { display: none !important; } .ana-sch-6 > div:nth-child(3n) .ana-chain-chev { display: none !important; } }
+    @media (max-width: 760px) { .ana-sch-3, .ana-sch-2 { grid-template-columns: 1fr !important; } .ana-sch-6 { grid-template-columns: 1fr 1fr !important; } .ana-sch-conn > div:nth-child(n+3) { display: none !important; } .ana-sch-6 > div:nth-child(2n) .ana-chain-chev { display: none !important; } .ana-sch-6 > div:nth-child(3n) .ana-chain-chev { display: flex !important; } }
+    /* Téléphone : la chaîne passe sur une colonne (sur deux, les noms se coupaient lettre par lettre) ; la flèche de passage pointe vers la carte du dessous. */
+    @media (max-width: 520px) { .ana-sch-6 { grid-template-columns: 1fr !important; row-gap: 14px !important; } .ana-sch-conn > div:nth-child(n+2) { display: none !important; } .ana-sch-6 > div:nth-child(n) .ana-chain-chev { display: block !important; left: 50%; right: auto !important; top: auto !important; bottom: -15px; transform: translateX(-50%) rotate(90deg) !important; } }
   
     .ana-skip:focus { top: 12px !important; }
       @media (max-width: 720px) { .ana-breath-q { font-size: 28px !important; line-height: 36px !important; max-width: none !important; } }
@@ -328,6 +334,145 @@
         </ul>
         </div>
       </details>
+    </div>
+    <div id="chaine" class="ana-bloc" style="margin-top:44px;scroll-margin-top:84px;border-radius:24px;background:#fff;border:1px solid #eceaf3;box-shadow:0 14px 40px -28px rgba(20,10,60,0.22);padding:36px 38px 34px;">
+      <span style="display:block;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--t-texte);margin-bottom:10px;" data-cms="cabinets.s2.span-41" data-cms-type="text">La chaîne, sur chaque dossier</span>
+      <h3 class="ana-h2-bloc" style="font-weight:800;letter-spacing:-0.02em;margin:0 0 10px;max-width:46ch;" data-cms="cabinets.s2.h3-1" data-cms-type="text">Six familles d'agents exécutent. Agent Control les contrôle toutes.</h3>
+      <p style="font-size:15.5px;line-height:25px;color:#4f4d61;margin:0 0 34px;max-width:97ch;" data-cms="cabinets.s2.p-2" data-cms-type="text">Sur chaque dossier du portefeuille, les agents se passent le travail de proche en proche, dans l'ordre, de la pièce collectée au dossier prêt à réviser. Au-dessus d'eux, un agent de contrôle rejoue leurs décisions à chaque traitement&nbsp;: c'est ce qui rend l'automatisation acceptable dans un métier où l'erreur se paie.</p>
+      <div class="ana-sch-rang" style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:20px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <span class="ana-t-indigo" style="width:36px;height:36px;border-radius:12px;background:var(--t-pastel);border:1.5px solid var(--t-bord);color:var(--t-texte);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-42" data-cms-type="text">01</span>
+          <span style="flex:1;width:2px;background:linear-gradient(#e0d2f7,#f2ecfb);border-radius:2px;min-height:18px;"></span>
+        </div>
+        <div style="padding-bottom:30px;min-width:0;">
+          <p style="font-size:12.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#5b586b;margin:0 0 14px;" data-cms="cabinets.s2.p-3" data-cms-type="text">Les flux de vos dossiers, branchés en place</p>
+          <div class="ana-sch-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+            <div style="border-radius:14px;background:#faf8ff;border:1px solid #efeaf9;padding:16px 18px;">
+              <p style="font-size:15.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 4px;color:#16151c;" data-cms="cabinets.s2.p-4" data-cms-type="text">Banques DSP2</p>
+              <p style="font-size:13px;line-height:20px;color:#5b586b;margin:0;" data-cms="cabinets.s2.p-5" data-cms-type="text">Soldes et mouvements, en lecture seule</p>
+            </div>
+            <div style="border-radius:14px;background:#faf8ff;border:1px solid #efeaf9;padding:16px 18px;">
+              <p style="font-size:15.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 4px;color:#16151c;" data-cms="cabinets.s2.p-6" data-cms-type="text">Pièces de vos clients</p>
+              <p style="font-size:13px;line-height:20px;color:#5b586b;margin:0;" data-cms="cabinets.s2.p-7" data-cms-type="text">Achats, ventes, notes de frais</p>
+            </div>
+            <div style="border-radius:14px;background:#faf8ff;border:1px solid #efeaf9;padding:16px 18px;">
+              <p style="font-size:15.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 4px;color:#16151c;" data-cms="cabinets.s2.p-8" data-cms-type="text">Logiciel de production</p>
+              <p style="font-size:13px;line-height:20px;color:#5b586b;margin:0;" data-cms="cabinets.s2.p-9" data-cms-type="text">Plan comptable et journaux de chaque dossier</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ana-sch-rang" style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:20px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <span class="ana-t-violet" style="width:36px;height:36px;border-radius:12px;background:var(--t-pastel);border:1.5px solid var(--t-bord);color:var(--t-texte);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-43" data-cms-type="text">02</span>
+          <span style="flex:1;width:2px;background:linear-gradient(#e0d2f7,#f2ecfb);border-radius:2px;min-height:18px;"></span>
+        </div>
+        <div style="padding-bottom:30px;min-width:0;">
+          <p style="font-size:12.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#5b586b;margin:0 0 14px;" data-cms="cabinets.s2.p-10" data-cms-type="text">Six familles d'agents, sous le contrôle d'Agent Control</p>
+          <div style="border-radius:20px;border:1.5px dashed #e8b9e0;background:linear-gradient(#fdf6fc,#fbf7ff);padding:18px 18px 0;">
+            <div class="ana-sch-6" style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px;">
+          <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
+            <span style="display:flex;align-items:center;gap:7px;">
+              <span class="ana-pastille ana-r1" style="width:20px;height:20px;border-radius:7px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-44" data-cms-type="text">1</span>
+              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="cabinets.s2.span-45" data-cms-type="text">Collecte</span>
+            </span>
+            <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="cabinets.s2.span-46" data-cms-type="text">Pièces des clients</span>
+            <svg class="ana-chain-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c3aee2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-11px;top:50%;transform:translateY(-50%);" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+          </div>
+          <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
+            <span style="display:flex;align-items:center;gap:7px;">
+              <span class="ana-pastille ana-r2" style="width:20px;height:20px;border-radius:7px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-47" data-cms-type="text">2</span>
+              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="cabinets.s2.span-48" data-cms-type="text">Rapproche&shy;ment</span>
+            </span>
+            <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="cabinets.s2.span-49" data-cms-type="text">Lettrage bancaire</span>
+            <svg class="ana-chain-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c3aee2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-11px;top:50%;transform:translateY(-50%);" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+          </div>
+          <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
+            <span style="display:flex;align-items:center;gap:7px;">
+              <span class="ana-pastille ana-r3" style="width:20px;height:20px;border-radius:7px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-50" data-cms-type="text">3</span>
+              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="cabinets.s2.span-51" data-cms-type="text">Relances</span>
+            </span>
+            <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="cabinets.s2.span-52" data-cms-type="text">Pièces manquantes</span>
+            <svg class="ana-chain-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c3aee2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-11px;top:50%;transform:translateY(-50%);" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+          </div>
+          <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
+            <span style="display:flex;align-items:center;gap:7px;">
+              <span class="ana-pastille ana-r4" style="width:20px;height:20px;border-radius:7px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-53" data-cms-type="text">4</span>
+              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="cabinets.s2.span-54" data-cms-type="text">TVA</span>
+            </span>
+            <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="cabinets.s2.span-55" data-cms-type="text">Bases déclaratives</span>
+            <svg class="ana-chain-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c3aee2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-11px;top:50%;transform:translateY(-50%);" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+          </div>
+          <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
+            <span style="display:flex;align-items:center;gap:7px;">
+              <span class="ana-pastille ana-r5" style="width:20px;height:20px;border-radius:7px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-56" data-cms-type="text">5</span>
+              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="cabinets.s2.span-57" data-cms-type="text">Clôture</span>
+            </span>
+            <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="cabinets.s2.span-58" data-cms-type="text">Dossier de révision</span>
+            <svg class="ana-chain-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c3aee2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-11px;top:50%;transform:translateY(-50%);" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+          </div>
+          <div style="position:relative;border-radius:14px;background:#fff;border:1.5px solid #ded7ef;padding:16px 14px;display:flex;flex-direction:column;gap:7px;">
+            <span style="display:flex;align-items:center;gap:7px;">
+              <span class="ana-pastille ana-r6" style="width:20px;height:20px;border-radius:7px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-59" data-cms-type="text">6</span>
+              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#16151c;" data-cms="cabinets.s2.span-60" data-cms-type="text">Reporting</span>
+            </span>
+            <span style="font-size:12.5px;line-height:18px;color:#5b586b;" data-cms="cabinets.s2.span-61" data-cms-type="text">Tableaux de bord</span>
+          </div>
+            </div>
+            <div class="ana-sch-6 ana-sch-conn" style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px;">
+          <div style="display:flex;justify-content:center;"><svg width="14" height="30" viewBox="0 0 14 30" fill="none" aria-hidden="true"><path d="M7 30V8" stroke="#f23fd6" stroke-width="1.8" stroke-dasharray="4 4"></path><path d="M3 11l4-4 4 4" stroke="#f23fd6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div style="display:flex;justify-content:center;"><svg width="14" height="30" viewBox="0 0 14 30" fill="none" aria-hidden="true"><path d="M7 30V8" stroke="#f23fd6" stroke-width="1.8" stroke-dasharray="4 4"></path><path d="M3 11l4-4 4 4" stroke="#f23fd6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div style="display:flex;justify-content:center;"><svg width="14" height="30" viewBox="0 0 14 30" fill="none" aria-hidden="true"><path d="M7 30V8" stroke="#f23fd6" stroke-width="1.8" stroke-dasharray="4 4"></path><path d="M3 11l4-4 4 4" stroke="#f23fd6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div style="display:flex;justify-content:center;"><svg width="14" height="30" viewBox="0 0 14 30" fill="none" aria-hidden="true"><path d="M7 30V8" stroke="#f23fd6" stroke-width="1.8" stroke-dasharray="4 4"></path><path d="M3 11l4-4 4 4" stroke="#f23fd6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div style="display:flex;justify-content:center;"><svg width="14" height="30" viewBox="0 0 14 30" fill="none" aria-hidden="true"><path d="M7 30V8" stroke="#f23fd6" stroke-width="1.8" stroke-dasharray="4 4"></path><path d="M3 11l4-4 4 4" stroke="#f23fd6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div style="display:flex;justify-content:center;"><svg width="14" height="30" viewBox="0 0 14 30" fill="none" aria-hidden="true"><path d="M7 30V8" stroke="#f23fd6" stroke-width="1.8" stroke-dasharray="4 4"></path><path d="M3 11l4-4 4 4" stroke="#f23fd6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            </div>
+            <div style="margin:0 -18px;border-radius:0 0 18px 18px;background:#15101f;padding:20px 24px;display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:13px;min-width:0;">
+                <span style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"></path><path d="M9 12l2 2 4-4"></path></svg></span>
+                <span style="display:flex;flex-direction:column;gap:3px;min-width:0;">
+                  <span style="font-size:17px;font-weight:800;letter-spacing:-0.01em;color:#fff;" data-cms="cabinets.s2.span-62" data-cms-type="text">Agent Control</span>
+                  <span style="font-size:13px;line-height:19px;color:rgba(255,255,255,0.8);" data-cms="cabinets.s2.span-63" data-cms-type="text">Contrôle les six familles, à chaque traitement</span>
+                </span>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <span style="font-size:12.5px;font-weight:600;color:#fff;background:rgba(255,255,255,0.16);border-radius:999px;padding:7px 13px;" data-cms="cabinets.s2.span-64" data-cms-type="text">Rejoue un échantillon</span>
+                <span style="font-size:12.5px;font-weight:600;color:#fff;background:rgba(255,255,255,0.16);border-radius:999px;padding:7px 13px;" data-cms="cabinets.s2.span-65" data-cms-type="text">Détecte les dérives</span>
+                <span style="font-size:12.5px;font-weight:600;color:#fff;background:rgba(255,255,255,0.16);border-radius:999px;padding:7px 13px;" data-cms="cabinets.s2.span-66" data-cms-type="text">Tient le journal complet</span>
+                <span style="font-size:12.5px;font-weight:600;color:#fff;background:rgba(255,255,255,0.16);border-radius:999px;padding:7px 13px;" data-cms="cabinets.s2.span-67" data-cms-type="text">Rend tout réversible</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ana-sch-rang" style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:20px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <span class="ana-t-magenta" style="width:36px;height:36px;border-radius:12px;background:var(--t-pastel);border:1.5px solid var(--t-bord);color:var(--t-texte);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;" data-cms="cabinets.s2.span-68" data-cms-type="text">03</span>
+          
+        </div>
+        <div style="padding-bottom:0;min-width:0;">
+          <p style="font-size:12.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#5b586b;margin:0 0 14px;" data-cms="cabinets.s2.p-11" data-cms-type="text">Décision, puis restitution</p>
+          <div class="ana-sch-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch;">
+            <div style="border-radius:16px;background:#faf8ff;border:1.5px solid #e0d2f7;padding:20px;">
+              <p style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 10px;color:#16151c;" data-cms="cabinets.s2.p-12" data-cms-type="text">Validation par vos collaborateurs</p>
+              <div style="display:flex;flex-direction:column;gap:7px;">
+                <span style="font-size:13.5px;line-height:20px;color:#4a4858;" data-cms="cabinets.s2.span-69" data-cms-type="rich"><strong style="color:#6d28d9;">Niveau 1</strong>, observation, rien n'est écrit</span>
+                <span style="font-size:13.5px;line-height:20px;color:#4a4858;" data-cms="cabinets.s2.span-70" data-cms-type="rich"><strong style="color:#6d28d9;">Niveau 2</strong>, accord d'un collaborateur avant écriture</span>
+                <span style="font-size:13.5px;line-height:20px;color:#4a4858;" data-cms="cabinets.s2.span-71" data-cms-type="rich"><strong style="color:#6d28d9;">Niveau 3</strong>, autonome sous votre seuil</span>
+              </div>
+            </div>
+            <div style="border-radius:16px;background:linear-gradient(135deg,#2b0a4d,#8b1fe0 62%,#f23fd6);padding:20px;color:#fff;display:flex;flex-direction:column;">
+              <p style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;margin:0 0 10px;" data-cms="cabinets.s2.p-13" data-cms-type="text">Écritures &amp; reporting</p>
+              <div style="display:flex;flex-direction:column;gap:7px;">
+                <span style="font-size:13.5px;line-height:20px;color:rgba(255,255,255,0.88);" data-cms="cabinets.s2.span-72" data-cms-type="text">Poussés dans vos outils existants</span>
+                <span style="font-size:13.5px;line-height:20px;color:rgba(255,255,255,0.88);" data-cms="cabinets.s2.span-73" data-cms-type="text">Journal complet attaché à chaque écriture</span>
+                <span style="font-size:13.5px;line-height:20px;color:rgba(255,255,255,0.88);" data-cms="cabinets.s2.span-74" data-cms-type="text">Annulable à tout moment, état antérieur conservé</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:14.5px;line-height:23px;color:#4f4d61;margin:26px 0 0;" data-cms="cabinets.s2.p-14" data-cms-type="rich">Derrière ces six familles, plus de 80 agents spécialisés. <a href="agents.html" style="font-weight:600;">Voir comment ils sont construits</a></p>
     </div>
   </section>
 
