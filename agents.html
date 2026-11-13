@@ -70,11 +70,12 @@
     @media (max-width: 720px) { .ana-grid-3 { grid-template-columns: 1fr 1fr !important; } }
     .ana-sch-conn svg { display: block; }
     @media (max-width: 620px) { .ana-ab-row { grid-template-columns: minmax(0,1fr) !important; gap: 14px !important; } .ana-ab-arrow { transform: rotate(90deg); } }
-    @media (max-width: 1080px) { .ana-sch-6 { grid-template-columns: repeat(3,1fr) !important; row-gap: 14px !important; } .ana-sch-conn > div:nth-child(n+4) { display: none !important; } .ana-sch-6 > div:nth-child(3n) .ana-chain-chev { display: none !important; } }
+    /* Chaîne des six agents : six colonnes tant qu'un nom tient sur sa carte (au-dessus de 1180 px), puis trois, deux, une. */
+    @media (max-width: 1180px) { .ana-sch-6 { grid-template-columns: repeat(3,1fr) !important; row-gap: 14px !important; } .ana-sch-conn > div:nth-child(n+4) { display: none !important; } .ana-sch-6 > div:nth-child(3n) .ana-chain-chev { display: none !important; } }
     @media (max-width: 760px) { .ana-sch-3, .ana-sch-2 { grid-template-columns: 1fr !important; } .ana-sch-6 { grid-template-columns: 1fr 1fr !important; } .ana-sch-conn > div:nth-child(n+3) { display: none !important; } .ana-sch-6 > div:nth-child(2n) .ana-chain-chev { display: none !important; } .ana-sch-6 > div:nth-child(3n) .ana-chain-chev { display: flex !important; } }
     @media (max-width: 520px) { .ana-grid-3 { grid-template-columns: 1fr !important; } }
-    /* Téléphone : la chaîne des six agents passe sur une colonne (sur deux, les noms se coupaient lettre par lettre). */
-    @media (max-width: 520px) { .ana-sch-6 { grid-template-columns: 1fr !important; row-gap: 10px !important; } .ana-sch-conn > div:nth-child(n+2) { display: none !important; } .ana-sch-6 > div:nth-child(n) .ana-chain-chev { display: none !important; } }
+    /* Téléphone : la chaîne passe sur une colonne (sur deux, les noms se coupaient lettre par lettre) ; la flèche de passage pointe vers la carte du dessous. */
+    @media (max-width: 520px) { .ana-sch-6 { grid-template-columns: 1fr !important; row-gap: 14px !important; } .ana-sch-conn > div:nth-child(n+2) { display: none !important; } .ana-sch-6 > div:nth-child(n) .ana-chain-chev { display: block !important; left: 50%; right: auto !important; top: auto !important; bottom: -15px; transform: translateX(-50%) rotate(90deg) !important; } }
   
     .ana-skip:focus { top: 12px !important; }
       @media (max-width: 720px) { .ana-breath-q { font-size: 28px !important; line-height: 36px !important; max-width: none !important; } }

@@ -99,3 +99,10 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - Non vérifié : Safari sur iPhone (tests faits dans Chromium).
 - Test SQL : `permissions_test.sql` ne dépend plus d'une clé précise du contenu (il visait `index.s1.h1-1`, renommée quand le titre de l'accueil a reçu son mot en dégradé ; la CI de la PR échouait sur ce point). Il prend un champ de texte du seed au moment du test.
 - Pour l'autre : pour un nouveau bloc, reprendre ces classes plutôt que des tailles et des marges en dur ; écrire `&nbsp;` devant la ponctuation double dans le HTML (`npm test` le contrôle).
+
+### 2026-11-13 · Romain (2)
+- Fait (signalement de Romain depuis son iPhone, même branche et même PR `Ana-Finance/site#11`) : le schéma de la page Agents s'affiche mal **en ligne** (noms des agents coupés) parce que la PR n'est pas fusionnée ; la branche l'affichait déjà sur une colonne. Vérifié à la taille de son téléphone (440 px de large), où l'émulation reproduit sa capture.
+- Corrigé en plus : entre 1081 et 1130 px (portable en 1366 px affiché à 125 %, par exemple), la chaîne passait à six colonnes trop étroites et coupait « Relances » et « Reporting ». Elle reste sur trois colonnes jusqu'à 1180 px. Sur téléphone, une flèche relie chaque agent au suivant.
+- Test : scénario e2e « schéma des agents : aucun mot coupé », à onze largeurs de 320 à 1440 px (30 scénarios). Les 15 pages ont été repassées de 521 à 1440 px : aucun mot coupé, aucun débordement.
+- Aucune clé CMS modifiée, aucune migration. Rien à faire côté base.
+- Pour l'autre : l'audit de l'entrée précédente s'arrêtait à 430 px ; pour un nouveau bloc en colonnes, vérifier aussi la largeur juste au-dessus de chaque seuil (c'est là que les colonnes sont les plus étroites).
