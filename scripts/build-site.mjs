@@ -230,19 +230,24 @@ function write404() {
   const main = dom && dom.window.document.querySelector('main');
   if (!main) return writeFallback404();
   const doc = dom.window.document;
-  const BTN = 'text-decoration:none;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:600;font-family:inherit;';
+  // Mêmes gabarits que les pages intérieures : surtitre, titre, chapô, boutons en pilule de 47 px de haut.
+  const BTN = 'text-decoration:none;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-size:15px;font-weight:600;font-family:inherit;';
+  const PLEIN = BTN + 'padding:14px 26px;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;';
+  const BORDE = BTN + 'padding:13px 24.5px;background:#fff;color:#16151c;border:1.5px solid #ded7ef;';
   main.innerHTML = `
     <section id="main" style="max-width:1440px;margin:0 auto;padding:88px 40px 104px;">
       <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 14px;">Erreur 404</span>
-      <h1 class="ana-hero-h1" style="font-size:clamp(30px,5.6vw,61px);line-height:1.12;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:24ch;">Cette page n'existe pas, ou plus.</h1>
-      <p style="font-size:18px;line-height:29px;max-width:70ch;margin:24px 0 0;color:#514f60;">L'adresse a peut-être changé. Repartez de l'accueil, ou allez directement à l'une des pages les plus consultées.</p>
+      <h1 class="ana-hero-h1" style="font-size:clamp(28px,5.2vw,57px);line-height:1.14;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:820px;">Cette page n'existe pas, ou plus.</h1>
+      <p style="font-size:17.5px;line-height:28px;max-width:84ch;margin:20px 0 0;color:#514f60;">L'adresse a peut-être changé. Repartez de l'accueil, ou allez directement à l'une des pages les plus consultées.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
-        <a href="./" style="${BTN}background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;">Retour à l'accueil</a>
-        <a href="comment-ca-marche.html" style="${BTN}background:#fff;color:#16151c;border:1.5px solid #dcd9e6;">Comment ça marche</a>
-        <a href="ressources.html#tarifs" style="${BTN}background:#fff;color:#16151c;border:1.5px solid #dcd9e6;">Tarifs</a>
-        <a href="demo.html" style="${BTN}background:#fff;color:#16151c;border:1.5px solid #dcd9e6;">Demander une démo</a>
+        <a href="./" style="${PLEIN}">Retour à l'accueil</a>
+        <a href="comment-ca-marche.html" style="${BORDE}">Comment ça marche</a>
+        <a href="ressources.html#tarifs" style="${BORDE}">Tarifs</a>
+        <a href="demo.html" style="${BORDE}">Demander une démo</a>
       </div>
     </section>`;
+  // La barre fixe « Demander une démo » de l'accueil n'a pas sa place sur une page d'erreur.
+  doc.querySelectorAll('.ana-mobile-sticky-cta').forEach((el) => el.remove());
   doc.title = 'Page introuvable — Ana Finance';
   doc.head.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"], meta[name="cms:seo-rev"], link[rel="canonical"], script[type="application/ld+json"]').forEach((el) => el.remove());
   let robots = doc.head.querySelector('meta[name="robots"]');

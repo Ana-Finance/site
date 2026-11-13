@@ -118,6 +118,66 @@ try {
     expect(lead.message.includes('Lien : https://exemple.fr/cv-alex'), 'lien du CV joint au message');
   });
 
+  // ——— Site public sur téléphone ———
+  await step('téléphone : menu défilable, tous les liens atteignables sur un petit écran', async () => {
+    const c = await browser.newContext({ viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true });
+    const p = await c.newPage();
+    p.on('pageerror', (e) => errors.push(e.message));
+    await p.goto(BASE + 'index.html');
+    const burger = p.locator('.ana-nav-burger');
+    await burger.click();
+    for (const k of ['toggleMobileFeatures', 'toggleMobileCases']) await p.locator(`[data-on-click="${k}"]`).first().click();
+    expect(await burger.getAttribute('aria-expanded') === 'true', 'bouton du menu marqué ouvert');
+    expect(await p.evaluate(() => getComputedStyle(document.documentElement).overflow) === 'hidden', 'la page ne défile pas derrière le menu');
+    const last = p.locator('.ana-mobile-panel a', { hasText: 'Créer un compte' });
+    await last.scrollIntoViewIfNeeded();
+    const ok = await last.evaluate((el) => { const r = el.getBoundingClientRect(); const top = document.elementFromPoint(r.left + 20, r.top + r.height / 2); return r.bottom <= innerHeight && !!top && (top === el || el.contains(top)); });
+    expect(ok, '« Créer un compte » atteignable, sans être recouvert par la barre fixe');
+    await burger.click();
+    expect(await p.evaluate(() => getComputedStyle(document.documentElement).overflow) !== 'hidden', 'la page défile de nouveau, menu fermé');
+    await c.close();
+  });
+
+  await step('téléphone : barre fixe masquée tant qu\'un bouton de démo est à l\'écran', async () => {
+    const c = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    const p = await c.newPage();
+    await p.goto(BASE + 'index.html');
+    const bar = p.locator('.ana-mobile-sticky-cta');
+    await p.waitForTimeout(300);
+    expect(await bar.evaluate((el) => getComputedStyle(el).visibility) === 'hidden', 'barre masquée en haut de l\'accueil (bouton du haut de page visible)');
+    await p.evaluate(() => { const el = document.querySelector('#fonctionnement'); window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY + 300); });
+    await p.waitForTimeout(500);
+    expect(await bar.evaluate((el) => getComputedStyle(el).visibility) === 'visible', 'barre affichée une fois le bouton hors de l\'écran');
+    for (const page2 of ['carrieres.html', 'mentions-legales.html', '404.html']) {
+      await p.goto(BASE + page2);
+      expect(await p.locator('.ana-mobile-sticky-cta').count() === 0, 'pas de barre fixe sur ' + page2);
+    }
+    await c.close();
+  });
+
+  await step('téléphone : fenêtre de détail aux couleurs de la carte, étapes et champs sur une colonne', async () => {
+    const c = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    const p = await c.newPage();
+    await p.goto(BASE + 'cabinets.html');
+    const card = p.locator('details.ana-acc').first();
+    const tint = await card.locator('.ana-pill').evaluate((el) => getComputedStyle(el).color);
+    await card.locator('summary').click();
+    const box = p.locator('[data-ana-bulle] [role="dialog"]');
+    await box.waitFor({ timeout: 3000 });
+    expect(await box.locator('.ana-pill').evaluate((el) => getComputedStyle(el).color) === tint, 'pictogramme de la fenêtre dans la teinte de la page');
+    expect(tint !== 'rgb(139, 31, 224)', 'la page Cabinets a sa propre teinte (indigo), pas le violet par défaut');
+    await p.keyboard.press('Escape');
+    const step1 = await p.locator('#pilote .ana-step-row').first().evaluate((el) => { const [a, b] = el.children; return b.getBoundingClientRect().top >= a.getBoundingClientRect().bottom && b.getBoundingClientRect().width > 250; });
+    expect(step1, 'étapes du pilote : libellé au-dessus du texte, sur toute la largeur');
+    await p.goto(BASE + 'carrieres.html');
+    const widths = await p.locator('form input[name="nom"], form input[name="email"]').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().width)));
+    expect(widths.length === 2 && widths.every((w) => w > 250), 'candidature : nom et e-mail sur toute la largeur (' + widths.join(', ') + ')');
+    expect(await p.locator('form input[name="email"]').evaluate((e) => parseFloat(getComputedStyle(e).fontSize)) >= 16, 'champs à 16 px (pas de zoom automatique sur iPhone)');
+    const over = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(over <= 1, 'aucun débordement horizontal');
+    await c.close();
+  });
+
   await step('accès direct à /admin/ : écran de connexion', async () => {
     await page.goto(BASE + 'admin/#/pages');
     await page.getByRole('heading', { name: 'Connexion' }).waitFor({ timeout: 8000 });

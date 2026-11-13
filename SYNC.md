@@ -89,3 +89,12 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - Corrigé au passage : la chaîne des six agents se coupait lettre par lettre sur téléphone (déjà le cas en ligne).
 - Aucune migration, aucun changement de schéma. Rien à faire côté base.
 - Pour l'autre : si tu ajoutes un bloc au site, reprends les classes existantes (`ana-t-*`, `ana-picto`, `ana-pastel`, `ana-halo`) plutôt que de nouvelles couleurs en dur ; le magenta et le corail purs sont trop clairs pour du petit texte, utiliser leur valeur `-texte`.
+
+### 2026-11-13 · Romain
+- Fait (demande de Romain, même branche et même PR `Ana-Finance/site#11`) : audit du rendu sur téléphone (26 défauts, de 280 à 430 px), tous corrigés. Les styles communs sont dans `assets/css/site.css`, blocs « Composants communs » et « Petits écrans ».
+- Ce qui cassait : menu mobile non défilable (liens inatteignables sur petit écran), étapes du pilote écrasées, formulaire de candidature sur deux colonnes, teinte perdue dans les fenêtres de détail, ancres sous l'en-tête, ponctuation seule en début de ligne, champs sous 16 px.
+- Cohérence, y compris sur ordinateur : un seul gabarit de haut de page (surtitre), une seule échelle de titres (`ana-h2`, `ana-h2-bloc`, `ana-h3-carte`), un seul bloc final (`ana-fin`), un seul style de bulle, boutons à la même hauteur. La barre fixe « Demander une démo » s'efface quand un bouton de démo est à l'écran ; elle est retirée de Carrières, des mentions légales et de la 404.
+- CMS : `typoFr()` dans `cms/core.js` rend insécable l'espace devant `; : ? ! » % €` à l'écriture d'un contenu dans la page ; `cms-rekey` ignore ces espaces. Aucune migration, rien à faire côté base.
+- Texte ajouté (à valider par Romain) : trois puces sous le chapô de la page PME, et la phrase de l'accueil reprise dans le bloc final de six pages.
+- Non vérifié : Safari sur iPhone (tests faits dans Chromium).
+- Pour l'autre : pour un nouveau bloc, reprendre ces classes plutôt que des tailles et des marges en dur ; écrire `&nbsp;` devant la ponctuation double dans le HTML (`npm test` le contrôle).

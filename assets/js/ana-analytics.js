@@ -60,7 +60,7 @@
     INVALID_EMAIL: 'Adresse e-mail invalide.',
     INVALID_NAME: 'Merci d\'indiquer votre nom.',
     FIELD_TOO_LONG: 'Un des champs est trop long.',
-    RATE_LIMITED: 'Trop de demandes envoyées : réessayez dans quelques minutes.'
+    RATE_LIMITED: 'Trop de demandes envoyées\u00a0: réessayez dans quelques minutes.'
   };
 
   /** Enregistre une demande. Résout {sent:true} uniquement si le serveur a confirmé l'enregistrement.

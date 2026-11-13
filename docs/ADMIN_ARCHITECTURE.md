@@ -87,6 +87,8 @@ Le build applique le contenu publié **par-dessus** le HTML : pour une clé déj
 | Texte simple auquel on ajoute une mise en forme (un mot en dégradé dans un titre, par exemple) | `npm run cms:rekey` corrige `data-cms-type` (`text` → `rich`) et change la clé si elle existe déjà dans `origin/main`. Sans cela le build réécrirait le titre comme un texte simple et déplacerait le passage mis en forme. |
 | Section à ne plus afficher | `data-cms-default-hidden hidden` (voir ci-dessus). |
 
+Typographie : tout texte écrit dans une page depuis le CMS passe par `typoFr()` (`cms/core.js`), qui rend insécable l'espace placée devant `; : ? ! » % €` et après `«`. Un texte saisi dans l'administration avec des espaces ordinaires ne laisse donc jamais un signe seul en début de ligne. Les pages HTML portent déjà ces espaces (`&nbsp;`) ; `cms-rekey` ne les compte pas comme un changement de texte.
+
 Le test « clés à jour » (`cms-rekey --check`) échoue si un champ modifié garde son ancienne clé ou si un élément éditable n'a pas de clé. À lancer **avant** la fusion dans `main` : une fois le changement fusionné, il n'y a plus de différence à détecter.
 
 ### 3.2 Publication : génération statique (approche B) + aperçu dynamique côté admin (hybride)
@@ -271,9 +273,9 @@ docs/
 
 | Suite | Contenu | Commande |
 |---|---|---|
-| Unitaires (36) | build identique au HTML source sur les 14 pages, clés à jour (`cms-rekey --check`), page 404, révision des textes SEO, balises de partage, assainissement HTML/URL, SEO/sitemap/JSON-LD, script de mesure sur toutes les pages, détection de clés service_role, adaptateur Plausible, périodes | `npm test` |
+| Unitaires (39) | build identique au HTML source sur les 14 pages, clés à jour (`cms-rekey --check`), page 404, révision des textes SEO, balises de partage, typographie (espaces insécables), assainissement HTML/URL, SEO/sitemap/JSON-LD, script de mesure sur toutes les pages, détection de clés service_role, adaptateur Plausible, périodes | `npm test` |
 | SQL (~80 assertions) | anonyme, compte non invité, éditeur, admin, workflow (service_role) : lecture, brouillons, conflits, publication, finalisation, échec, restauration, médias, storage, dernier admin, formulaires et limites anti-abus | `npm run test:sql` |
-| E2E (26 scénarios) | site public sous `/site/`, formulaires réels (démo, contact, candidature) + conversion + refus du serveur, connexion/refus, dashboard sans faux chiffres, alerte des nouvelles demandes, éditeur (sélection, édition d'un titre enrichi, mot en dégradé, emplacement de la capture, annuler/rétablir, sections dont section masquée par défaut, mobile/tablette), brouillon, publication, aperçu, éditeur sans droit de publier, mobile sans débordement, thème sombre, aucune erreur JS | `node tests/e2e/admin.e2e.mjs` |
+| E2E (29 scénarios) | site public sous `/site/`, formulaires réels (démo, contact, candidature) + conversion + refus du serveur, site sur téléphone (menu défilable et liens atteignables, barre fixe, fenêtre de détail, étapes et champs sur une colonne), connexion/refus, dashboard sans faux chiffres, alerte des nouvelles demandes, éditeur (sélection, édition d'un titre enrichi, mot en dégradé, emplacement de la capture, annuler/rétablir, sections dont section masquée par défaut, mobile/tablette), brouillon, publication, aperçu, éditeur sans droit de publier, mobile sans débordement, thème sombre, aucune erreur JS | `node tests/e2e/admin.e2e.mjs` |
 | CI | typage, lint, unitaires, SQL (service PostgreSQL), e2e sur PR, build, `check` | `.github/workflows/deploy.yml` |
 
 Voir `docs/SETUP.md` pour la mise en service et `docs/LIMITATIONS.md` pour les limites restantes.

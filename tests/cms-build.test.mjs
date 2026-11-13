@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { JSDOM } from 'jsdom';
 import { ROOT, listPages } from '../scripts/lib/site.mjs';
 import { initialContent } from '../scripts/lib/content.mjs';
-import { extractModel, applyContent, mergeContent } from '../cms/core.js';
+import { extractModel, applyContent, mergeContent, typoFr } from '../cms/core.js';
 
 const out = mkdtempSync(join(tmpdir(), 'ana-build-'));
 const contentFile = join(out, 'export.json');
@@ -152,6 +152,40 @@ describe('cms/core en mémoire', () => {
     applyContent(doc, mergeContent(null, { fields: { k: { html: 'ok <img src=x onerror=alert(1)><a href="javascript:x" onclick="y">l</a><span style="background:url(http://e)">s</span><strong>b</strong>' } } }));
     const html = doc.querySelector('p').innerHTML;
     expect(html).toBe('ok <a>l</a><span>s</span><strong>b</strong>');
+  });
+});
+
+describe('typographie française', () => {
+  const NB = '\u00a0';
+  it('espace insécable devant ; : ? ! » % € et après «, sans toucher au reste', () => {
+    expect(typoFr('Pourquoi ? Parce que : oui ; non ! 55 % de 10 € « ici »')).toBe(`Pourquoi${NB}? Parce que${NB}: oui${NB}; non${NB}! 55${NB}% de 10${NB}€ «${NB}ici${NB}»`);
+    expect(typoFr('https://ana.example/a?b=1 et 12:30')).toBe('https://ana.example/a?b=1 et 12:30');
+    expect(typoFr(typoFr('Déjà fait : oui'))).toBe(typoFr('Déjà fait : oui'));
+  });
+
+  it('un contenu publié avec des espaces ordinaires s\'affiche avec des insécables (texte, texte riche, lien)', () => {
+    const doc = new JSDOM('<p data-cms="t" data-cms-type="text">a</p><p data-cms="r" data-cms-type="rich">b</p><a href="x.html" data-cms="l" data-cms-type="link">c</a>').window.document;
+    applyContent(doc, mergeContent(null, { fields: {
+      t: { text: 'Une question : laquelle ?' },
+      r: { html: 'Voir la <a href="p.html?a=1 ;b">page : ici</a> ; puis <strong>ceci !</strong>' },
+      l: { text: 'En savoir plus ?', href: 'y.html' },
+    } }));
+    expect(doc.querySelector('[data-cms="t"]').textContent).toBe(`Une question${NB}: laquelle${NB}?`);
+    const rich = doc.querySelector('[data-cms="r"]');
+    expect(rich.textContent).toBe(`Voir la page${NB}: ici${NB}; puis ceci${NB}!`);
+    expect(rich.querySelector('a').getAttribute('href')).toBe('p.html?a=1 ;b'); // les attributs ne sont jamais modifiés
+    expect(doc.querySelector('[data-cms="l"]').textContent).toBe(`En savoir plus${NB}?`);
+  });
+
+  it('aucune ponctuation double précédée d\'une espace ordinaire dans le texte des pages', () => {
+    for (const file of listPages()) {
+      const doc = new JSDOM(readFileSync(join(ROOT, file), 'utf8')).window.document;
+      doc.querySelectorAll('script, style, textarea').forEach((el) => el.remove());
+      const bad = [];
+      const walker = doc.createTreeWalker(doc.body, 4); // NodeFilter.SHOW_TEXT
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) { const m = n.nodeValue.match(/\S [;:?!»%€]/); if (m) bad.push(n.nodeValue.trim().slice(0, 60)); }
+      expect(bad, file).toEqual([]);
+    }
   });
 });
 

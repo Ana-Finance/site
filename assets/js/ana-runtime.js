@@ -125,6 +125,8 @@
 
     function render() {
       vals = comp.renderVals() || {};
+      // Menu mobile ouvert : la page ne défile plus derrière (règle « ana-menu-ouvert » de site.css).
+      document.documentElement.classList.toggle('ana-menu-ouvert', !!(comp.state && comp.state.mobileOpen));
       ifs.forEach(function (el) { el.hidden = !lookup(vals, el.getAttribute('data-if')); });
       texts.forEach(function (el) {
         var v = lookup(vals, el.getAttribute('data-text'));
@@ -180,7 +182,41 @@
     });
 
     render();
+    initBarre();
     return comp;
+  }
+
+  /* Barre fixe « Demander une démo » (téléphone) : elle s'efface tant qu'un bouton de démo ou un formulaire
+     est déjà à l'écran, pour ne pas afficher deux fois la même action. */
+  function initBarre() {
+    var bar = document.querySelector('.ana-mobile-sticky-cta');
+    if (!bar || !('IntersectionObserver' in window)) return;
+    var watched = Array.prototype.slice.call(document.querySelectorAll('main a[href="demo.html"], main form'));
+    if (!watched.length) return;
+    var HAUT = 69, BAS = 70; // hauteur de l'en-tête fixe et de la barre : ce qui est dessous ne compte pas comme visible
+    var visibles = [];
+    function set(el, on) {
+      var i = visibles.indexOf(el);
+      if (on && i < 0) visibles.push(el);
+      if (!on && i > -1) visibles.splice(i, 1);
+    }
+    function apply() { bar.classList.toggle('est-masquee', visibles.length > 0); }
+    // État initial calculé tout de suite, pour que la barre n'apparaisse pas un instant au chargement.
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    watched.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      set(el, r.height > 0 && r.bottom > HAUT && r.top < vh - BAS);
+    });
+    // Sans transition pour ce premier état : la barre ne doit pas glisser hors de l'écran à l'ouverture de la page.
+    bar.style.transition = 'none';
+    apply();
+    var raf = window.requestAnimationFrame || function (fn) { return setTimeout(fn, 16); };
+    raf(function () { raf(function () { bar.style.transition = ''; }); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { set(e.target, e.isIntersecting); });
+      apply();
+    }, { rootMargin: '-' + HAUT + 'px 0px -' + BAS + 'px 0px' });
+    watched.forEach(function (el) { io.observe(el); });
   }
 
   window.DC = { mount: mount };

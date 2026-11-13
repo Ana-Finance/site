@@ -88,11 +88,12 @@
 @media (forced-colors: active) { .ana-grad { background: none; color: CanvasText; } }
 /* Petit texte dans la teinte de son bloc (surtitre, lien « Découvrir »). */
 .ana-accent { color: var(--t-texte, #8b1fe0); }
-/* Pictogramme dans une tuile teintée. */
-.ana-picto { display: flex; align-items: center; justify-content: center; flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--t-fond, #f4ecff); color: var(--t, #8b1fe0); }
-.ana-picto svg { stroke: currentColor; }
-/* Pastille numérotée et « bulle » cliquable : aplat dans la teinte, chiffre ou pictogramme blanc (la valeur -texte garantit le contraste). */
-.ana-pastille, .ana-bulle { background: var(--t-texte, #3f2569); color: #fff; }
+/* Pictogramme dans une tuile teintée : le seul style de « bulle » du contenu des pages (cartes cliquables comprises).
+   Sans teinte posée sur un parent, la tuile prend le violet de la marque. */
+.ana-picto, .ana-pill { display: flex; align-items: center; justify-content: center; flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--t-fond, #f4ecff); color: var(--t, #8b1fe0); }
+.ana-picto svg, .ana-pill svg { stroke: currentColor; }
+/* Pastille numérotée : aplat dans la teinte, chiffre blanc (la valeur -texte garantit le contraste). */
+.ana-pastille { background: var(--t-texte, #3f2569); color: #fff; }
 /* Carte sur fond pastel, et son trait de couleur. */
 .ana-pastel { background: var(--t-pastel, #faf8ff); border: 1px solid var(--t-bord, #efeaf9); }
 .ana-trait { display: block; width: 28px; height: 4px; border-radius: 4px; margin: 0 0 14px; background: var(--t, #8b1fe0); }
@@ -131,7 +132,7 @@
 @media (max-width: 760px) {
   .ana-scene { padding: 5% 6% 0; }
   .ana-scene-fenetre { border-radius: 9px 9px 0 0; }
-  .ana-scene-barre { gap: 4px; padding: 7px 9px; font-size: 9px; }
+  .ana-scene-barre { gap: 4px; padding: 7px 9px; font-size: 12px; }
   .ana-scene-barre i { width: 6px; height: 6px; }
   .ana-scene-barre i + i + i { margin-right: 4px; }
   .ana-scene-gabarit { grid-template-columns: minmax(0, 1fr); }
@@ -142,4 +143,93 @@
   .ana-scene-case { width: 10px; height: 10px; border-radius: 3px; }
   .ana-scene-trait { height: 5px; }
   .ana-scene-statut { height: 11px; }
+}
+
+/* ————————————————————————————————————————————————————————————————————————————
+   Composants communs à toutes les pages (toutes largeurs)
+   ———————————————————————————————————————————————————————————————————————————— */
+/* Titres : un rôle, une taille. « ana-h2 » pour un titre de section posé sur le fond de la page,
+   « ana-h2-bloc » pour le titre d'un bloc encadré, « ana-h3-carte » pour le titre d'une carte. */
+.ana-h2 { font-size: clamp(24px, 3.8vw, 38px); line-height: 1.2; }
+.ana-h2-bloc { font-size: clamp(24px, 2.4vw, 28px); line-height: 1.25; }
+.ana-h3-carte { font-size: 22px; line-height: 1.3; }
+/* Bloc final (appel à la démo) : le même sur toutes les pages. */
+.ana-fin { border-radius: 28px; background: linear-gradient(135deg, #000000, #8b1fe0 55%, #f23fd6 100%); padding: 64px 56px; color: #fff; }
+/* Ancres : la section visée ne passe plus sous l'en-tête fixe (les sections ont déjà leur marge intérieure haute). */
+main section[id] { scroll-margin-top: 24px; }
+main [id]:not(section) { scroll-margin-top: 88px; }
+/* Une adresse e-mail ne se coupe pas au trait d'union. */
+a[href^="mailto:"] { white-space: nowrap; }
+/* Fil d'Ariane : s'il manque de place, il passe à la ligne entre deux éléments, pas au milieu d'un nom. */
+main > nav[aria-label="Fil d'ariane"] { flex-wrap: wrap; row-gap: 2px; }
+/* FAQ : une flèche indique que la question s'ouvre, comme sur les autres cartes cliquables. */
+#faq details > summary { position: relative; padding-right: 36px; }
+#faq details > summary::after { content: ""; position: absolute; right: 5px; top: 50%; width: 9px; height: 9px; margin-top: -8px; border-right: 2px solid #8b1fe0; border-bottom: 2px solid #8b1fe0; transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+#faq details[open] > summary::after { margin-top: -3px; transform: rotate(-135deg); }
+/* Menu mobile : il défile dans la hauteur disponible, sous l'en-tête. Ouvert, le bouton devient une croix et la page ne défile plus derrière. */
+.ana-mobile-panel { box-sizing: border-box; max-height: calc(100vh - 70px); max-height: calc(100dvh - 70px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.ana-nav-burger { position: relative; }
+.ana-nav-burger[aria-expanded="true"] svg { visibility: hidden; }
+.ana-nav-burger[aria-expanded="true"]::before, .ana-nav-burger[aria-expanded="true"]::after { content: ""; position: absolute; left: 50%; top: 50%; width: 17px; height: 2.2px; margin: -1.1px 0 0 -8.5px; border-radius: 2px; background: #16151c; }
+.ana-nav-burger[aria-expanded="true"]::before { transform: rotate(45deg); }
+.ana-nav-burger[aria-expanded="true"]::after { transform: rotate(-45deg); }
+@media (max-width: 1080px) { html.ana-menu-ouvert, html.ana-menu-ouvert body { overflow: hidden; } }
+
+/* ————————————————————————————————————————————————————————————————————————————
+   Petits écrans. Les styles en ligne des pages valent pour toutes les largeurs : ces règles les adaptent
+   (d'où les !important). Seuils : 900 px, les grilles passent sur une colonne ; 760 px, la barre fixe
+   apparaît ; 600 px, téléphone.
+   ———————————————————————————————————————————————————————————————————————————— */
+/* Sur une seule colonne, chaque carte prend la hauteur de son contenu : la règle « rangées égales » des pages
+   ne sert qu'à aligner les cartes d'une même rangée. */
+@media (max-width: 900px) { .ana-features-grid { grid-auto-rows: auto !important; } }
+@media (max-width: 600px) { .ana-two-grid { grid-auto-rows: auto !important; } }
+@media (max-width: 760px) {
+  /* Place de la barre fixe : dans le pied de page (sombre), plus sous lui (bande blanche). */
+  body { padding-bottom: 0 !important; }
+  footer { padding-bottom: 72px; }
+  body:not(:has(.ana-mobile-sticky-cta)) footer { padding-bottom: 0; }
+  /* La barre s'efface quand un bouton de démo ou un formulaire est déjà à l'écran (classe posée par ana-runtime.js). */
+  .ana-mobile-sticky-cta { transition: transform .22s ease, visibility .22s; }
+  .ana-mobile-sticky-cta.est-masquee { transform: translateY(110%); visibility: hidden; }
+  /* Le menu s'arrête au-dessus de la barre fixe. */
+  .ana-mobile-panel { max-height: calc(100vh - 142px); max-height: calc(100dvh - 142px); }
+  /* Sections « respiration » : leur grande marge ne laisse plus 160 px de vide avant le bloc final. */
+  [data-ana-breath] { padding-top: 64px !important; padding-bottom: 8px !important; }
+  /* Champs à 16 px : en dessous, Safari sur iPhone zoome sur la page à la saisie. */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea { font-size: 16px !important; }
+  /* Zones tactiles : liens du pied de page, du fil d'Ariane, liens seuls, onglets, curseurs. */
+  .ana-pied-liens { gap: 0 !important; }
+  .ana-pied-liens > span { margin-bottom: 5px; }
+  .ana-pied-legal { row-gap: 0 !important; }
+  .ana-pied-liens > a, .ana-pied-legal > a { display: inline-flex; align-items: center; min-height: 34px; }
+  main > nav[aria-label="Fil d'ariane"] { padding-top: 12px !important; }
+  main > nav[aria-label="Fil d'ariane"] > a { display: inline-flex; align-items: center; min-height: 34px; }
+  .ana-lien { display: inline-flex; align-items: center; min-height: 40px; }
+  .ana-tab { min-height: 44px; }
+  input[type="range"] { min-height: 34px; }
+}
+@media (max-width: 700px) { .ana-form-grid { grid-template-columns: minmax(0, 1fr) !important; } }
+@media (max-width: 600px) {
+  /* Étapes du pilote : le libellé passe au-dessus du texte au lieu de lui prendre 140 px. */
+  .ana-step-row { grid-template-columns: minmax(0, 1fr) !important; gap: 6px !important; }
+  /* Grands blocs encadrés : même marge intérieure que les cartes, pour laisser sa largeur au texte. */
+  .ana-bloc { padding-left: 24px !important; padding-right: 24px !important; }
+  .ana-fin { padding: 40px 26px !important; border-radius: 24px; }
+  /* Titre du bloc final : un cran au-dessus des titres de section (24 px), pas deux. « h2. » passe devant la règle 30 px des pages. */
+  h2.ana-close-h3 { font-size: 26px !important; line-height: 32px !important; }
+  /* Fenêtre de détail (ana-bulle.js) : marges réduites, contenu sous le bouton Fermer pour prendre toute la largeur. */
+  [data-ana-bulle] { padding: 14px !important; }
+  .ana-fenetre { padding: 24px 22px 24px !important; border-radius: 20px !important; max-height: 88vh !important; }
+  .ana-fenetre-tete { padding-right: 0 !important; padding-top: 30px; }
+}
+@media (max-width: 460px) { main > nav[aria-label="Fil d'ariane"] { padding-left: 18px !important; padding-right: 18px !important; } }
+/* Très petits écrans (téléphone pliant fermé, 280 px) : rien ne dépasse, aucun mot ne se coupe. */
+@media (max-width: 340px) {
+  h1.ana-hero-h1, h1.ana-demo-h1 { font-size: 32px !important; line-height: 38px !important; } /* « h1. » : passe devant la règle 38 px des pages */
+  .ana-bloc a[style*="white-space:nowrap"] { white-space: normal !important; text-align: center; }
+  .ana-bloc { padding-left: 18px !important; padding-right: 18px !important; }
+  /* Schéma des agents : le numéro d'étape passe au-dessus de son contenu au lieu de lui prendre une colonne. */
+  .ana-sch-rang { grid-template-columns: minmax(0, 1fr) !important; gap: 10px !important; }
+  .ana-sch-rang > :first-child > span[style*="width:2px"] { display: none; }
 }

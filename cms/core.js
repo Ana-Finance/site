@@ -24,6 +24,27 @@ const TEXT_NODE = 3;
 // Espaces HTML (ASCII) uniquement : les espaces insécables (&nbsp;) font partie du contenu.
 const WS = /[ \t\n\r\f]+/g;
 const trimWs = (s) => s.replace(/^[ \t\n\r\f]+|[ \t\n\r\f]+$/g, '');
+
+/**
+ * Typographie française : l'espace placée devant ; : ? ! » % € (ou après «) devient insécable, pour que le signe
+ * ne se retrouve jamais seul en début de ligne. Appliquée à tout texte écrit dans la page depuis le CMS : un texte
+ * saisi dans l'administration avec des espaces ordinaires s'affiche donc correctement. Sans effet sur un texte déjà correct.
+ */
+export function typoFr(text) {
+  return String(text == null ? '' : text).replace(/ ([;:?!»%€])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
+}
+
+/** Même règle sur un fragment HTML riche déjà assaini : seuls les nœuds de texte sont touchés. */
+function typoRich(html, doc) {
+  const tpl = doc.createElement('template');
+  tpl.innerHTML = html;
+  (function walk(node) {
+    node.childNodes.forEach((n) => {
+      if (n.nodeType === TEXT_NODE) { const t = typoFr(n.nodeValue); if (t !== n.nodeValue) n.nodeValue = t; } else walk(n);
+    });
+  })(tpl.content);
+  return tpl.innerHTML;
+}
 const ELEMENT_NODE = 1;
 
 /* ------------------------------------------------------------------ *
@@ -402,16 +423,16 @@ export function applyValue(el, value, { type = el.getAttribute(TYPE_ATTR), resol
   const doc = el.ownerDocument;
   switch (type) {
     case 'text':
-      if (typeof value.text === 'string') setPlainText(el, value.text);
+      if (typeof value.text === 'string') setPlainText(el, typoFr(value.text));
       break;
     case 'rich':
       if (typeof value.html === 'string') {
-        const clean = sanitizeRich(value.html, doc);
+        const clean = typoRich(sanitizeRich(value.html, doc), doc);
         if (trimWs(el.innerHTML.replace(WS, ' ')) !== trimWs(clean.replace(WS, ' '))) el.innerHTML = clean;
       }
       break;
     case 'link':
-      if (typeof value.text === 'string') setPlainText(el, value.text);
+      if (typeof value.text === 'string') setPlainText(el, typoFr(value.text));
       if (typeof value.href === 'string' && isSafeUrl(value.href) && el.getAttribute('href') !== value.href) el.setAttribute('href', value.href);
       break;
     case 'href':

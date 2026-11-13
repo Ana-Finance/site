@@ -47,7 +47,9 @@ function fieldsOf(doc) {
     const key = el.getAttribute(ATTR);
     const type = el.getAttribute(TYPE_ATTR);
     if (!FIELD_TYPES.includes(type) || map.has(key)) return;
-    map.set(key, { type, value: JSON.stringify(readValue(el, type)) });
+    // Une espace devenue insécable devant une ponctuation n'est pas un changement de texte : le build la rétablit
+    // de toute façon sur la valeur publiée (typoFr dans cms/core.js), la clé peut donc rester la même.
+    map.set(key, { type, value: JSON.stringify(readValue(el, type)).replace(/\u00a0|&nbsp;/g, ' ') });
   });
   return map;
 }

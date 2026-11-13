@@ -15,6 +15,8 @@ export const DEFAULT_HIDDEN_ATTR: string;
 export const FIELD_TYPES: FieldType[];
 export function isSafeUrl(url: string, opts?: { allowData?: boolean }): boolean;
 export function sanitizeRich(html: string, doc: Document): string;
+/** Espace insécable devant ; : ? ! » % € et après « (typographie française). */
+export function typoFr(text: string): string;
 export function sanitizeStyle(style: string): string;
 export function readValue(el: Element, type?: FieldType): FieldValue;
 export function extractModel(doc: Document): Model;

@@ -29,9 +29,18 @@
     var box = document.createElement('div');
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
+    // La fenêtre est créée hors de la page : elle reprend la teinte de la carte et de ses parents
+    // (classes ana-t-* et ana-r1…6 de site.css), sinon pictogrammes et surtitres retombent sur la couleur par défaut.
+    box.className = 'ana-fenetre';
+    for (var el = card; el && el.classList; el = el.parentElement) {
+      Array.prototype.forEach.call(el.classList, function (c) {
+        if (/^ana-(t-[a-z]+|r[1-6])$/.test(c)) box.classList.add(c);
+      });
+    }
     box.style.cssText = 'position:relative;background:#fff;border-radius:24px;border:1px solid #eceaf3;box-shadow:0 44px 90px -34px rgba(20,10,60,0.55);width:100%;max-width:620px;max-height:84vh;overflow:auto;padding:34px 36px 36px;font-family:Inter,system-ui,sans-serif;color:#16151c;animation:anaBullePop .26s cubic-bezier(.34,1.3,.64,1) both;';
 
     var head = document.createElement('div');
+    head.className = 'ana-fenetre-tete';
     head.style.cssText = 'display:flex;flex-direction:column;gap:16px;padding-right:44px;';
     head.innerHTML = sum.innerHTML;
     Array.prototype.forEach.call(head.querySelectorAll('.ana-chev'), function (c) {
