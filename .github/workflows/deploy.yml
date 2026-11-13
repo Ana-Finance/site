@@ -48,6 +48,12 @@ jobs:
           --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
     steps:
       - uses: actions/checkout@v4
+      # Le test « clés à jour » compare les textes des pages à ceux de main. Sans cette référence (clone
+      # superficiel), il ne contrôle que les clés manquantes : l'étape n'est donc pas bloquante.
+      - name: Référence main pour le contrôle des clés du CMS
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: git fetch --no-tags --depth=1 origin +refs/heads/main:refs/remotes/origin/main
       - uses: actions/setup-node@v4
         with:
           node-version: 22

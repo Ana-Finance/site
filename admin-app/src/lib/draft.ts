@@ -39,6 +39,12 @@ export function usePageDraft(pageSlug: string | null) {
       const model = extractModel(doc);
       const base = clone(draft.content);
       const content: Content = { ...base, fields: base.fields || {}, sections: base.sections || { order: model.sections.map((s) => s.key), hidden: [] }, seo: base.seo || {} };
+      // Titre et description révisés dans le HTML depuis le dernier enregistrement (cms:seo-rev) : on repart des
+      // textes en ligne, et la révision est reprise pour que les prochaines modifications priment de nouveau.
+      if ((model.seo.rev || 0) > (content.seo?.rev || 0)) {
+        const { title, description, ogTitle, ogDescription, rev } = model.seo;
+        content.seo = { ...content.seo, title, description, ogTitle, ogDescription, rev };
+      }
       const globalContent: Content = gdraft ? clone(gdraft.content) : { fields: {} };
       setState({ page, global, model, content, globalContent, version: draft.version, globalVersion: gdraft?.version ?? 0 });
       saved.current = { page: clone(content), global: clone(globalContent) };

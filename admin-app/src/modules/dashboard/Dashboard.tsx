@@ -13,6 +13,7 @@ import { NotConfiguredCard, PeriodPicker } from '../analytics/Analytics';
 import { DEFINITIONS, useReport, type Metrics, type PeriodKey } from '../analytics/report';
 import { actionLabel } from '../publications/Publications';
 import { STATUS_LABEL } from '../publications/publish';
+import { LeadsAlert } from '../leads/Leads';
 
 function KpiTile({ label, k, cur, prev, fmt, invert, series, spark }: { label: string; k: keyof Metrics; cur: Metrics | null; prev: Metrics | null; fmt: (n: number | null) => string; invert?: boolean; series: { date: string; [k: string]: number | string | null }[]; spark?: 'visitors' | 'pageviews' | 'conversions' }) {
   const c = cur ? (cur[k] as number | null) : null;
@@ -87,6 +88,8 @@ export default function Dashboard() {
         <div><h1>{hour < 18 ? 'Bonjour' : 'Bonsoir'}{profile?.display_name ? `, ${profile.display_name}` : ''}</h1><p>Vue d'ensemble du site et de son activité.</p></div>
         <PeriodPicker period={period} setPeriod={setPeriod} range={range} setRange={setRange} />
       </div>
+
+      <LeadsAlert />
 
       {error && <Notice tone="danger" title="Statistiques indisponibles">{errorMessage(error)}</Notice>}
       {data && !data.configured && <NotConfiguredCard data={data} />}

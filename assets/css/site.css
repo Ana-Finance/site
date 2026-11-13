@@ -1,3 +1,10 @@
+/* Police Inter hébergée avec le site : aucun appel à un serveur tiers. Licence OFL, voir assets/fonts/LICENSE-Inter.txt */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url(../fonts/inter-latin-ext-wght-normal.woff2) format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url(../fonts/inter-latin-wght-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
 [data-if] { display: contents; }
 [data-if][hidden] { display: none !important; }
 /* Correctif responsive : les colonnes de la page démo ne doivent pas imposer leur largeur minimale. */
@@ -6,5 +13,223 @@
 .ana-sch-6 > * { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 600px) { .ana-two-grid { grid-template-columns: minmax(0, 1fr) !important; } }
 .ana-slot { position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
-  background: rgba(127,127,127,.08); color: #8b8899; border: 1.5px dashed rgba(127,127,127,.45);
+  background: rgba(127,127,127,.08); color: #5b586b; border: 1.5px dashed rgba(127,127,127,.45);
   font: 500 13px/1.4 Inter, system-ui, sans-serif; text-align: center; padding: 8px 14px; }
+/* Zone de contenu principal (<main>) : mêmes règles d'empilement que les enfants directs du canevas. */
+.ana-canvas > main { display: block; }
+.ana-canvas > main > * { position: relative; z-index: 1; }
+/* Téléphone : la barre fixe du bas porte déjà « Demander une démo », inutile de le répéter dans l'en-tête et le menu. */
+@media (max-width: 760px) {
+  .ana-nav-demo, .ana-mobile-panel a[href="demo.html"] { display: none !important; }
+  .ana-nav-cta-group { flex: none !important; }
+  /* Ligne de réassurance de l'accueil : une mention par ligne, sans séparateur resté seul en bout de ligne. */
+  .ana-reassurance { flex-direction: column; gap: 6px !important; }
+  .ana-reassurance > [aria-hidden="true"] { display: none; }
+}
+/* Statut d'un connecteur (pages Intégrations et Connecteurs). */
+.ana-statut { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 700; line-height: 18px; letter-spacing: 0; text-transform: none; white-space: nowrap; }
+.ana-statut::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.ana-statut-ok { background: #e6f6ec; color: #14713f; }
+.ana-statut-prevu { background: #f1eff5; color: #5b586b; }
+.ana-statut-etude { background: #f4e6ff; color: #6d28d9; }
+/* Bandeau défilant des logiciels compatibles (page Intégrations). Sans script ou sans animation, la liste reste lisible sur plusieurs lignes. */
+.ana-marquee { overflow: hidden; }
+.ana-marquee-track { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 0; margin: 0; padding: 6px 0; list-style: none; }
+.ana-marquee-track > li { flex: none; display: flex; align-items: center; margin: 0 52px 0 0; padding: 0; }
+.ana-outil, .ana-outil.ana-slot { display: flex; align-items: center; height: 34px; padding: 0; border: 0; background: none;
+  font: 700 21px/1 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; color: #6b6880; white-space: nowrap; }
+/* Un logo déposé depuis l'administration s'affiche en une seule couleur, quelle que soit sa couleur d'origine. */
+.ana-outil img { height: 100% !important; width: auto !important; max-width: 170px; object-fit: contain; filter: grayscale(1) brightness(0) opacity(.6); }
+@keyframes anaMarquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: no-preference) {
+  .ana-marquee:has(.is-loop) { -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+  .ana-marquee-track.is-loop { flex-wrap: nowrap; width: max-content; animation: anaMarquee 42s linear infinite; }
+  .ana-marquee:hover .ana-marquee-track.is-loop, .ana-marquee:focus-within .ana-marquee-track.is-loop { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) { .ana-marquee-track.is-loop > [aria-hidden="true"] { display: none; } }
+
+/* ————————————————————————————————————————————————————————————————————————————
+   Couleur. La palette prolonge le dégradé du logo (violet → magenta) d'un cran de chaque côté :
+   indigo côté froid, corail côté chaud. Chaque teinte existe en cinq valeurs :
+     (nom)      aplat, pictogrammes, traits          -pastel   fond de carte
+     -texte     petit texte sur fond clair (4,5:1)   -bord     bordure et halo sur fond clair
+     -clair     texte et points sur fond sombre
+   Une teinte garde son sens d'une page à l'autre :
+     étapes de la chaîne   01 indigo · 02 violet · 03 magenta · 04 corail
+     publics               cabinets indigo · directions financières violet · PME magenta
+     six agents            .ana-r1 … .ana-r6 : Collecte, Rapprochement, Relances, TVA, Clôture, Reporting
+   Le magenta et le corail purs sont trop clairs pour du petit texte : utiliser leur valeur -texte.
+   ———————————————————————————————————————————————————————————————————————————— */
+:root {
+  --ana-indigo: #4f46e5;  --ana-indigo-texte: #4338ca;  --ana-indigo-pastel: #eef0ff;  --ana-indigo-bord: #dcdffd;  --ana-indigo-clair: #aab4ff;
+  --ana-violet: #8b1fe0;  --ana-violet-texte: #7a1bc7;  --ana-violet-pastel: #f4ecff;  --ana-violet-bord: #e6d6fb;  --ana-violet-clair: #d3b0ff;
+  --ana-magenta: #e02fc5; --ana-magenta-texte: #b5179e; --ana-magenta-pastel: #ffeaf9; --ana-magenta-bord: #fbd0ef; --ana-magenta-clair: #ff9fe8;
+  --ana-corail: #ff6b57;  --ana-corail-texte: #c93a24;  --ana-corail-pastel: #fff0eb;  --ana-corail-bord: #ffd8cd;  --ana-corail-clair: #ffc2b3;
+}
+/* Une teinte se pose par une classe sur l'élément (ou sur un parent) ; les composants ci-dessous lisent ces variables. */
+.ana-t-indigo  { --t: var(--ana-indigo);  --t-texte: var(--ana-indigo-texte);  --t-pastel: var(--ana-indigo-pastel);  --t-bord: var(--ana-indigo-bord);  --t-clair: var(--ana-indigo-clair);  --t-fond: rgba(79,70,229,.12); }
+.ana-t-violet  { --t: var(--ana-violet);  --t-texte: var(--ana-violet-texte);  --t-pastel: var(--ana-violet-pastel);  --t-bord: var(--ana-violet-bord);  --t-clair: var(--ana-violet-clair);  --t-fond: rgba(139,31,224,.12); }
+.ana-t-magenta { --t: var(--ana-magenta); --t-texte: var(--ana-magenta-texte); --t-pastel: var(--ana-magenta-pastel); --t-bord: var(--ana-magenta-bord); --t-clair: var(--ana-magenta-clair); --t-fond: rgba(224,47,197,.12); }
+.ana-t-corail  { --t: var(--ana-corail);  --t-texte: var(--ana-corail-texte);  --t-pastel: var(--ana-corail-pastel);  --t-bord: var(--ana-corail-bord);  --t-clair: var(--ana-corail-clair);  --t-fond: rgba(255,107,87,.14); }
+/* Les six agents : le même dégradé, déroulé en six pas. */
+.ana-r1 { --t: #4f46e5; --t-texte: #4338ca; --t-fond: rgba(79,70,229,.12); }
+.ana-r2 { --t: #7733e3; --t-texte: #6a2bd6; --t-fond: rgba(119,51,227,.12); }
+.ana-r3 { --t: #a421d8; --t-texte: #9219c4; --t-fond: rgba(164,33,216,.12); }
+.ana-r4 { --t: #d926c3; --t-texte: #b5179e; --t-fond: rgba(217,38,195,.12); }
+.ana-r5 { --t: #ee3d8b; --t-texte: #c81e68; --t-fond: rgba(238,61,139,.12); }
+.ana-r6 { --t: #ee4f2f; --t-texte: #c93a24; --t-fond: rgba(238,79,47,.12); }
+
+/* Un mot en dégradé dans un grand titre, comme « finance » dans le logo. Un seul par écran. */
+.ana-grad { color: #8b1fe0; }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .ana-grad { background: linear-gradient(90deg, #8b1fe0, #e02fc5); -webkit-background-clip: text; background-clip: text; color: transparent;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone; padding-bottom: .08em; }
+}
+@media (forced-colors: active) { .ana-grad { background: none; color: CanvasText; } }
+/* Petit texte dans la teinte de son bloc (surtitre, lien « Découvrir »). */
+.ana-accent { color: var(--t-texte, #8b1fe0); }
+/* Pictogramme dans une tuile teintée : le seul style de « bulle » du contenu des pages (cartes cliquables comprises).
+   Sans teinte posée sur un parent, la tuile prend le violet de la marque. */
+.ana-picto, .ana-pill { display: flex; align-items: center; justify-content: center; flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--t-fond, #f4ecff); color: var(--t, #8b1fe0); }
+.ana-picto svg, .ana-pill svg { stroke: currentColor; }
+/* Pastille numérotée : aplat dans la teinte, chiffre blanc (la valeur -texte garantit le contraste). */
+.ana-pastille { background: var(--t-texte, #3f2569); color: #fff; }
+/* Carte sur fond pastel, et son trait de couleur. */
+.ana-pastel { background: var(--t-pastel, #faf8ff); border: 1px solid var(--t-bord, #efeaf9); }
+.ana-trait { display: block; width: 28px; height: 4px; border-radius: 4px; margin: 0 0 14px; background: var(--t, #8b1fe0); }
+/* Halo de couleur dans l'angle d'une carte blanche. */
+.ana-halo { background-color: #fff; background-image: radial-gradient(260px 200px at 100% 0%, var(--t-bord, #e6d6fb) 0%, rgba(255,255,255,0) 72%); background-repeat: no-repeat; }
+/* Bloc sombre : deux halos discrets aux couleurs de la marque. */
+.ana-aurore { background-image: radial-gradient(70% 150% at 0% 0%, rgba(79,70,229,.46), rgba(79,70,229,0) 62%), radial-gradient(60% 150% at 100% 100%, rgba(242,63,214,.34), rgba(242,63,214,0) 64%); }
+/* Étape de la chaîne, sur fond sombre : point et libellé dans la teinte de l'étape. */
+.ana-etape { display: flex; align-items: center; gap: 8px; color: var(--t-clair, rgba(255,255,255,.62)); }
+.ana-etape::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 4px rgba(255,255,255,.1); }
+/* Résultat de l'estimateur (accueil). */
+.ana-resultat { background: linear-gradient(135deg, var(--ana-violet-pastel) 0%, var(--ana-magenta-pastel) 100%); border: 1px solid #ecd6fa; }
+
+/* Scène du visuel produit (accueil) : fond aux couleurs de la marque, fenêtre blanche, et un gabarit abstrait
+   tant qu'aucune capture n'est déposée. L'emplacement de la capture recouvre le gabarit : vide, il est transparent ;
+   rempli depuis l'administration, l'image occupe toute la fenêtre. */
+.ana-scene { position: relative; display: flex; align-items: flex-end; justify-content: center; box-sizing: border-box; width: 100%; aspect-ratio: 16 / 9; padding: 4.5% 7% 0; overflow: hidden;
+  background: radial-gradient(60% 90% at 12% 8%, rgba(79,70,229,.55), rgba(79,70,229,0) 60%), radial-gradient(55% 80% at 92% 18%, rgba(255,107,87,.42), rgba(255,107,87,0) 62%), linear-gradient(135deg, #0a0713 0%, #2b0a4d 42%, #8b1fe0 82%, #f23fd6 100%); }
+.ana-scene-fenetre { display: flex; flex-direction: column; width: 100%; height: 100%; overflow: hidden; background: #fff; border-radius: 16px 16px 0 0; box-shadow: 0 30px 80px -20px rgba(10,7,19,.6); }
+.ana-scene-barre { display: flex; align-items: center; gap: 7px; flex: none; padding: 13px 16px; border-bottom: 1px solid #f1eff5; background: #faf9fd; font: 600 13px/1 'Inter', system-ui, sans-serif; color: #5b586b; }
+.ana-scene-barre i { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--ana-corail); }
+.ana-scene-barre i + i { background: #ffb224; }
+.ana-scene-barre i + i + i { background: #12b886; margin-right: 8px; }
+.ana-scene-corps { position: relative; flex: 1; min-height: 0; }
+.ana-scene-gabarit { position: absolute; inset: 0; display: grid; grid-template-columns: 190px minmax(0, 1fr); overflow: hidden; }
+.ana-scene-menu { display: flex; flex-direction: column; gap: 14px; padding: 20px 18px; border-right: 1px solid #f1eff5; }
+.ana-scene-ligne { display: grid; grid-template-columns: 16px minmax(0, 1fr) 90px 74px; align-items: center; gap: 16px; padding: 14px 18px; border-bottom: 1px solid #f1eff5; }
+.ana-scene-ligne > span:nth-child(2) { display: flex; flex-direction: column; gap: 7px; }
+.ana-scene-case { width: 16px; height: 16px; box-sizing: border-box; border-radius: 5px; border: 1.5px solid #cfcbe0; }
+.ana-scene-trait { display: block; height: 10px; border-radius: 6px; background: #e9e7f1; }
+.ana-scene-trait.fort { background: #d9d6e6; }
+.ana-scene-statut { display: block; height: 20px; border-radius: 999px; background: var(--t-pastel, #f4ecff); border: 1px solid var(--t-bord, #e6d6fb); }
+.ana-scene-capture, .ana-scene-capture.ana-slot { position: absolute; inset: 0; display: block; padding: 0; border: 0; background: none; font-size: 0; color: transparent; }
+.ana-scene-capture:has(img) { background: #fff; }
+.ana-scene-capture img { object-fit: cover !important; object-position: left top; }
+@media (max-width: 760px) {
+  .ana-scene { padding: 5% 6% 0; }
+  .ana-scene-fenetre { border-radius: 9px 9px 0 0; }
+  .ana-scene-barre { gap: 4px; padding: 7px 9px; font-size: 12px; }
+  .ana-scene-barre i { width: 6px; height: 6px; }
+  .ana-scene-barre i + i + i { margin-right: 4px; }
+  .ana-scene-gabarit { grid-template-columns: minmax(0, 1fr); }
+  .ana-scene-menu { display: none; }
+  .ana-scene-ligne { grid-template-columns: 10px minmax(0, 1fr) 44px; gap: 8px; padding: 7px 9px; }
+  .ana-scene-ligne > span:nth-child(2) { gap: 4px; }
+  .ana-scene-ligne > span:nth-child(3) { display: none; }
+  .ana-scene-case { width: 10px; height: 10px; border-radius: 3px; }
+  .ana-scene-trait { height: 5px; }
+  .ana-scene-statut { height: 11px; }
+}
+
+/* ————————————————————————————————————————————————————————————————————————————
+   Composants communs à toutes les pages (toutes largeurs)
+   ———————————————————————————————————————————————————————————————————————————— */
+/* Titres : un rôle, une taille. « ana-h2 » pour un titre de section posé sur le fond de la page,
+   « ana-h2-bloc » pour le titre d'un bloc encadré, « ana-h3-carte » pour le titre d'une carte. */
+.ana-h2 { font-size: clamp(24px, 3.8vw, 38px); line-height: 1.2; }
+.ana-h2-bloc { font-size: clamp(24px, 2.4vw, 28px); line-height: 1.25; }
+.ana-h3-carte { font-size: 22px; line-height: 1.3; }
+/* Bloc final (appel à la démo) : le même sur toutes les pages. */
+.ana-fin { border-radius: 28px; background: linear-gradient(135deg, #000000, #8b1fe0 55%, #f23fd6 100%); padding: 64px 56px; color: #fff; }
+/* Ancres : la section visée ne passe plus sous l'en-tête fixe (les sections ont déjà leur marge intérieure haute). */
+main section[id] { scroll-margin-top: 24px; }
+main [id]:not(section) { scroll-margin-top: 88px; }
+/* Une adresse e-mail ne se coupe pas au trait d'union. */
+a[href^="mailto:"] { white-space: nowrap; }
+/* Fil d'Ariane : s'il manque de place, il passe à la ligne entre deux éléments, pas au milieu d'un nom. */
+main > nav[aria-label="Fil d'ariane"] { flex-wrap: wrap; row-gap: 2px; }
+/* FAQ : une flèche indique que la question s'ouvre, comme sur les autres cartes cliquables. */
+#faq details > summary { position: relative; padding-right: 36px; }
+#faq details > summary::after { content: ""; position: absolute; right: 5px; top: 50%; width: 9px; height: 9px; margin-top: -8px; border-right: 2px solid #8b1fe0; border-bottom: 2px solid #8b1fe0; transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+#faq details[open] > summary::after { margin-top: -3px; transform: rotate(-135deg); }
+/* Menu mobile : il défile dans la hauteur disponible, sous l'en-tête. Ouvert, le bouton devient une croix et la page ne défile plus derrière. */
+.ana-mobile-panel { box-sizing: border-box; max-height: calc(100vh - 70px); max-height: calc(100dvh - 70px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.ana-nav-burger { position: relative; }
+.ana-nav-burger[aria-expanded="true"] svg { visibility: hidden; }
+.ana-nav-burger[aria-expanded="true"]::before, .ana-nav-burger[aria-expanded="true"]::after { content: ""; position: absolute; left: 50%; top: 50%; width: 17px; height: 2.2px; margin: -1.1px 0 0 -8.5px; border-radius: 2px; background: #16151c; }
+.ana-nav-burger[aria-expanded="true"]::before { transform: rotate(45deg); }
+.ana-nav-burger[aria-expanded="true"]::after { transform: rotate(-45deg); }
+@media (max-width: 1080px) { html.ana-menu-ouvert, html.ana-menu-ouvert body { overflow: hidden; } }
+
+/* ————————————————————————————————————————————————————————————————————————————
+   Petits écrans. Les styles en ligne des pages valent pour toutes les largeurs : ces règles les adaptent
+   (d'où les !important). Seuils : 900 px, les grilles passent sur une colonne ; 760 px, la barre fixe
+   apparaît ; 600 px, téléphone.
+   ———————————————————————————————————————————————————————————————————————————— */
+/* Sur une seule colonne, chaque carte prend la hauteur de son contenu : la règle « rangées égales » des pages
+   ne sert qu'à aligner les cartes d'une même rangée. */
+@media (max-width: 900px) { .ana-features-grid { grid-auto-rows: auto !important; } }
+@media (max-width: 600px) { .ana-two-grid { grid-auto-rows: auto !important; } }
+@media (max-width: 760px) {
+  /* Place de la barre fixe : dans le pied de page (sombre), plus sous lui (bande blanche). */
+  body { padding-bottom: 0 !important; }
+  footer { padding-bottom: 72px; }
+  body:not(:has(.ana-mobile-sticky-cta)) footer { padding-bottom: 0; }
+  /* La barre s'efface quand un bouton de démo ou un formulaire est déjà à l'écran (classe posée par ana-runtime.js). */
+  .ana-mobile-sticky-cta { transition: transform .22s ease, visibility .22s; }
+  .ana-mobile-sticky-cta.est-masquee { transform: translateY(110%); visibility: hidden; }
+  /* Le menu s'arrête au-dessus de la barre fixe. */
+  .ana-mobile-panel { max-height: calc(100vh - 142px); max-height: calc(100dvh - 142px); }
+  /* Sections « respiration » : leur grande marge ne laisse plus 160 px de vide avant le bloc final. */
+  [data-ana-breath] { padding-top: 64px !important; padding-bottom: 8px !important; }
+  /* Champs à 16 px : en dessous, Safari sur iPhone zoome sur la page à la saisie. */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea { font-size: 16px !important; }
+  /* Zones tactiles : liens du pied de page, du fil d'Ariane, liens seuls, onglets, curseurs. */
+  .ana-pied-liens { gap: 0 !important; }
+  .ana-pied-liens > span { margin-bottom: 5px; }
+  .ana-pied-legal { row-gap: 0 !important; }
+  .ana-pied-liens > a, .ana-pied-legal > a { display: inline-flex; align-items: center; min-height: 34px; }
+  main > nav[aria-label="Fil d'ariane"] { padding-top: 12px !important; }
+  main > nav[aria-label="Fil d'ariane"] > a { display: inline-flex; align-items: center; min-height: 34px; }
+  .ana-lien { display: inline-flex; align-items: center; min-height: 40px; }
+  .ana-tab { min-height: 44px; }
+  input[type="range"] { min-height: 34px; }
+}
+@media (max-width: 700px) { .ana-form-grid { grid-template-columns: minmax(0, 1fr) !important; } }
+@media (max-width: 600px) {
+  /* Étapes du pilote : le libellé passe au-dessus du texte au lieu de lui prendre 140 px. */
+  .ana-step-row { grid-template-columns: minmax(0, 1fr) !important; gap: 6px !important; }
+  /* Grands blocs encadrés : même marge intérieure que les cartes, pour laisser sa largeur au texte. */
+  .ana-bloc { padding-left: 24px !important; padding-right: 24px !important; }
+  .ana-fin { padding: 40px 26px !important; border-radius: 24px; }
+  /* Titre du bloc final : un cran au-dessus des titres de section (24 px), pas deux. « h2. » passe devant la règle 30 px des pages. */
+  h2.ana-close-h3 { font-size: 26px !important; line-height: 32px !important; }
+  /* Fenêtre de détail (ana-bulle.js) : marges réduites, contenu sous le bouton Fermer pour prendre toute la largeur. */
+  [data-ana-bulle] { padding: 14px !important; }
+  .ana-fenetre { padding: 24px 22px 24px !important; border-radius: 20px !important; max-height: 88vh !important; }
+  .ana-fenetre-tete { padding-right: 0 !important; padding-top: 30px; }
+}
+@media (max-width: 460px) { main > nav[aria-label="Fil d'ariane"] { padding-left: 18px !important; padding-right: 18px !important; } }
+/* Très petits écrans (téléphone pliant fermé, 280 px) : rien ne dépasse, aucun mot ne se coupe. */
+@media (max-width: 340px) {
+  h1.ana-hero-h1, h1.ana-demo-h1 { font-size: 32px !important; line-height: 38px !important; } /* « h1. » : passe devant la règle 38 px des pages */
+  .ana-bloc a[style*="white-space:nowrap"] { white-space: normal !important; text-align: center; }
+  .ana-bloc { padding-left: 18px !important; padding-right: 18px !important; }
+  /* Schéma des agents : le numéro d'étape passe au-dessus de son contenu au lieu de lui prendre une colonne. */
+  .ana-sch-rang { grid-template-columns: minmax(0, 1fr) !important; gap: 10px !important; }
+  .ana-sch-rang > :first-child > span[style*="width:2px"] { display: none; }
+}

@@ -4,7 +4,9 @@ import { ExternalLink, LogOut, Menu, Moon, MousePointerClick, Search, Sun, Monit
 import { NAV } from './nav';
 import { useAuth } from './auth';
 import { Button } from '../components/ui';
-import { useLocalStorage } from '../components/hooks';
+import { useAsync, useInterval, useLocalStorage } from '../components/hooks';
+import { api } from '../lib/api';
+import { unseenLeads, useLeadsSeen } from '../lib/leads';
 import { CommandPalette } from './CommandPalette';
 import { siteBase } from '../lib/site';
 import { logo } from './Login';
@@ -30,6 +32,11 @@ export function Layout() {
   const loc = useLocation();
   const nav = useNavigate();
   const current = NAV.find((n) => loc.pathname.startsWith(n.to));
+  // Pastille du menu : demandes du site pas encore vues sur ce navigateur (rafraîchie toutes les 5 minutes).
+  const leads = useAsync(() => api.leads(100).catch(() => []), []);
+  const { seen } = useLeadsSeen();
+  useInterval(leads.reload, 5 * 60 * 1000);
+  const unseen = unseenLeads(leads.data || [], seen).length;
   const isEditor = loc.pathname.startsWith('/editor');
 
   useEffect(() => { setOpen(false); }, [loc.pathname]);
@@ -56,6 +63,7 @@ export function Layout() {
         {NAV.map((n) => (
           <NavLink key={n.to} to={n.to} className={({ isActive }) => 'nav-item' + (isActive ? ' active' : '')}>
             <n.icon />{n.label}
+            {n.to === '/demandes' && unseen > 0 && <span className="count" style={{ background: 'var(--accent)', color: '#fff' }} aria-label={`${unseen} demande${unseen > 1 ? 's' : ''} à voir`}>{unseen}</span>}
           </NavLink>
         ))}
         <div className="sidebar-foot">

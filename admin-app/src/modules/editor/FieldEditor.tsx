@@ -1,6 +1,6 @@
 // Panneau de propriétés d'un champ éditable (partagé par l'éditeur visuel et le formulaire de page).
 import { useEffect, useRef, useState } from 'react';
-import { Bold, ImagePlus, Italic, Link2, Trash2, Unlink } from 'lucide-react';
+import { Bold, Highlighter, ImagePlus, Italic, Link2, Trash2, Unlink } from 'lucide-react';
 import { isSafeUrl, sanitizeRich, type FieldValue, type ModelField } from '@cms';
 import { Button, Field, Notice } from '../../components/ui';
 import { MediaPicker } from '../media/MediaPicker';
@@ -34,6 +34,26 @@ function RichInput({ value, onChange }: { value: string; onChange: (v: string) =
   useEffect(() => { if (ref.current) ref.current.innerHTML = sanitizeRich(value, document); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const emit = () => { const clean = sanitizeRich(ref.current?.innerHTML || '', document); last.current = clean; onChange(clean); };
   const cmd = (c: string, arg?: string) => { ref.current?.focus(); document.execCommand(c, false, arg); emit(); };
+  // Mot en dégradé (classe « ana-grad » du site) : pose la mise en forme sur la sélection, ou la retire si le curseur est déjà dedans.
+  const grad = () => {
+    const el = ref.current;
+    const sel = window.getSelection();
+    if (!el || !sel || !sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    if (!el.contains(range.commonAncestorContainer)) return;
+    const start = range.startContainer;
+    const inside = (start.nodeType === Node.ELEMENT_NODE ? (start as Element) : start.parentElement)?.closest('.ana-grad');
+    if (inside && el.contains(inside)) inside.replaceWith(...Array.from(inside.childNodes));
+    else if (!range.collapsed) {
+      const span = document.createElement('span');
+      span.className = 'ana-grad';
+      span.appendChild(range.extractContents());
+      span.querySelectorAll('.ana-grad').forEach((n) => n.replaceWith(...Array.from(n.childNodes)));
+      range.insertNode(span);
+      sel.removeAllRanges();
+    } else return;
+    emit();
+  };
   return (
     <div>
       <div className="rich-tools">
@@ -45,10 +65,11 @@ function RichInput({ value, onChange }: { value: string; onChange: (v: string) =
           if (url && isSafeUrl(url)) cmd('createLink', url);
         }} />
         <Button size="sm" iconOnly variant="ghost" aria-label="Retirer le lien" icon={<Unlink />} onMouseDown={(e) => { e.preventDefault(); cmd('unlink'); }} />
+        <Button size="sm" iconOnly variant="ghost" aria-label="Mot en dégradé" title="Mettre la sélection en dégradé, ou retirer le dégradé" icon={<Highlighter />} onMouseDown={(e) => { e.preventDefault(); grad(); }} />
       </div>
       <div ref={ref} className="rich" contentEditable suppressContentEditableWarning role="textbox" aria-multiline="true" onInput={emit}
         onPaste={(e) => { e.preventDefault(); document.execCommand('insertText', false, e.clipboardData.getData('text/plain')); }} />
-      <span className="hint">Le style des passages existants (dégradés, couleurs) est conservé. Collage en texte brut.</span>
+      <span className="hint">Le style des passages existants (dégradés, couleurs) est conservé. Pour mettre un mot en dégradé, sélectionnez-le puis cliquez sur le surligneur : un seul par titre. Collage en texte brut.</span>
     </div>
   );
 }

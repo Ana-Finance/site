@@ -8,6 +8,7 @@ import { ConfirmProvider, Spinner, ToastProvider } from '../components/ui';
 
 // Chaque module est chargé à la demande (graphiques et éditeur ne pèsent pas sur la connexion).
 const Dashboard = lazy(() => import('../modules/dashboard/Dashboard'));
+const Leads = lazy(() => import('../modules/leads/Leads'));
 const Analytics = lazy(() => import('../modules/analytics/Analytics'));
 const PagesList = lazy(() => import('../modules/pages/PagesList'));
 const PageDetail = lazy(() => import('../modules/pages/PageDetail'));
@@ -33,6 +34,7 @@ function Gate() {
         <Route element={<Layout />}>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/demandes" element={<Leads />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/pages" element={<PagesList />} />
           <Route path="/pages/:id" element={<PageDetail />} />

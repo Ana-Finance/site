@@ -141,6 +141,7 @@ export async function build() {
     const res = applyContent(doc, content, { resolveMedia, siteUrl: SITE_URL !== '/' ? SITE_URL : undefined, pagePath });
     if (res.missing.length) log(`! ${slug} : ${res.missing.length} clé(s) sans élément HTML (ignorées)`);
     injectPublicConfig(doc, exp && exp.public);
+    injectSocial(doc, pagePath, settings);
     if (slug === 'index') injectOrganization(doc, settings, SITE_URL !== '/' ? SITE_URL : null);
     writeFileSync(join(OUT, pagePath), dom.serialize());
     const noindex = !!doc.head.querySelector('meta[name="robots"][content*="noindex"]');
@@ -173,6 +174,34 @@ export async function build() {
   return { emitted, manifest };
 }
 
+/** Image de partage du dépôt : utilisée quand ni la page ni les paramètres du CMS n'en définissent. */
+const DEFAULT_OG_IMAGE = { path: 'assets/img/partage-ana-finance.png', width: 1200, height: 630 };
+
+/**
+ * Balises de partage (LinkedIn, WhatsApp, Teams, messageries) : complète ce que le contenu n'a pas fourni.
+ * Rien n'est remplacé ; sans URL publique du site, rien n'est ajouté (une image de partage doit être absolue).
+ */
+function injectSocial(doc, pagePath, settings) {
+  if (!SITE_URL || SITE_URL === '/') return;
+  const get = (attr, name) => doc.head.querySelector(`meta[${attr}="${name}"]`);
+  const add = (attr, name, content) => {
+    if (!content || get(attr, name)) return;
+    const m = doc.createElement('meta');
+    m.setAttribute(attr, name);
+    m.setAttribute('content', content);
+    doc.head.appendChild(m);
+  };
+  if (!get('property', 'og:image') && existsSync(join(ROOT, DEFAULT_OG_IMAGE.path))) {
+    add('property', 'og:image', new URL(DEFAULT_OG_IMAGE.path, SITE_URL).href);
+    add('property', 'og:image:width', String(DEFAULT_OG_IMAGE.width));
+    add('property', 'og:image:height', String(DEFAULT_OG_IMAGE.height));
+  }
+  add('property', 'og:url', new URL(pagePath === 'index.html' ? '' : pagePath, SITE_URL).href);
+  add('property', 'og:site_name', (settings.general && settings.general.siteName) || 'Ana Finance');
+  add('property', 'og:locale', 'fr_FR');
+  if (get('property', 'og:image')) add('name', 'twitter:card', 'summary_large_image');
+}
+
 /** Données structurées schema.org Organization (accueil), à partir des paramètres du CMS. */
 function injectOrganization(doc, settings, siteUrl) {
   const g = settings.general || {}; const c = settings.contact || {}; const so = settings.social || {};
@@ -189,8 +218,54 @@ function injectOrganization(doc, settings, siteUrl) {
   doc.head.appendChild(s);
 }
 
+/**
+ * Page 404 aux couleurs du site : l'accueil déjà construit (en-tête, pied de page, styles, scripts), dont le
+ * contenu est remplacé par le message d'erreur. Elle suit donc toujours l'en-tête et le pied publiés.
+ * GitHub Pages la sert à n'importe quelle profondeur : une balise <base> ramène tous les liens à la racine.
+ */
 function write404() {
   if (existsSync(join(ROOT, '404.html'))) return cpSync(join(ROOT, '404.html'), join(OUT, '404.html'));
+  const home = join(OUT, 'index.html');
+  const dom = existsSync(home) ? new JSDOM(readFileSync(home, 'utf8')) : null;
+  const main = dom && dom.window.document.querySelector('main');
+  if (!main) return writeFallback404();
+  const doc = dom.window.document;
+  // Mêmes gabarits que les pages intérieures : surtitre, titre, chapô, boutons en pilule de 47 px de haut.
+  const BTN = 'text-decoration:none;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-size:15px;font-weight:600;font-family:inherit;';
+  const PLEIN = BTN + 'padding:14px 26px;background:linear-gradient(135deg,#000000,#8b1fe0 55%,#f23fd6 100%);color:#fff;';
+  const BORDE = BTN + 'padding:13px 24.5px;background:#fff;color:#16151c;border:1.5px solid #ded7ef;';
+  main.innerHTML = `
+    <section id="main" style="max-width:1440px;margin:0 auto;padding:88px 40px 104px;">
+      <span style="display:block;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8b1fe0;margin:0 0 14px;">Erreur 404</span>
+      <h1 class="ana-hero-h1" style="font-size:clamp(28px,5.2vw,57px);line-height:1.14;letter-spacing:-0.025em;font-weight:800;margin:0;max-width:820px;">Cette page n'existe pas, ou plus.</h1>
+      <p style="font-size:17.5px;line-height:28px;max-width:84ch;margin:20px 0 0;color:#514f60;">L'adresse a peut-être changé. Repartez de l'accueil, ou allez directement à l'une des pages les plus consultées.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
+        <a href="./" style="${PLEIN}">Retour à l'accueil</a>
+        <a href="comment-ca-marche.html" style="${BORDE}">Comment ça marche</a>
+        <a href="ressources.html#tarifs" style="${BORDE}">Tarifs</a>
+        <a href="demo.html" style="${BORDE}">Demander une démo</a>
+      </div>
+    </section>`;
+  // La barre fixe « Demander une démo » de l'accueil n'a pas sa place sur une page d'erreur.
+  doc.querySelectorAll('.ana-mobile-sticky-cta').forEach((el) => el.remove());
+  doc.title = 'Page introuvable — Ana Finance';
+  doc.head.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"], meta[name="cms:seo-rev"], link[rel="canonical"], script[type="application/ld+json"]').forEach((el) => el.remove());
+  let robots = doc.head.querySelector('meta[name="robots"]');
+  if (!robots) { robots = doc.createElement('meta'); robots.setAttribute('name', 'robots'); doc.head.appendChild(robots); }
+  robots.setAttribute('content', 'noindex');
+  // Le lien d'évitement et les clés du CMS n'ont pas de sens ici (page générée, non éditable).
+  doc.querySelectorAll('.ana-skip').forEach((el) => el.remove());
+  doc.querySelectorAll('[data-cms], [data-cms-type], [data-cms-section]').forEach((el) => { el.removeAttribute('data-cms'); el.removeAttribute('data-cms-type'); el.removeAttribute('data-cms-section'); });
+  // <base> calculé avant tout chargement : racine du domaine, ou /<dépôt>/ sous github.io.
+  const base = doc.createElement('script');
+  base.textContent = "(function(){var p=location.pathname.split('/');var b=location.hostname.endsWith('github.io')&&p[1]?'/'+p[1]+'/':'/';document.write('<base href=\"'+b+'\">');})();";
+  const charset = doc.head.querySelector('meta[charset]');
+  doc.head.insertBefore(base, charset ? charset.nextSibling : doc.head.firstChild);
+  writeFileSync(join(OUT, '404.html'), dom.serialize());
+}
+
+/** Secours : page 404 minimale, si l'accueil n'a pas pu servir de modèle. */
+function writeFallback404() {
   writeFileSync(join(OUT, '404.html'), `<!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page introuvable — Ana Finance</title><meta name="robots" content="noindex">

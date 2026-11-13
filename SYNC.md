@@ -72,3 +72,37 @@ Un fichier `SYNC.md` existe aussi dans `Ana-Finance/app` (l'app ANA) et `Ana-Fin
 - Fait : fond décoratif retiré des 14 pages (dégradés violets `.ana-canvas::before`, grille `::after`, dessins animés `ana-bg-*` sur les côtés et leurs animations). Le fond est maintenant uni `#f8f9fc`.
 - Test `cms-build.test.mjs` (« annotation du HTML source ») : le fond est retiré aussi du HTML d'origine avant la comparaison.
 - Pour l'autre : rien à faire côté base, ces éléments ne sont pas des clés CMS.
+
+### 2026-11-12 · Romain
+- Fait : recette du site avant de le montrer à un client (26 points, choix de Romain). Textes : « en continu / temps réel / jour et nuit » remplacés par « à chaque import » (ta remarque du 2026-11-06), statut par connecteur (import du FEC « Disponible », le reste « Prévu »), tarifs sur devis (simulateur retiré), mentions légales et CGV complétées (« société en cours d'immatriculation »), preuves non vérifiables retirées, vrais formulaires de contact (Ressources) et de candidature (Carrières).
+- Technique : police Inter servie par le site (plus d'appel à Google), page 404 habillée, image de partage, contrastes et `<main>`, bandeau défilant des logiciels qui exportent un FEC. Admin : page « Demandes » et alerte sur le tableau de bord (le tableau des demandes n'était visible qu'avec Plausible configuré).
+- Décision : `npm run cms:rekey` automatise ton principe du 2026-11-08 (2) : tout champ dont le texte change par rapport à `origin/main` reçoit une nouvelle clé, donc **aucune mise à jour de la base**. Titres et descriptions : `<meta name="cms:seo-rev">`. Section masquée par défaut : `data-cms-default-hidden` (références clients de l'accueil). Détail : `docs/ADMIN_ARCHITECTURE.md`, « Modifier le HTML d'une page déjà publiée ».
+- Test `cms-build.test.mjs` : la comparaison au site d'avant le CMS est remplacée par « clés à jour » (`cms-rekey --check`) ; `deploy.yml` récupère `main` sur les PR pour ce contrôle (étape non bloquante).
+- Aucune migration ni changement de schéma : les nouveaux formulaires passent par `submit_lead` avec `p_form = 'contact'`, déjà accepté.
+- Reste côté Romain : capture d'écran de l'accueil (cadre toujours vide), adresse et téléphone de l'éditeur, compte Plausible, logos officiels du bandeau.
+- Pour l'autre : (1) l'inscription de l'app annonce « 14 jours d'essai gratuit, sans carte bancaire » ; Romain confirme qu'il n'y a pas d'essai gratuit, à retirer côté `app`. (2) `contact@ana-finance.com` est maintenant affichée sur le site (pied de page, formulaires, mentions légales) : la boîte doit exister. (3) `tmp/ana-build-vMpDZY/` est suivi par git sur `main` depuis le commit des fondations du CMS (copie d'un ancien build, non publiée) : pas supprimé, dis-moi si tu en as besoin.
+
+### 2026-11-12 · Romain (2)
+- Fait (demande de Romain, même branche que l'entrée précédente) : plus de couleur sur le site, sans sortir de la direction artistique. La palette prolonge le dégradé du logo d'un cran de chaque côté (indigo, corail) ; elle est décrite dans `assets/css/site.css`, bloc « Couleur ».
+- Six changements : un mot en dégradé dans le grand titre de 13 pages ; une teinte par étape de la chaîne et par agent (accueil, Agents, Comment ça marche) ; fonds pastel sur quelques grilles de cartes ; une teinte par public (cabinets indigo, directions financières violet, PME magenta), reprise sur leurs pages ; résultat de l'estimateur mis en valeur ; cadre de l'accueil transformé en scène avec un gabarit abstrait, en attendant la capture du produit.
+- Admin : bouton « mot en dégradé » dans l'éditeur de texte enrichi. `cms:rekey` corrige aussi le type d'un champ devenu « riche » (sinon le build déplaçait le passage mis en forme).
+- Corrigé au passage : la chaîne des six agents se coupait lettre par lettre sur téléphone (déjà le cas en ligne).
+- Aucune migration, aucun changement de schéma. Rien à faire côté base.
+- Pour l'autre : si tu ajoutes un bloc au site, reprends les classes existantes (`ana-t-*`, `ana-picto`, `ana-pastel`, `ana-halo`) plutôt que de nouvelles couleurs en dur ; le magenta et le corail purs sont trop clairs pour du petit texte, utiliser leur valeur `-texte`.
+
+### 2026-11-13 · Romain
+- Fait (demande de Romain, même branche et même PR `Ana-Finance/site#11`) : audit du rendu sur téléphone (26 défauts, de 280 à 430 px), tous corrigés. Les styles communs sont dans `assets/css/site.css`, blocs « Composants communs » et « Petits écrans ».
+- Ce qui cassait : menu mobile non défilable (liens inatteignables sur petit écran), étapes du pilote écrasées, formulaire de candidature sur deux colonnes, teinte perdue dans les fenêtres de détail, ancres sous l'en-tête, ponctuation seule en début de ligne, champs sous 16 px.
+- Cohérence, y compris sur ordinateur : un seul gabarit de haut de page (surtitre), une seule échelle de titres (`ana-h2`, `ana-h2-bloc`, `ana-h3-carte`), un seul bloc final (`ana-fin`), un seul style de bulle, boutons à la même hauteur. La barre fixe « Demander une démo » s'efface quand un bouton de démo est à l'écran ; elle est retirée de Carrières, des mentions légales et de la 404.
+- CMS : `typoFr()` dans `cms/core.js` rend insécable l'espace devant `; : ? ! » % €` à l'écriture d'un contenu dans la page ; `cms-rekey` ignore ces espaces. Aucune migration, rien à faire côté base.
+- Texte ajouté (à valider par Romain) : trois puces sous le chapô de la page PME, et la phrase de l'accueil reprise dans le bloc final de six pages.
+- Non vérifié : Safari sur iPhone (tests faits dans Chromium).
+- Test SQL : `permissions_test.sql` ne dépend plus d'une clé précise du contenu (il visait `index.s1.h1-1`, renommée quand le titre de l'accueil a reçu son mot en dégradé ; la CI de la PR échouait sur ce point). Il prend un champ de texte du seed au moment du test.
+- Pour l'autre : pour un nouveau bloc, reprendre ces classes plutôt que des tailles et des marges en dur ; écrire `&nbsp;` devant la ponctuation double dans le HTML (`npm test` le contrôle).
+
+### 2026-11-13 · Romain (2)
+- Fait (signalement de Romain depuis son iPhone, même branche et même PR `Ana-Finance/site#11`) : le schéma de la page Agents s'affiche mal **en ligne** (noms des agents coupés) parce que la PR n'est pas fusionnée ; la branche l'affichait déjà sur une colonne. Vérifié à la taille de son téléphone (440 px de large), où l'émulation reproduit sa capture.
+- Corrigé en plus : entre 1081 et 1130 px (portable en 1366 px affiché à 125 %, par exemple), la chaîne passait à six colonnes trop étroites et coupait « Relances » et « Reporting ». Elle reste sur trois colonnes jusqu'à 1180 px. Sur téléphone, une flèche relie chaque agent au suivant.
+- Test : scénario e2e « schéma des agents : aucun mot coupé », à onze largeurs de 320 à 1440 px (30 scénarios). Les 15 pages ont été repassées de 521 à 1440 px : aucun mot coupé, aucun débordement.
+- Aucune clé CMS modifiée, aucune migration. Rien à faire côté base.
+- Pour l'autre : l'audit de l'entrée précédente s'arrêtait à 430 px ; pour un nouveau bloc en colonnes, vérifier aussi la largeur juste au-dessus de chaque seuil (c'est là que les colonnes sont les plus étroites).

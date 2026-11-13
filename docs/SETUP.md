@@ -120,7 +120,7 @@ Sans clé API, l'administration affiche « Analytics non configuré » (aucun ch
 3. *Actions → Build & déploiement → Run workflow* (branche `main`) pour le premier déploiement, ou attendez le run déclenché par la fusion.
 4. Vérifiez `https://ana-finance.com/` puis `https://ana-finance.com/admin/`.
 
-Le site publié est alors identique à l'actuel (le test « DOM identique » le garantit), avec en plus `robots.txt`, `sitemap.xml`, `404.html`, les balises canoniques et le script de mesure si configuré.
+Le site publié est alors identique au HTML du dépôt (le test « DOM identique » le garantit), avec en plus `robots.txt`, `sitemap.xml`, `404.html` (aux couleurs du site), les balises canoniques, l'image de partage par défaut et le script de mesure si configuré.
 
 ## 8. Recette en ligne (10 minutes)
 
@@ -129,7 +129,10 @@ Le site publié est alors identique à l'actuel (le test « DOM identique » le 
 3. *Prévisualiser* : la modification apparaît, le site public n'a pas changé.
 4. *Publier* → l'écran de suivi passe par *Construction → Déploiement → Vérification → En ligne*.
 5. Ouvrir le site public : le nouveau titre est en ligne. *Pages → Accueil → Historique → Restaurer v1* puis publier pour revenir en arrière.
-6. *Médias* → importer un logo → *Éditeur* → cliquer « Logo client 1 » → *Choisir une image* → publier.
+6. *Médias* → importer un logo → *Éditeur* → page Intégrations → cliquer un nom du bandeau des logiciels (« Sage », « Cegid »…) → *Choisir une image* → publier. Le logo s'affiche en une seule couleur.
+7. *Demandes* : les envois des formulaires (démo, contact, candidature) y arrivent ; le tableau de bord signale les nouvelles.
+8. Capture du produit sur l'accueil : *Médias* → importer la capture (format 16:9 conseillé, par exemple 1920 × 1080) → *Éditeur* → Accueil → cliquer dans la fenêtre « File de validation » → *Choisir une image* → publier. Tant qu'aucune image n'est déposée, la fenêtre montre un gabarit abstrait.
+9. Mot en dégradé d'un titre : *Éditeur* → cliquer le titre → sélectionner le mot → bouton surligneur. Un seul par titre.
 
 ## Développement local
 
@@ -142,7 +145,16 @@ node tests/e2e/admin.e2e.mjs   # parcours complet dans Chromium (backend simulé
 npm run build && npm run check # site complet dans _site/
 ```
 
-Après une modification structurelle du HTML d'une page (nouveau bloc), lancez `node scripts/cms-annotate.mjs --force` **uniquement** sur un site pas encore en production : les clés existantes seraient régénérées. En production, ajoutez à la main les attributs `data-cms="<page>.<section>.<élément>-<n>" data-cms-type="text"` aux nouveaux éléments.
+Après toute modification du HTML d'une page (texte corrigé, nouveau bloc), lancez **avant de fusionner** :
+
+```bash
+npm run cms:rekey              # nouvelle clé pour chaque texte modifié, clé pour chaque nouvel élément
+npm run cms:seed               # seed à jour (sans effet sur une base déjà remplie)
+```
+
+Sans cela, le site continuerait d'afficher l'ancien texte publié (le contenu du CMS s'applique par-dessus le HTML) ; `npm test` le signale. Pour un `<title>` ou une description modifiés dans le HTML, incrémentez aussi `<meta name="cms:seo-rev">` sur la page. Détails : `docs/ADMIN_ARCHITECTURE.md`, « Modifier le HTML d'une page déjà publiée ».
+
+`node scripts/cms-annotate.mjs --force` régénère **toutes** les clés : à réserver à un site pas encore en production.
 
 ## Renouvellements
 

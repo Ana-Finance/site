@@ -5,6 +5,7 @@
   "scripts": {
     "cms:annotate": "node scripts/cms-annotate.mjs",
     "cms:seed": "node scripts/cms-seed.mjs",
+    "cms:rekey": "node scripts/cms-rekey.mjs",
     "build:admin": "vite build --config admin-app/vite.config.ts",
     "build:site": "node scripts/build-site.mjs",
     "build": "npm run build:admin && npm run build:site",

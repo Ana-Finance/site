@@ -10,17 +10,41 @@
  *   data-cms="<clé>"            élément éditable (clé stable)
  *   data-cms-type="<type>"      text | rich | link | href | image | slot
  *   data-cms-section="<clé>"    section réordonnable / masquable
+ *   data-cms-default-hidden     section masquée par défaut (réaffichable depuis l'éditeur)
  */
 
 export const ATTR = 'data-cms';
 export const TYPE_ATTR = 'data-cms-type';
 export const SECTION_ATTR = 'data-cms-section';
+/** Section présente dans le HTML mais masquée tant que le contenu ne demande pas de l'afficher (sections.shown). */
+export const DEFAULT_HIDDEN_ATTR = 'data-cms-default-hidden';
 export const FIELD_TYPES = ['text', 'rich', 'link', 'href', 'image', 'slot'];
 
 const TEXT_NODE = 3;
 // Espaces HTML (ASCII) uniquement : les espaces insécables (&nbsp;) font partie du contenu.
 const WS = /[ \t\n\r\f]+/g;
 const trimWs = (s) => s.replace(/^[ \t\n\r\f]+|[ \t\n\r\f]+$/g, '');
+
+/**
+ * Typographie française : l'espace placée devant ; : ? ! » % € (ou après «) devient insécable, pour que le signe
+ * ne se retrouve jamais seul en début de ligne. Appliquée à tout texte écrit dans la page depuis le CMS : un texte
+ * saisi dans l'administration avec des espaces ordinaires s'affiche donc correctement. Sans effet sur un texte déjà correct.
+ */
+export function typoFr(text) {
+  return String(text == null ? '' : text).replace(/ ([;:?!»%€])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
+}
+
+/** Même règle sur un fragment HTML riche déjà assaini : seuls les nœuds de texte sont touchés. */
+function typoRich(html, doc) {
+  const tpl = doc.createElement('template');
+  tpl.innerHTML = html;
+  (function walk(node) {
+    node.childNodes.forEach((n) => {
+      if (n.nodeType === TEXT_NODE) { const t = typoFr(n.nodeValue); if (t !== n.nodeValue) n.nodeValue = t; } else walk(n);
+    });
+  })(tpl.content);
+  return tpl.innerHTML;
+}
 const ELEMENT_NODE = 1;
 
 /* ------------------------------------------------------------------ *
@@ -258,7 +282,9 @@ export function extractModel(doc) {
   });
   const sections = [];
   doc.querySelectorAll('[' + SECTION_ATTR + ']').forEach((el) => {
-    sections.push({ key: el.getAttribute(SECTION_ATTR), label: headingOf(el) || el.getAttribute('aria-label') || 'Section', id: el.id || null });
+    const section = { key: el.getAttribute(SECTION_ATTR), label: headingOf(el) || el.getAttribute('aria-label') || 'Section', id: el.id || null };
+    if (el.hasAttribute(DEFAULT_HIDDEN_ATTR)) section.hiddenByDefault = true;
+    sections.push(section);
   });
   return { fields, sections, seo: readSeo(doc) };
 }
@@ -275,7 +301,7 @@ function metaContent(doc, sel) {
 export function readSeo(doc) {
   const canon = doc.head && doc.head.querySelector('link[rel="canonical"]');
   const robots = metaContent(doc, 'meta[name="robots"]');
-  return {
+  const seo = {
     title: doc.title || '',
     description: metaContent(doc, 'meta[name="description"]'),
     ogTitle: metaContent(doc, 'meta[property="og:title"]'),
@@ -284,6 +310,20 @@ export function readSeo(doc) {
     canonical: canon ? canon.getAttribute('href') || '' : '',
     noindex: /noindex/i.test(robots),
   };
+  const rev = seoRevision(doc);
+  if (rev) seo.rev = rev;
+  return seo;
+}
+
+/**
+ * Révision des textes SEO portée par le HTML : <meta name="cms:seo-rev" content="N">.
+ * Quand le titre ou la description d'une page sont modifiés dans le HTML, on incrémente N : tant que le
+ * contenu enregistré en base est plus ancien (seo.rev absent ou inférieur), ce sont les textes du HTML
+ * qui s'appliquent. Dès qu'un membre enregistre le SEO dans l'administration, la révision est reprise
+ * (voir admin-app/src/lib/draft.ts) et ses valeurs priment de nouveau.
+ */
+export function seoRevision(doc) {
+  return Number(metaContent(doc, 'meta[name="cms:seo-rev"]')) || 0;
 }
 
 function upsertMeta(doc, attr, name, content) {
@@ -300,10 +340,14 @@ function upsertMeta(doc, attr, name, content) {
 export function applySeo(doc, seo, { resolveMedia, siteUrl, pagePath } = {}) {
   if (!seo || !doc.head) return;
   const has = (k) => Object.prototype.hasOwnProperty.call(seo, k);
-  if (has('title') && seo.title) doc.title = seo.title;
-  if (has('description')) upsertMeta(doc, 'name', 'description', seo.description);
-  if (has('ogTitle')) upsertMeta(doc, 'property', 'og:title', seo.ogTitle || seo.title);
-  if (has('ogDescription')) upsertMeta(doc, 'property', 'og:description', seo.ogDescription || seo.description);
+  // Textes révisés dans le HTML après le dernier enregistrement en base : le HTML fait foi (voir seoRevision).
+  const upToDate = (Number(seo.rev) || 0) >= seoRevision(doc);
+  if (upToDate) {
+    if (has('title') && seo.title) doc.title = seo.title;
+    if (has('description')) upsertMeta(doc, 'name', 'description', seo.description);
+    if (has('ogTitle')) upsertMeta(doc, 'property', 'og:title', seo.ogTitle || seo.title);
+    if (has('ogDescription')) upsertMeta(doc, 'property', 'og:description', seo.ogDescription || seo.description);
+  }
   if (has('ogImage')) {
     let src = seo.ogImage && (resolveMedia ? resolveMedia(seo.ogImage) : seo.ogImage.src);
     if (src && siteUrl && !/^https?:/i.test(src)) src = new URL(src, siteUrl).href; // og:image doit être absolue
@@ -379,16 +423,16 @@ export function applyValue(el, value, { type = el.getAttribute(TYPE_ATTR), resol
   const doc = el.ownerDocument;
   switch (type) {
     case 'text':
-      if (typeof value.text === 'string') setPlainText(el, value.text);
+      if (typeof value.text === 'string') setPlainText(el, typoFr(value.text));
       break;
     case 'rich':
       if (typeof value.html === 'string') {
-        const clean = sanitizeRich(value.html, doc);
+        const clean = typoRich(sanitizeRich(value.html, doc), doc);
         if (trimWs(el.innerHTML.replace(WS, ' ')) !== trimWs(clean.replace(WS, ' '))) el.innerHTML = clean;
       }
       break;
     case 'link':
-      if (typeof value.text === 'string') setPlainText(el, value.text);
+      if (typeof value.text === 'string') setPlainText(el, typoFr(value.text));
       if (typeof value.href === 'string' && isSafeUrl(value.href) && el.getAttribute('href') !== value.href) el.setAttribute('href', value.href);
       break;
     case 'href':
@@ -408,17 +452,27 @@ export function applyValue(el, value, { type = el.getAttribute(TYPE_ATTR), resol
   }
 }
 
+/**
+ * Une section est-elle masquée ? Soit le contenu la masque (sections.hidden), soit elle est masquée par défaut
+ * dans le HTML (data-cms-default-hidden) et le contenu ne demande pas de l'afficher (sections.shown).
+ */
+export function isSectionHidden(sections, key, hiddenByDefault) {
+  const s = sections || {};
+  if (Array.isArray(s.hidden) && s.hidden.includes(key)) return true;
+  return !!hiddenByDefault && !(Array.isArray(s.shown) && s.shown.includes(key));
+}
+
 /** Masquage et ordre des sections. Seules les sections sœurs d'un même parent sont réordonnées. */
 export function applySections(doc, sections) {
   if (!sections) return;
   const all = Array.from(doc.querySelectorAll('[' + SECTION_ATTR + ']'));
   const byKey = new Map(all.map((el) => [el.getAttribute(SECTION_ATTR), el]));
-  const hidden = new Set(Array.isArray(sections.hidden) ? sections.hidden : []);
   all.forEach((el) => {
     const k = el.getAttribute(SECTION_ATTR);
-    if (hidden.has(k)) {
+    const byDefault = el.hasAttribute(DEFAULT_HIDDEN_ATTR);
+    if (isSectionHidden(sections, k, byDefault)) {
       if (!el.hasAttribute('hidden')) { el.setAttribute('hidden', ''); el.setAttribute('data-cms-hidden', ''); }
-    } else if (el.hasAttribute('data-cms-hidden')) {
+    } else if (el.hasAttribute('data-cms-hidden') || byDefault) {
       el.removeAttribute('hidden');
       el.removeAttribute('data-cms-hidden');
     }
